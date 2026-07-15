@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'machawi-erp-cloud-v3-7-manual-permissions-only';
+const CACHE_NAME = 'machawi-erp-cloud-v3-8-production-centers';
 const STATIC_FILES = [
   './manifest.json',
   './icon-192.png',

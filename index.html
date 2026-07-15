@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Machawi Dajaj ERP Cloud V3.7</title>
+<title>Machawi Dajaj ERP Cloud V3.8</title>
 
 <style>
 :root{
@@ -498,6 +498,18 @@ table{
   cursor:pointer;
   touch-action:manipulation
 }
+
+.center-list{display:grid;gap:8px;margin-top:12px}
+.center-chip{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fffaf7
+}
+.center-chip span{display:flex;flex-direction:column;gap:2px}
+.center-chip small{color:var(--muted);direction:ltr;text-align:right}
+.product-center-assignment{min-width:180px}
+@media(max-width:620px){
+  .product-center-assignment{min-width:160px}
+}
 </style>
 
 
@@ -527,7 +539,7 @@ table{
   <div id="iconRail" class="icon-rail"></div>
   <div class="nav-panel">
     <div class="brand-box">
-      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.7</small></div>
+      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.8</small></div>
     </div>
     <button id="closeSideMenuBtn" class="btn btn-soft close-side-menu" type="button" onclick="closeSideMenu()">إرجاع القائمة</button>
     <div class="nav-heading"><strong id="navGroupTitle">الرئيسية</strong><span>القائمة</span></div>
@@ -1019,38 +1031,32 @@ table{
     </section>
 
     
+
 <section id="transform_admin" class="page">
   <div class="page-title">
     <div>
-      <h2>إعدادات التحويل والإنتاج</h2>
-      <div style="color:var(--muted);margin-top:5px">هذه الصفحة مخصصة للشخص المسؤول عن إعداد المنتجات وأنواع التحويل.</div>
+      <h2>إدارة مراكز الإنتاج</h2>
+      <div style="color:var(--muted);margin-top:5px">
+        اربط كل منتج بالمركز المناسب، وسيظهر فقط داخل المركز الخاص به.
+      </div>
     </div>
   </div>
 
   <div class="grid">
     <div class="card">
-      <h3>إضافة أو تعديل نوع تحويل</h3>
+      <h3>مراكز الإنتاج</h3>
       <div class="form-grid">
-        <select id="adminTransformProfile" onchange="loadAdminTransformProfile()"></select>
-        <input id="adminTransformName" placeholder="اسم العملية">
-        <select id="adminTransformMode">
-          <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
-          <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
-          <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
-        </select>
-        <input id="adminRawLabel" placeholder="اسم خانة البداية">
-        <input id="adminCookedLabel" placeholder="اسم خانة بعد الطبخ">
-        <input id="adminNetLabel" placeholder="اسم خانة الناتج النهائي">
+        <input id="adminCenterName" placeholder="اسم مركز جديد، مثال: الحلويات">
+        <input id="adminCenterCode" placeholder="رمز مختصر بالإنجليزية، مثال: pastry">
       </div>
       <div class="actions">
-        <button class="btn btn-primary" onclick="saveAdminTransformProfile()">حفظ النوع</button>
-        <button class="btn btn-soft" onclick="newAdminTransformProfile()">نوع جديد</button>
-        <button class="btn btn-danger" onclick="deleteAdminTransformProfile()">حذف المحدد</button>
+        <button class="btn btn-primary" onclick="addProductionCenter()">إضافة مركز</button>
       </div>
+      <div id="productionCentersList" class="center-list"></div>
     </div>
 
     <div class="card">
-      <h3>إضافة منتج للتحويل</h3>
+      <h3>إضافة منتج لمركز إنتاج</h3>
       <div class="form-grid">
         <input id="adminProductName" placeholder="اسم المنتج">
         <select id="adminProductType">
@@ -1062,23 +1068,57 @@ table{
         <select id="adminProductUnit">
           <option>كغ</option><option>لتر</option><option>وحدة</option><option>علبة</option>
         </select>
+        <select id="adminProductCenter"></select>
         <input id="adminProductCost" type="number" min="0" step="0.01" placeholder="التكلفة">
         <input id="adminProductMin" type="number" min="0" step="0.001" placeholder="الحد الأدنى">
       </div>
       <div class="actions">
         <button class="btn btn-primary" onclick="saveAdminTransformProduct()">إضافة المنتج</button>
       </div>
-      <div class="notice">بعد الحفظ يظهر المنتج تلقائيًا في قوائم المنتج الداخل والمنتج الناتج.</div>
+      <div class="notice">
+        المنتج سيظهر فقط داخل المركز الذي تختاره، ويمكن تغيير مركزه لاحقًا.
+      </div>
     </div>
   </div>
 
   <div class="card" style="margin-top:14px">
-    <h3>المنتجات المتاحة للتحويل</h3>
+    <div class="page-title">
+      <div>
+        <h3 style="margin:0">ربط المنتجات بمراكزها</h3>
+        <small style="color:var(--muted)">اختر مركز كل منتج ثم اضغط حفظ التوزيع.</small>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="saveProductCenterAssignments()">حفظ التوزيع</button>
+      </div>
+    </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>المنتج</th><th>النوع</th><th>الفئة</th><th>الوحدة</th><th>إجراء</th></tr></thead>
+        <thead>
+          <tr><th>المنتج</th><th>النوع</th><th>الوحدة</th><th>مركز الإنتاج</th><th>إجراء</th></tr>
+        </thead>
         <tbody id="adminTransformProductsBody"></tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>أنواع تحويل مركز الدجاج</h3>
+    <div class="form-grid">
+      <select id="adminTransformProfile" onchange="loadAdminTransformProfile()"></select>
+      <input id="adminTransformName" placeholder="اسم العملية">
+      <select id="adminTransformMode">
+        <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
+        <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
+        <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
+      </select>
+      <input id="adminRawLabel" placeholder="اسم خانة البداية">
+      <input id="adminCookedLabel" placeholder="اسم خانة بعد الطبخ">
+      <input id="adminNetLabel" placeholder="اسم خانة الناتج النهائي">
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="saveAdminTransformProfile()">حفظ النوع</button>
+      <button class="btn btn-soft" onclick="newAdminTransformProfile()">نوع جديد</button>
+      <button class="btn btn-danger" onclick="deleteAdminTransformProfile()">حذف المحدد</button>
     </div>
   </div>
 </section>
@@ -1263,9 +1303,9 @@ const navGroups=[
  {id:'reports',label:'التقارير',items:[['reports','التقارير','reports.view']]},
  {id:'admin',label:'الإدارة',items:[
   ['users','المستخدمون','users.view'],
-  ['transform_admin','إعدادات التحويل والإنتاج','settings.view'],
+  ['transform_admin','إدارة مراكز الإنتاج','transform_centers.manage'],
   ['audit','سجل النشاط','audit.view'],
-  ['transform_admin','إعدادات التحويل والإنتاج','settings.view','','','الإدارة'],
+  ['transform_admin','إدارة مراكز الإنتاج','transform_centers.manage','','','الإدارة'],
   ['settings','الإعدادات','settings.view']
  ]}
 ];
@@ -3139,11 +3179,24 @@ function closeModal(id){document.getElementById(id).classList.remove('open')}
 
 
 function ensureChickenTransformModule(){
-  if(!db.chicken_transforms) db.chicken_transforms=[];
+  if(!db.chicken_transforms)db.chicken_transforms=[];
+  if(!db.production_centers){
+    db.production_centers=[
+      {id:'chicken',name:'تحويل وإنتاج الدجاج',locked:true},
+      {id:'salads',name:'إنتاج السلطات'},
+      {id:'sauces',name:'إنتاج الصوص'},
+      {id:'juices',name:'إنتاج العصائر'},
+      {id:'rice',name:'إنتاج الأرز'},
+      {id:'fries',name:'إنتاج الفريت'},
+      {id:'other',name:'تحضيرات أخرى'}
+    ];
+  }
+
   if(!db.process_profiles){
     db.process_profiles=[
       {
         id:'PROC-001',
+        centerId:'chicken',
         name:'Poulet mariné kg → Poulet Haché cuit',
         mode:'three_stage',
         rawLabel:'الوزن قبل الطبخ',
@@ -3152,6 +3205,7 @@ function ensureChickenTransformModule(){
       },
       {
         id:'PROC-002',
+        centerId:'chicken',
         name:'طبخ الدجاج الكامل بالعدد',
         mode:'same_unit',
         rawLabel:'عدد الدجاج قبل الطبخ',
@@ -3160,10 +3214,38 @@ function ensureChickenTransformModule(){
       }
     ];
   }
+  db.process_profiles.forEach(p=>{if(!p.centerId)p.centerId='chicken'});
 
-  const groupExists=db.permissions_catalog.some(g=>g.group==='تحويل الدجاج');
-  if(!groupExists){
-    db.permissions_catalog.splice(4,0,{
+  const inferCenter=product=>{
+    const text=normalizeProductionName(`${product.name||''} ${product.category||''} ${product.type||''}`);
+    if(/poulet|دجاج|hach|marin|cuit/.test(text))return 'chicken';
+    if(/salad|سلط|tomat|طماطم|خيار|بصل|laitue|خس/.test(text))return 'salads';
+    if(/sauce|صوص|mayo|mayonnaise|ketchup|bigue|barbecue/.test(text))return 'sauces';
+    if(/jus|عصير|ليمون|بيجام|حامض|orange/.test(text))return 'juices';
+    if(/riz|ارز|أرز|كبسة/.test(text))return 'rice';
+    if(/frite|بطاط|frites/.test(text))return 'fries';
+    return 'other';
+  };
+  (db.products||[]).forEach(product=>{
+    if(!product.productionCenter)product.productionCenter=inferCenter(product);
+  });
+
+  let group=db.permissions_catalog.find(g=>g.group==='إدارة مراكز الإنتاج');
+  if(!group){
+    group={
+      group:'إدارة مراكز الإنتاج',
+      items:[
+        ['transform_centers.manage','إدارة المراكز وربط المنتجات'],
+        ['transform_centers.add_product','إضافة منتجات إلى المراكز'],
+        ['transform_centers.delete_product','حذف منتجات المراكز']
+      ]
+    };
+    db.permissions_catalog.push(group);
+  }
+
+  let chickenGroup=db.permissions_catalog.find(g=>g.group==='تحويل الدجاج');
+  if(!chickenGroup){
+    chickenGroup={
       group:'تحويل الدجاج',
       items:[
         ['chicken_transform.view','مشاهدة مركز الطبخ والتحويل'],
@@ -3172,9 +3254,233 @@ function ensureChickenTransformModule(){
         ['chicken_transform.cancel','إلغاء دفعة'],
         ['chicken_transform.print','طباعة سجل التحويل']
       ]
-    });
+    };
+    db.permissions_catalog.splice(4,0,chickenGroup);
+  }
+}
+
+
+let adminEditingTransformIndex=null;
+
+function centerOptions(selected=''){
+  return (db.production_centers||[])
+    .map(c=>`<option value="${c.id}" ${c.id===selected?'selected':''}>${c.name}</option>`)
+    .join('');
+}
+
+function renderTransformAdmin(){
+  if(!document.getElementById('adminTransformProfile'))return;
+  ensureChickenTransformModule();
+
+  adminProductCenter.innerHTML=centerOptions('chicken');
+
+  productionCentersList.innerHTML=(db.production_centers||[]).map(center=>`
+    <div class="center-chip">
+      <span><b>${center.name}</b><small>${center.id}</small></span>
+      ${center.locked?'':`<button class="btn btn-danger" onclick="deleteProductionCenter('${center.id}')">حذف</button>`}
+    </div>`).join('');
+
+  const selectedProfile=adminTransformProfile.value;
+  adminTransformProfile.innerHTML='<option value="">-- نوع جديد --</option>'+
+    db.process_profiles.map((p,i)=>`<option value="${i}">${p.name}</option>`).join('');
+  if(selectedProfile!==''&&db.process_profiles[Number(selectedProfile)]){
+    adminTransformProfile.value=selectedProfile;
   }
 
+  adminTransformProductsBody.innerHTML=(db.products||[]).map((product,index)=>`
+    <tr>
+      <td><b>${product.name}</b></td>
+      <td>${product.type||''}</td>
+      <td>${product.unit||''}</td>
+      <td>
+        <select class="product-center-assignment" data-index="${index}">
+          ${centerOptions(product.productionCenter||'other')}
+        </select>
+      </td>
+      <td>
+        <button class="btn btn-danger"
+          onclick="deleteAdminTransformProduct(${index})"
+          ${can('transform_centers.delete_product')?'':'disabled'}>
+          حذف
+        </button>
+      </td>
+    </tr>`).join('');
+
+  loadAdminTransformProfile();
+}
+
+function addProductionCenter(){
+  if(!requirePerm('transform_centers.manage'))return;
+  const name=adminCenterName.value.trim();
+  let id=adminCenterCode.value.trim().toLowerCase()
+    .replace(/\s+/g,'_').replace(/[^a-z0-9_-]/g,'');
+  if(!name)return alert('أدخل اسم المركز');
+  if(!id)id='center_'+Date.now();
+  if(db.production_centers.some(c=>c.id===id))return alert('رمز المركز مستخدم مسبقًا');
+  db.production_centers.push({id,name});
+  adminCenterName.value=adminCenterCode.value='';
+  log('إضافة مركز إنتاج',name);
+  renderTransformAdmin();
+  save();
+}
+
+function deleteProductionCenter(centerId){
+  if(!requirePerm('transform_centers.manage'))return;
+  const center=db.production_centers.find(c=>c.id===centerId);
+  if(!center||center.locked)return;
+  const used=db.products.some(p=>p.productionCenter===centerId);
+  if(used)return alert('لا يمكن حذف المركز قبل نقل منتجاته إلى مركز آخر');
+  if(!confirm(`حذف مركز ${center.name}؟`))return;
+  db.production_centers=db.production_centers.filter(c=>c.id!==centerId);
+  log('حذف مركز إنتاج',center.name);
+  renderTransformAdmin();
+  save();
+}
+
+function saveProductCenterAssignments(){
+  if(!requirePerm('transform_centers.manage'))return;
+  document.querySelectorAll('.product-center-assignment').forEach(select=>{
+    const product=db.products[Number(select.dataset.index)];
+    if(product)product.productionCenter=select.value;
+  });
+  log('توزيع المنتجات','تم تحديث ربط المنتجات بمراكز الإنتاج');
+  renderProcessSelectors();
+  renderTransformAdmin();
+  save();
+  alert('تم حفظ توزيع المنتجات على المراكز');
+}
+
+function saveAdminTransformProduct(){
+  if(!requirePerm('transform_centers.add_product'))return;
+  const name=adminProductName.value.trim();
+  if(!name)return alert('أدخل اسم المنتج');
+  if(db.products.some(x=>normalizeProductionName(x.name)===normalizeProductionName(name))){
+    return alert('المنتج موجود مسبقًا');
+  }
+
+  const product={
+    id:'PRD-'+Date.now(),
+    name,
+    type:adminProductType.value,
+    category:adminProductCategory.value.trim()||'تحويل وإنتاج',
+    unit:adminProductUnit.value,
+    productionCenter:adminProductCenter.value||'other',
+    barcode:'',
+    cost:Number(adminProductCost.value||0),
+    salePrice:0,
+    min:Number(adminProductMin.value||0),
+    active:true,
+    createdAt:localIsoTimestamp()
+  };
+
+  db.products.push(product);
+  ['المخزن الرئيسي','مخزن الإنتاج','مخزن البيع'].forEach(location=>{
+    if(!db.inventory.some(x=>x.productId===product.id&&x.location===location)){
+      db.inventory.push({
+        id:'INV-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),
+        productId:product.id,
+        name:product.name,
+        type:product.type,
+        category:product.category,
+        unit:product.unit,
+        location,
+        stock:0,
+        min:product.min,
+        cost:product.cost
+      });
+    }
+  });
+
+  log('إضافة منتج لمركز إنتاج',
+      `${product.name} — ${(db.production_centers.find(c=>c.id===product.productionCenter)||{}).name||product.productionCenter}`);
+
+  adminProductName.value='';
+  adminProductCost.value='';
+  adminProductMin.value='';
+  renderProcessSelectors();
+  renderTransformAdmin();
+  save();
+}
+
+function deleteAdminTransformProduct(index){
+  if(!requirePerm('transform_centers.delete_product'))return;
+  const product=db.products[index];
+  if(!product)return;
+  const used=(db.chicken_transforms||[]).some(x=>
+    x.inputProductId===product.id||x.outputProductId===product.id
+  );
+  if(used)return alert('لا يمكن حذف المنتج لأنه مستخدم في سجلات سابقة');
+  if(!confirm(`حذف المنتج ${product.name}؟`))return;
+  db.products.splice(index,1);
+  db.inventory=(db.inventory||[]).filter(x=>x.productId!==product.id);
+  log('حذف منتج مركز إنتاج',product.name);
+  renderProcessSelectors();
+  renderTransformAdmin();
+  save();
+}
+
+function loadAdminTransformProfile(){
+  if(!document.getElementById('adminTransformProfile'))return;
+  const value=adminTransformProfile.value;
+  if(value===''){
+    newAdminTransformProfile();
+    return;
+  }
+  const index=Number(value);
+  const profile=db.process_profiles[index];
+  if(!profile)return;
+  adminEditingTransformIndex=index;
+  adminTransformName.value=profile.name||'';
+  adminTransformMode.value=profile.mode||'three_stage';
+  adminRawLabel.value=profile.rawLabel||'';
+  adminCookedLabel.value=profile.cookedLabel||'';
+  adminNetLabel.value=profile.netLabel||'';
+}
+
+function newAdminTransformProfile(){
+  adminEditingTransformIndex=null;
+  if(document.getElementById('adminTransformProfile'))adminTransformProfile.value='';
+  adminTransformName.value='';
+  adminTransformMode.value='three_stage';
+  adminRawLabel.value='';
+  adminCookedLabel.value='';
+  adminNetLabel.value='';
+}
+
+function saveAdminTransformProfile(){
+  if(!requirePerm('transform_centers.manage'))return;
+  const name=adminTransformName.value.trim();
+  if(!name)return alert('أدخل اسم نوع التحويل');
+  const profile={
+    id:adminEditingTransformIndex===null
+      ?'PROC-'+Date.now()
+      :(db.process_profiles[adminEditingTransformIndex]?.id||'PROC-'+Date.now()),
+    centerId:'chicken',
+    name,
+    mode:adminTransformMode.value,
+    rawLabel:adminRawLabel.value.trim()||'الكمية قبل الطبخ',
+    cookedLabel:adminCookedLabel.value.trim()||'الكمية بعد الطبخ',
+    netLabel:adminNetLabel.value.trim()||'الكمية النهائية'
+  };
+  if(adminEditingTransformIndex===null)db.process_profiles.push(profile);
+  else db.process_profiles[adminEditingTransformIndex]=profile;
+  log(adminEditingTransformIndex===null?'إضافة نوع تحويل':'تعديل نوع تحويل',name);
+  renderProcessSelectors();
+  renderTransformAdmin();
+  save();
+}
+
+function deleteAdminTransformProfile(){
+  if(!requirePerm('transform_centers.manage'))return;
+  if(adminEditingTransformIndex===null)return alert('اختر نوع التحويل أولًا');
+  const profile=db.process_profiles[adminEditingTransformIndex];
+  if(!confirm(`حذف نوع التحويل ${profile.name}؟`))return;
+  db.process_profiles.splice(adminEditingTransformIndex,1);
+  adminEditingTransformIndex=null;
+  log('حذف نوع تحويل',profile.name);
+  renderProcessSelectors();
+  renderTransformAdmin();
+  save();
 }
 
 function getStockRow(productId, location){
@@ -3461,13 +3767,28 @@ function exportProductionRequirements(){
 }
 
 function renderProcessSelectors(){
-  ctProcessProfile.innerHTML=db.process_profiles.map((x,i)=>`<option value="${i}">${x.name}</option>`).join('');
-  const eligible=db.products.filter(x=>x.active!==false);
-  ctInputProduct.innerHTML=eligible.map(x=>`<option value="${x.id}">${x.name} — ${x.unit}</option>`).join('');
-  ctOutputProduct.innerHTML=eligible.map(x=>`<option value="${x.id}">${x.name} — ${x.unit}</option>`).join('');
+  ensureChickenTransformModule();
+  const profiles=db.process_profiles
+    .map((x,i)=>({x,i}))
+    .filter(item=>(item.x.centerId||'chicken')==='chicken');
 
-  const marinated=db.products.find(x=>x.name==='Poulet mariné kg');
-  const hache=db.products.find(x=>x.name==='Poulet Haché cuit');
+  ctProcessProfile.innerHTML=profiles
+    .map(item=>`<option value="${item.i}">${item.x.name}</option>`).join('');
+
+  const eligible=(db.products||[]).filter(x=>
+    x.active!==false && x.productionCenter==='chicken'
+  );
+
+  ctInputProduct.innerHTML=eligible.length
+    ?eligible.map(x=>`<option value="${x.id}">${x.name} — ${x.unit}</option>`).join('')
+    :'<option value="">لا توجد منتجات مرتبطة بمركز الدجاج</option>';
+
+  ctOutputProduct.innerHTML=eligible.length
+    ?eligible.map(x=>`<option value="${x.id}">${x.name} — ${x.unit}</option>`).join('')
+    :'<option value="">لا توجد منتجات مرتبطة بمركز الدجاج</option>';
+
+  const marinated=eligible.find(x=>/poulet marin[eé]e? kg/i.test(x.name));
+  const hache=eligible.find(x=>/hach/i.test(x.name));
   if(marinated)ctInputProduct.value=marinated.id;
   if(hache)ctOutputProduct.value=hache.id;
   loadProcessProfile();
