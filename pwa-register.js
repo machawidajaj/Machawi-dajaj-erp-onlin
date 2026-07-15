@@ -1,47 +1,7 @@
-
 (() => {
-  let deferredPrompt = null;
-
-  window.addEventListener('beforeinstallprompt', event => {
-    event.preventDefault();
-    deferredPrompt = event;
-    console.log('Machawi ERP is installable');
-  });
-
-  window.addEventListener('appinstalled', () => {
-    deferredPrompt = null;
-    console.log('Machawi ERP installed');
-  });
-
-  window.installMachawiApp = async function () {
-    if (!deferredPrompt) {
-      alert('افتح قائمة Google Chrome ثم اختر: تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.');
-      return;
-    }
-
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-  };
-
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', async () => {
-      try {
-        const registrations = await navigator.serviceWorker.getRegistrations();
-
-        // Remove service workers from the earlier broken PWA versions.
-        for (const registration of registrations) {
-          await registration.unregister();
-        }
-
-        await navigator.serviceWorker.register('./service-worker.js', {
-          updateViaCache: 'none'
-        });
-
-        console.log('Machawi ERP service worker registered');
-      } catch (error) {
-        console.error('PWA registration failed:', error);
-      }
-    });
-  }
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;const b=document.getElementById('installPwaBtn');if(b)b.style.display='inline-flex'});
+window.addEventListener('appinstalled',()=>{deferredPrompt=null;const b=document.getElementById('installPwaBtn');if(b)b.style.display='none'});
+document.addEventListener('click',async e=>{if(e.target?.id!=='installPwaBtn')return;if(!deferredPrompt){alert('من قائمة Chrome اختر تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.');return}deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;e.target.style.display='none'});
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'}).catch(console.error));
 })();

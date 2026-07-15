@@ -3,40 +3,471 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Machawi Dajaj ERP Online</title>
+<title>Machawi Dajaj ERP Cloud V3.0</title>
+
 <style>
-:root{--brand:#7f1d1d;--brand2:#b91c1c;--bg:#f5f7fb;--card:#fff;--text:#182234;--muted:#728096;--line:#e5eaf1;--ok:#15803d;--warn:#b7791f;--bad:#b91c1c;--blue:#2563eb}
-*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
+:root{
+ --brand:#981f20;--brand-dark:#6f1112;--brand-soft:#fff0ef;
+ --gold:#f2b705;--gold-soft:#fff7d6;--bg:#f7f7f9;--card:#fff;
+ --text:#261f20;--muted:#82777a;--line:#ebe4e5;--ok:#16814b;
+ --warn:#9a6b00;--bad:#b91c1c;--shadow:0 10px 28px rgba(89,25,25,.055)
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
 button,input,select{font:inherit}.hidden{display:none!important}
-.login{position:fixed;inset:0;background:linear-gradient(135deg,#450a0a,#991b1b);display:grid;place-items:center;padding:20px;z-index:99}
-.login-card{width:min(420px,100%);background:white;border-radius:20px;padding:28px;box-shadow:0 30px 90px #0007}
-.login-card h1{text-align:center;color:var(--brand);margin:0 0 6px}.login-card p{text-align:center;color:var(--muted)}
-.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
-aside{background:#fff;border-left:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
-.logo{font-size:22px;font-weight:800;color:var(--brand);padding:8px 6px 18px}.logo small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
-.menu button{width:100%;border:0;background:transparent;padding:11px 12px;border-radius:10px;text-align:right;cursor:pointer;color:#475569;margin-bottom:4px}
-.menu button.active,.menu button:hover{background:#fff1f2;color:var(--brand);font-weight:700}
-main{min-width:0}.topbar{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:0 24px;position:sticky;top:0;z-index:10}
-.userbox{display:flex;gap:10px;align-items:center}.avatar{width:38px;height:38px;border-radius:50%;background:#fee2e2;color:var(--brand);display:grid;place-items:center;font-weight:800}
-.content{padding:24px;max-width:1500px;margin:auto}.page{display:none}.page.show{display:block}
-.page-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.page-title h2{margin:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 18px #0f172a0a}
+.login{position:fixed;inset:0;background:radial-gradient(circle at 15% 15%,rgba(242,183,5,.25),transparent 28%),linear-gradient(145deg,var(--brand-dark),var(--brand));display:grid;place-items:center;padding:20px;z-index:99}
+.login-card{width:min(430px,100%);background:white;border-radius:26px;padding:30px;box-shadow:0 35px 100px #3c080870;border-top:6px solid var(--gold)}
+.login-card h1{text-align:center;color:var(--brand);margin:0 0 6px;font-size:30px}.login-card p{text-align:center;color:var(--muted)}
+.app{display:grid;grid-template-columns:310px minmax(0,1fr);min-height:100vh}
+aside{background:#fff;border-left:1px solid var(--line);position:sticky;top:0;height:100vh;display:grid;grid-template-columns:68px 1fr;z-index:30;overflow:hidden}
+.icon-rail{background:#fffafa;border-left:1px solid var(--line);padding:14px 8px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.rail-logo{width:48px;height:48px;border-radius:16px;overflow:hidden;background:#fff;border:2px solid #f1d5d5;border-bottom:4px solid var(--gold);margin-bottom:8px}
+.rail-logo img{width:100%;height:100%;object-fit:cover}
+.rail-item{width:48px;height:46px;border:0;border-radius:14px;background:transparent;color:#807477;cursor:pointer;font-size:21px;display:grid;place-items:center;position:relative}
+.rail-item:hover{background:var(--brand-soft);color:var(--brand)}
+.rail-item.active{background:var(--brand-soft);color:var(--brand);box-shadow:inset -4px 0 0 var(--brand)}
+.rail-item.active:after{content:"";position:absolute;left:5px;bottom:4px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.nav-panel{min-width:0;padding:18px 14px 20px;overflow:auto}
+.brand-box{padding:4px 4px 17px;border-bottom:1px solid var(--line);margin-bottom:13px}
+.logo{font-size:23px;font-weight:900;color:var(--brand)}
+.logo:after{content:"";display:inline-block;width:26px;height:5px;margin-right:8px;border-radius:999px;background:var(--gold);vertical-align:middle}
+.logo small{display:block;color:var(--muted);font-size:12px;margin-top:6px;font-weight:500}
+.nav-heading{display:flex;align-items:center;justify-content:space-between;padding:4px 5px 12px}
+.nav-heading strong{font-size:18px}.nav-heading span{font-size:11px;color:var(--muted)}
+.menu button{width:100%;border:0;background:transparent;padding:11px 12px;border-radius:12px;text-align:right;cursor:pointer;color:#665b5e;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.menu button .nav-icon{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:#f6f2f2;color:#8b7c7e;font-size:15px;flex:0 0 auto}
+.menu button:hover{background:#fff8f0;color:var(--brand)}
+.menu button.active{background:linear-gradient(90deg,var(--brand-soft),#fffaf0);color:var(--brand);font-weight:800;box-shadow:inset -4px 0 0 var(--brand)}
+.menu button.active .nav-icon{background:var(--brand);color:#fff}
+.menu button.active:after{content:"";margin-right:auto;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+main{min-width:0}
+.topbar{min-height:72px;background:rgba(255,255,255,.95);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:14px;padding:10px 24px;position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
+.topbar-start{display:flex;align-items:center;gap:12px;min-width:0}.page-context{min-width:0}
+.page-context b{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.page-context small{color:var(--muted)}
+.cloud-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #d8eadf;background:#f0fbf4;color:#167245;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:800}
+.cloud-pill:before{content:"";width:7px;height:7px;border-radius:50%;background:#25a65a}
+.userbox{display:flex;gap:10px;align-items:center}.avatar{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,var(--brand-soft),var(--gold-soft));color:var(--brand);display:grid;place-items:center;font-weight:900;border:1px solid #f0d7c2}
+.content{padding:24px;max-width:1560px;margin:auto}.page{display:none}.page.show{display:block;animation:pageIn .18s ease-out}
+@keyframes pageIn{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
+.page-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.page-title h2{margin:0;font-size:25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.kpi{position:relative;overflow:hidden}.kpi:before{content:"";position:absolute;right:0;top:0;width:5px;height:100%;background:linear-gradient(var(--brand),var(--gold))}
 .kpi span{color:var(--muted);font-size:13px}.kpi strong{display:block;font-size:28px;margin-top:8px}.kpi small{color:var(--muted)}
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
-input,select{width:100%;padding:10px 11px;border:1px solid #cfd7e3;border-radius:9px;background:#fff}
-.btn{border:0;border-radius:9px;padding:10px 14px;cursor:pointer;font-weight:700}.btn-primary{background:var(--brand);color:#fff}.btn-soft{background:#f1f5f9;color:#334155}.btn-danger{background:#fee2e2;color:#991b1b}.btn-blue{background:#dbeafe;color:#1d4ed8}
-.actions{display:flex;gap:8px;flex-wrap:wrap}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
-table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;border-bottom:1px solid var(--line);text-align:right;font-size:13px}th{background:#f8fafc;color:#475569;position:sticky;top:0}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700}.ok{background:#dcfce7;color:#166534}.warn{background:#fef3c7;color:#92400e}.bad{background:#fee2e2;color:#991b1b}
-.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.open{display:flex}.modal-box{background:#fff;border-radius:18px;padding:20px;width:min(1000px,100%);max-height:90vh;overflow:auto}
-.perm-group{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}.perm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.perm-item{display:flex;gap:8px;align-items:center;padding:7px;background:#f8fafc;border-radius:8px}
-.recipe-row{display:grid;grid-template-columns:2fr 1fr auto;gap:8px;margin:7px 0}.transfer-item-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin:8px 0;align-items:center}.purchase-item-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;margin:8px 0;align-items:center}.production-plan-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin:8px 0;align-items:center}.composition-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin:8px 0;align-items:center}.transfer-item-row .stock-info{font-size:12px;color:var(--muted)}
-.notice{padding:12px;border-radius:10px;background:#fff7ed;border-right:4px solid #f59e0b;margin:10px 0}
-.chart{height:220px;display:flex;align-items:end;gap:8px;padding:20px;border:1px solid var(--line);border-radius:12px}.bar{flex:1;background:linear-gradient(#fca5a5,#b91c1c);border-radius:7px 7px 0 0;min-width:20px}
+input,select{width:100%;padding:11px 12px;border:1px solid #dcd4d5;border-radius:11px;background:#fff;color:var(--text);outline:none}
+input:focus,select:focus{border-color:#c88686;box-shadow:0 0 0 3px rgba(153,27,27,.08)}
+.btn{border:0;border-radius:11px;padding:10px 15px;cursor:pointer;font-weight:800;transition:.15s}
+.btn:hover{transform:translateY(-1px)}.btn-primary{background:linear-gradient(145deg,var(--brand),var(--brand-dark));color:#fff}.btn-soft{background:#f5f1f1;color:#54494b}.btn-danger{background:#fee8e8;color:#991b1b}.btn-blue{background:var(--gold-soft);color:#7c5b00}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:right;font-size:13px}
+th{background:#faf7f7;color:#665b5e;position:sticky;top:0;font-weight:800}tbody tr:hover{background:#fffcf5}
+.badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800}.ok{background:#dcfce7;color:#166534}.warn{background:#fff3c5;color:#8a6100}.bad{background:#fee2e2;color:#991b1b}
+.modal{position:fixed;inset:0;background:#26070780;display:none;align-items:center;justify-content:center;padding:18px;z-index:60;backdrop-filter:blur(4px)}.modal.open{display:flex}
+.modal-box{background:#fff;border-radius:22px;padding:20px;width:min(1000px,100%);max-height:90vh;overflow:auto;border-top:5px solid var(--gold)}
+.perm-group{border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}.perm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.perm-item{display:flex;gap:8px;align-items:center;padding:8px;background:#faf7f7;border-radius:9px}
+.recipe-row,.transfer-item-row,.purchase-item-row,.production-plan-row,.composition-row{display:grid;gap:8px;margin:8px 0;align-items:center}
+.recipe-row{grid-template-columns:2fr 1fr auto}.transfer-item-row{grid-template-columns:2fr 1fr 1fr auto}.purchase-item-row{grid-template-columns:2fr 1fr 1fr 1fr auto}.production-plan-row{grid-template-columns:2fr 1fr 1fr auto}.composition-row{grid-template-columns:2fr 1fr 1fr auto}
+.notice{padding:12px;border-radius:11px;background:var(--gold-soft);border-right:4px solid var(--gold);margin:10px 0}
+.chart{height:220px;display:flex;align-items:end;gap:8px;padding:20px;border:1px solid var(--line);border-radius:14px}.bar{flex:1;background:linear-gradient(var(--gold),var(--brand));border-radius:8px 8px 0 0;min-width:20px}
+.production-progress-card{min-height:142px}.progress-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.progress-head span{display:block;color:var(--muted);font-size:13px}.progress-head strong{display:block;font-size:23px;margin-top:5px}.progress-head>b{font-size:25px;color:var(--brand)}
+.brand-progress{height:12px;background:#f1eaea;border-radius:999px;overflow:hidden;margin:18px 0 9px}.brand-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--gold));border-radius:inherit;transition:width .35s ease}
 .mobile-menu{display:none}
-@media(max-width:900px){.app{grid-template-columns:1fr}aside{position:fixed;right:-270px;z-index:40;width:250px;transition:.25s}.app.menu-open aside{right:0}.mobile-menu{display:inline-flex}.content{padding:14px}.topbar{padding:0 14px}}
+@media(max-width:900px){.app{grid-template-columns:1fr}aside{position:fixed;right:-320px;z-index:50;width:300px;transition:.25s;box-shadow:-20px 0 50px #20070725}.app.menu-open aside{right:0}.mobile-menu{display:inline-flex}.content{padding:14px}.topbar{padding:9px 13px}.userbox>div:first-child{display:none}}
+@media(max-width:620px){.content{padding:11px}.page-title{align-items:flex-start}.page-title h2{font-size:21px}.card{padding:14px}.kpi strong{font-size:23px}.grid{grid-template-columns:1fr 1fr;gap:10px}.grid>.card:not(.kpi){grid-column:1/-1}.form-grid{grid-template-columns:1fr}.cloud-pill{display:none}}
+@media(max-width:420px){.grid{grid-template-columns:1fr}}
 @media print{aside,.topbar,.no-print{display:none!important}.app{display:block}.content{padding:0}.page{display:none!important}.page.printing{display:block!important}.card{box-shadow:none;border:0}body{background:#fff}}
+
+.rail-item svg{width:23px;height:23px;stroke-width:1.8}.nav-icon svg{width:17px;height:17px;stroke-width:2}
+.production-type-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:12px}
+.production-type-card{border:1px solid var(--line);border-radius:15px;padding:15px;background:#fff;cursor:pointer;transition:.16s}
+.production-type-card:hover{transform:translateY(-2px);border-color:#d9b6b6;box-shadow:var(--shadow)}
+.production-type-card h4{margin:10px 0 7px;color:var(--brand)}.production-type-card small{color:var(--muted)}
+.production-category-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.production-category-tabs button.active{background:var(--brand);color:#fff}
+.production-create-panel{border:1px dashed #d6bcbc;background:#fffaf7}
+
+/* القائمة الرئيسية بالكتابة فقط */
+aside{grid-template-columns:122px 1fr}
+.icon-rail{
+ width:122px;
+ padding:18px 8px;
+ align-items:stretch;
+ gap:8px;
+ overflow-y:auto;
+ background:#fffafa
+}
+.rail-logo{display:none!important}
+.rail-item.text-rail-item{
+ width:100%;
+ min-height:50px;
+ height:auto;
+ padding:12px 7px;
+ border-radius:13px;
+ font-size:15px;
+ font-weight:800;
+ line-height:1.35;
+ color:#6f6264;
+ background:transparent;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center
+}
+.rail-item.text-rail-item:hover{
+ color:var(--brand);
+ background:var(--brand-soft)
+}
+.rail-item.text-rail-item.active{
+ background:linear-gradient(135deg,var(--brand-soft),var(--gold-soft));
+ color:var(--brand);
+ box-shadow:inset -4px 0 0 var(--brand)
+}
+.rail-item.text-rail-item.active:after{
+ content:"";
+ position:absolute;
+ left:7px;
+ bottom:7px;
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:var(--gold)
+}
+.menu button{
+ padding:13px 15px;
+ font-size:16px;
+ justify-content:flex-start
+}
+.nav-icon,[data-lucide]{display:none!important}
+@media(max-width:1050px){
+ .app{grid-template-columns:300px minmax(0,1fr)}
+ aside{grid-template-columns:112px 1fr}
+ .icon-rail{width:112px}
+}
+@media(max-width:900px){
+ aside{
+  width:min(92vw,360px);
+  right:-380px;
+  grid-template-columns:112px 1fr
+ }
+}
+
+.close-side-menu{
+  width:100%;
+  margin:0 0 12px;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:var(--gold-soft);
+  color:#7c5b00;
+}
+.menu-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(35,10,10,.38);
+  z-index:45;
+  backdrop-filter:blur(2px);
+}
+@media(max-width:900px){
+  .app.menu-open .menu-backdrop{display:block}
+  .close-side-menu{display:flex}
+  body.menu-is-open{overflow:hidden}
+  aside{
+    transition:right .25s ease;
+  }
+}
+
+.datetime-action{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:center}
+.datetime-action .btn{white-space:nowrap}
+.history-filter{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(125px,1fr));
+ gap:8px;
+ padding:12px;
+ margin:10px 0 14px;
+ background:#fffaf7;
+ border:1px solid var(--line);
+ border-radius:14px
+}
+.print-report-stamp{
+ padding:8px 12px;
+ margin-bottom:12px;
+ color:var(--muted);
+ border-bottom:1px solid var(--line);
+ font-size:12px
+}
+@media print{
+ .print-report-stamp{display:block!important;color:#000}
+ table{font-size:10px}
+ th,td{padding:7px}
+}
+
+#chicken_transform .datetime-action{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;align-items:center}
+#chicken_transform .datetime-action button{white-space:nowrap}
+#chicken_transform label{display:block;margin-bottom:6px;color:var(--muted);font-size:12px;font-weight:700}
+@media(max-width:620px){#chicken_transform .datetime-action{grid-template-columns:1fr}#chicken_transform .datetime-action button{width:100%}}
+
+/* =========================================================
+   V2.7 — Responsive phone and Samsung tablet layout
+   ========================================================= */
+html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+.app,main,.content,.page{
+  min-width:0;
+  max-width:100%;
+}
+main{
+  width:100%;
+  overflow-x:hidden;
+}
+.content{
+  width:100%;
+}
+.card,.table-wrap,.form-grid,.grid{
+  max-width:100%;
+  min-width:0;
+}
+input,select,textarea,button{
+  max-width:100%;
+}
+table{
+  max-width:none;
+}
+
+/* Tablet: menu becomes an overlay and content uses full screen */
+@media(max-width:1200px){
+  .app{
+    display:block!important;
+    width:100%!important;
+    grid-template-columns:none!important;
+  }
+  main{
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  aside{
+    position:fixed!important;
+    top:0!important;
+    right:-390px!important;
+    left:auto!important;
+    width:min(390px,92vw)!important;
+    height:100dvh!important;
+    z-index:60!important;
+    display:grid!important;
+    grid-template-columns:118px minmax(0,1fr)!important;
+    box-shadow:-18px 0 45px rgba(55,10,10,.22)!important;
+    transition:right .25s ease!important;
+  }
+  .app.menu-open aside{
+    right:0!important;
+  }
+  .icon-rail{
+    width:118px!important;
+    min-width:118px!important;
+  }
+  .nav-panel{
+    min-width:0!important;
+    width:100%!important;
+  }
+  .mobile-menu{
+    display:inline-flex!important;
+  }
+  .menu-backdrop{
+    z-index:55!important;
+  }
+  .content{
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:18px!important;
+  }
+  .topbar{
+    width:100%!important;
+    padding:10px 16px!important;
+  }
+}
+
+/* Samsung tablets in portrait and smaller tablets */
+@media(max-width:900px){
+  .content{
+    padding:13px!important;
+  }
+  aside{
+    width:min(360px,94vw)!important;
+    right:-380px!important;
+    grid-template-columns:110px minmax(0,1fr)!important;
+  }
+  .icon-rail{
+    width:110px!important;
+    min-width:110px!important;
+  }
+  .page-title{
+    flex-wrap:wrap;
+  }
+  .page-title>.actions{
+    width:100%;
+  }
+  .page-title>.actions .btn{
+    flex:1;
+  }
+  .grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .form-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .table-wrap{
+    width:100%!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+}
+
+/* Mobile phones */
+@media(max-width:620px){
+  .content{
+    padding:10px!important;
+  }
+  .topbar{
+    padding:8px 10px!important;
+  }
+  .grid,
+  .form-grid{
+    grid-template-columns:1fr!important;
+  }
+  .card{
+    width:100%!important;
+    padding:13px!important;
+    border-radius:15px!important;
+  }
+  .page-title{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch!important;
+    gap:10px;
+  }
+  .page-title h2{
+    font-size:21px!important;
+  }
+  .actions{
+    width:100%;
+  }
+  .actions .btn{
+    flex:1 1 auto;
+  }
+  .datetime-action{
+    grid-template-columns:1fr!important;
+  }
+  .datetime-action .btn{
+    width:100%!important;
+  }
+  #chicken_transform .form-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+  #chicken_transform input,
+  #chicken_transform select,
+  #chicken_transform .btn{
+    width:100%!important;
+  }
+  #chicken_transform .card{
+    margin-inline:0!important;
+  }
+  .history-filter{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* Very small mobile */
+@media(max-width:390px){
+  aside{
+    width:96vw!important;
+    grid-template-columns:102px minmax(0,1fr)!important;
+  }
+  .icon-rail{
+    width:102px!important;
+    min-width:102px!important;
+  }
+  .rail-item.text-rail-item{
+    font-size:13px!important;
+    padding:10px 5px!important;
+  }
+  .menu button{
+    font-size:14px!important;
+    padding:11px 10px!important;
+  }
+}
+
+#chicken_transform #ctProcessHelp{display:none!important}
+#chicken_transform input[type="hidden"]{display:none!important}
+@media(max-width:620px){
+  #chicken_transform .form-grid{gap:10px!important}
+  #chicken_transform .datetime-action{grid-template-columns:1fr auto!important}
+  #chicken_transform .datetime-action .btn{width:auto!important;min-width:86px}
+}
+
+.transform-selector-control{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:7px;
+  align-items:start
+}
+.selector-actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap
+}
+.selector-actions .btn,
+.selector-single-button{
+  white-space:nowrap;
+  min-height:44px
+}
+.transform-report-toolbar{
+  position:sticky;
+  top:76px;
+  z-index:12;
+  border-top:4px solid var(--gold);
+  box-shadow:0 12px 30px rgba(80,20,20,.09)
+}
+.transform-report-filters{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(120px,1fr));
+  gap:8px
+}
+.transform-report-table{
+  scroll-margin-top:210px
+}
+@media(max-width:900px){
+  .transform-report-toolbar{top:68px}
+  .transform-report-filters{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .transform-selector-control{grid-template-columns:1fr}
+  .selector-actions{display:grid;grid-template-columns:1fr 1fr}
+  .selector-single-button{width:100%!important}
+  .transform-report-toolbar{
+    position:relative;
+    top:auto;
+  }
+  .transform-report-filters{grid-template-columns:1fr}
+  .transform-report-table{scroll-margin-top:20px}
+}
+
+#transform_admin .grid{align-items:start}
+#transform_admin .card{min-width:0}
+.transform-report-filters>div{display:flex;flex-direction:column;gap:5px}
+.transform-report-filters label{font-size:12px;color:var(--muted)}
+@media(max-width:620px){
+  #transform_admin .grid{grid-template-columns:1fr!important}
+}
 </style>
+
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#8b1e1e">
@@ -61,29 +492,79 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
 
 <div id="app" class="app hidden">
 <aside>
-  <div class="logo">مشاوي الدجاج<small>Machawi ERP V1.0</small></div>
-  <div id="menu" class="menu"></div>
+  <div id="iconRail" class="icon-rail"></div>
+  <div class="nav-panel">
+    <div class="brand-box">
+      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.0</small></div>
+    </div>
+    <button id="closeSideMenuBtn" class="btn btn-soft close-side-menu" type="button" onclick="closeSideMenu()">إرجاع القائمة</button>
+    <div class="nav-heading"><strong id="navGroupTitle">الرئيسية</strong><span>القائمة</span></div>
+    <div id="menu" class="menu"></div>
+  </div>
 </aside>
+<div id="menuBackdrop" class="menu-backdrop" onclick="closeSideMenu()"></div>
 <main>
   <div class="topbar">
-    <div><button class="btn btn-soft mobile-menu" onclick="document.getElementById('app').classList.toggle('menu-open')">☰</button></div>
-    <div class="userbox"><div><b id="currentName"></b><br><small id="currentRole"></small></div><div class="avatar">م</div><button class="btn btn-soft" onclick="logout()">خروج</button></div>
+    <div class="topbar-start">
+      <button class="btn btn-soft mobile-menu" onclick="toggleSideMenu()">☰</button>
+      <div class="page-context"><b id="activePageTitle">لوحة التحكم</b><small id="activePageGroup">الرئيسية</small></div>
+      <span id="cloudSyncStatus" class="cloud-pill">متصل بالسحابة</span>
+    </div>
+    <div class="userbox">
+      <div><b id="currentName"></b><br><small id="currentRole"></small></div>
+      <div class="avatar">م</div>
+      <button class="btn btn-soft" onclick="logout()">خروج</button>
+    </div>
   </div>
   <div class="content">
 
     <section id="dashboard" class="page show">
-      <div class="page-title"><h2>لوحة التحكم</h2><div id="todayLabel"></div></div>
-      <div class="grid">
-        <div class="card kpi"><span>مبيعات اليوم</span><strong id="kpiSales">0 DH</strong><small>إجمالي المبيعات المسجلة</small></div>
-        <div class="card kpi"><span>مصاريف اليوم</span><strong id="kpiExpenses">0 DH</strong><small>المصاريف المسجلة</small></div>
-        <div class="card kpi"><span>مواد منخفضة</span><strong id="kpiLow">0</strong><small>بلغت الحد الأدنى</small></div>
-        <div class="card kpi"><span>تحويلات مفتوحة</span><strong id="kpiTransfers">0</strong><small>لم يتم استلامها</small></div>
+  <div class="page-title">
+    <div><h2>لوحة التحكم التشغيلية</h2><div id="todayLabel" style="color:var(--muted);margin-top:5px"></div></div>
+    <div class="actions no-print"><button class="btn btn-soft" onclick="renderDashboard()">تحديث</button><button class="btn btn-blue" onclick="printPage('dashboard')">طباعة</button></div>
+  </div>
+
+  <div class="grid">
+    <div class="card kpi"><span>مبيعات اليوم</span><strong id="kpiSales">0 DH</strong><small>إجمالي المبيعات</small></div>
+    <div class="card kpi"><span>مصاريف اليوم</span><strong id="kpiExpenses">0 DH</strong><small>إجمالي المصاريف</small></div>
+    <div class="card kpi"><span>إنتاج السلطات اليوم</span><strong id="kpiSaladsToday">0</strong><small>حسب سجلات الإنتاج</small></div>
+    <div class="card kpi"><span>إنتاج الصوصات اليوم</span><strong id="kpiSaucesToday">0</strong><small>حسب سجلات الإنتاج</small></div>
+  </div>
+
+  <div class="grid" style="margin-top:14px">
+    <div class="card production-progress-card"><div class="progress-head"><div><span>Poulet cuit</span><strong id="dashPouletCuitQty">0</strong></div><b id="dashPouletCuitPct">0%</b></div><div class="brand-progress"><i id="dashPouletCuitBar"></i></div><small>نسبة إنجاز هدف اليوم</small></div>
+    <div class="card production-progress-card"><div class="progress-head"><div><span>Poulet haché</span><strong id="dashPouletHacheQty">0</strong></div><b id="dashPouletHachePct">0%</b></div><div class="brand-progress"><i id="dashPouletHacheBar"></i></div><small>نسبة إنجاز هدف اليوم</small></div>
+    <div class="card production-progress-card"><div class="progress-head"><div><span>طهي الفريت</span><strong id="dashFriesQty">0</strong></div><b id="dashFriesPct">0%</b></div><div class="brand-progress"><i id="dashFriesBar"></i></div><small>نسبة إنجاز هدف اليوم</small></div>
+  </div>
+
+  <div class="card no-print" style="margin-top:14px">
+    <h3>الأهداف اليومية الرئيسية</h3>
+    <div class="form-grid">
+      <input id="targetPouletCuit" type="number" min="0" step="0.001" placeholder="هدف Poulet cuit">
+      <input id="targetPouletHache" type="number" min="0" step="0.001" placeholder="هدف Poulet haché">
+      <input id="targetFries" type="number" min="0" step="0.001" placeholder="هدف طهي الفريت">
+      <button class="btn btn-primary" onclick="saveDashboardTargets()">حفظ الأهداف</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="page-title" style="margin-bottom:12px">
+      <div><h3 style="margin:0">إحصائيات جميع أنواع الإنتاج</h3><small style="color:var(--muted)">أي وصفة جديدة تظهر تلقائياً</small></div>
+      <div class="actions no-print">
+        <select id="dashProductionFilter" onchange="renderProductionStatsTable()" style="width:auto">
+          <option value="all">جميع أنواع الإنتاج</option><option value="salad">السلطات</option><option value="sauce">الصوصات</option><option value="rice">الأرز</option><option value="juice">العصائر</option><option value="chicken">الدجاج</option><option value="fries">الفريت</option><option value="other">أخرى</option>
+        </select>
+        <button class="btn btn-soft" onclick="openProductionTargetsModal()">أهداف الوصفات</button>
       </div>
-      <div class="grid" style="margin-top:14px">
-        <div class="card"><h3>المبيعات خلال آخر 7 أيام</h3><div id="salesChart" class="chart"></div></div>
-        <div class="card"><h3>تنبيهات المخزون</h3><div id="alerts"></div></div>
-      </div>
-    </section>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>نوع الإنتاج</th><th>الفئة</th><th>اليوم</th><th>هدف اليوم</th><th>الإنجاز</th><th>الأسبوع</th><th>الشهر</th><th>الوحدة</th><th>آخر موظف</th><th>آخر إنتاج</th></tr></thead><tbody id="dashboardProductionStatsBody"></tbody></table></div>
+  </div>
+
+  <div class="grid" style="margin-top:14px">
+    <div class="card"><h3>المبيعات خلال آخر 7 أيام</h3><div id="salesChart" class="chart"></div></div>
+    <div class="card"><h3>تنبيهات المخزون</h3><div id="alerts"></div></div>
+  </div>
+</section>
 
     
     <section id="products" class="page">
@@ -128,7 +609,31 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
         </div>
       </div>
 
-      <div class="table-wrap" style="margin-top:14px">
+      <div id="transformReportSection" class="card transform-report-toolbar no-print" style="margin-top:14px">
+  <div class="page-title" style="margin-bottom:10px">
+    <div>
+      <h3 style="margin:0">فلترة تقرير التحويل والإنتاج</h3>
+      <small id="transformReportSummary" style="color:var(--muted)">دفعات اليوم</small>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="setTransformReportToday()">اليوم</button>
+      <button class="btn btn-soft" onclick="setTransformReportYesterday()">أمس</button>
+      <button class="btn btn-soft" onclick="setTransformReportThisWeek()">هذا الأسبوع</button>
+      <button class="btn btn-soft" onclick="setTransformReportThisMonth()">هذا الشهر</button>
+      <button class="btn btn-soft" onclick="clearTransformReportFilters()">كل السجل</button>
+    </div>
+  </div>
+  <div class="transform-report-filters">
+    <div><label>من تاريخ</label><input id="ctReportFromDate" type="date" onchange="renderChickenTransforms()"></div>
+    <div><label>إلى تاريخ</label><input id="ctReportToDate" type="date" onchange="renderChickenTransforms()"></div>
+    <div><label>الشهر</label><input id="ctReportMonth" type="month" onchange="applyTransformReportMonth()"></div>
+    <div><label>نوع التحويل</label><select id="ctReportProfile" onchange="renderChickenTransforms()"><option value="">جميع الأنواع</option></select></div>
+    <div><label>بحث</label><input id="ctReportSearch" placeholder="رقم الدفعة أو المنتج" oninput="renderChickenTransforms()"></div>
+    <button class="btn btn-primary" onclick="downloadTransformReport()">تحميل التقرير CSV</button>
+  </div>
+</div>
+
+<div class="table-wrap transform-report-table" style="margin-top:10px">
         <table>
           <thead>
             <tr>
@@ -194,14 +699,38 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
   </div>
 </section>
 <section id="production" class="page">
-        
-      <div class="page-title"><h2>الإنتاج</h2><button class="btn btn-soft no-print" onclick="printPage('production')">طباعة</button></div>
-      <div class="card no-print">
-        <div class="form-grid"><input id="prodDate" type="date"><select id="prodRecipe"></select><input id="prodQty" type="number" step="0.1" placeholder="الكمية المطلوبة"><button class="btn btn-primary" onclick="calculateProduction()">حساب المواد</button></div>
-      </div>
-      <div id="prodCalc" style="margin-top:14px"></div>
-      <div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>الرقم</th><th>التاريخ</th><th>الوصفة</th><th>الكمية</th><th>الحالة</th><th>المستخدم</th></tr></thead><tbody id="productionBody"></tbody></table></div>
-    </section>
+<div class="page-title"><div><h2>مركز الإنتاج</h2><div style="color:var(--muted);margin-top:5px">السلطات، الصوصات، الأرز، العصائر، الفريت والدجاج</div></div><div class="actions no-print"><button class="btn btn-primary" onclick="toggleCreateProductionType()">+ إضافة نوع إنتاج</button><button class="btn btn-soft" onclick="downloadProductionReport()">تحميل التقرير CSV</button><button class="btn btn-blue" onclick="printPage('production')">طباعة</button></div></div>
+<div id="createProductionTypePanel" class="card production-create-panel hidden"><h3>إنشاء نوع إنتاج جديد</h3><div class="form-grid">
+<input id="newProductionName" placeholder="اسم الإنتاج"><select id="newProductionCategory"><option value="salad">سلطة</option><option value="sauce">صوص</option><option value="rice">أرز</option><option value="juice">عصير</option><option value="chicken">دجاج</option><option value="fries">فريت</option><option value="other">تحضير آخر</option></select>
+<select id="newProductionUnit"><option value="كغ">كغ</option><option value="لتر">لتر</option><option value="وحدة">وحدة</option><option value="حصة">حصة</option></select><select id="newProductionOutputProduct"></select><select id="newProductionStation"></select><input id="newProductionDailyTarget" type="number" min="0" step="0.001" placeholder="الهدف اليومي"><button class="btn btn-primary" onclick="createProductionType()">حفظ</button><button class="btn btn-soft" onclick="toggleCreateProductionType()">إلغاء</button></div><div class="notice">سيظهر نوع الإنتاج الجديد في هذه الصفحة وفي لوحة التحكم.</div></div>
+<div class="card"><div class="production-category-tabs"><button class="btn btn-soft active" data-prod-cat="all" onclick="filterProductionTypes('all',this)">الكل</button><button class="btn btn-soft" data-prod-cat="salad" onclick="filterProductionTypes('salad',this)">السلطات</button><button class="btn btn-soft" data-prod-cat="sauce" onclick="filterProductionTypes('sauce',this)">الصوصات</button><button class="btn btn-soft" data-prod-cat="rice" onclick="filterProductionTypes('rice',this)">الأرز</button><button class="btn btn-soft" data-prod-cat="juice" onclick="filterProductionTypes('juice',this)">العصائر</button><button class="btn btn-soft" data-prod-cat="chicken" onclick="filterProductionTypes('chicken',this)">الدجاج</button><button class="btn btn-soft" data-prod-cat="fries" onclick="filterProductionTypes('fries',this)">الفريت</button><button class="btn btn-soft" data-prod-cat="other" onclick="filterProductionTypes('other',this)">أخرى</button></div><div id="productionTypeGrid" class="production-type-grid"></div></div>
+<div class="card" style="margin-top:14px"><h3 id="selectedProductionTitle">تسجيل عملية إنتاج</h3><div class="form-grid"><input id="prodDate" type="date"><select id="prodRecipe"></select><input id="prodQty" type="number" min="0" step="0.001" placeholder="الكمية المنتجة"><input id="prodWaste" type="number" min="0" step="0.001" placeholder="الهدر"><div>
+<label for="prodStartedAt">بدأ التحضير</label>
+<div class="datetime-action"><input id="prodStartedAt" type="datetime-local"><button type="button" class="btn btn-soft" onclick="setPreparationStartNow()">الآن</button></div>
+</div>
+<div>
+<label for="prodEndedAt">انتهى التحضير</label>
+<div class="datetime-action"><input id="prodEndedAt" type="datetime-local"><button type="button" class="btn btn-soft" onclick="setPreparationEndNow()">الآن</button></div>
+</div><button class="btn btn-primary" onclick="calculateProduction()">حساب المواد</button></div><div id="prodCalc"></div></div>
+<div class="card" style="margin-top:14px">
+<div class="page-title" style="margin-bottom:10px"><div><h3 style="margin:0">سجل الإنتاج الموحد</h3><small id="productionReportStamp" style="color:var(--muted)"></small></div><select id="productionLogFilter" onchange="renderProduction()" style="width:auto"><option value="all">الجميع</option><option value="salad">السلطات</option><option value="sauce">الصوصات</option><option value="rice">الأرز</option><option value="juice">العصائر</option><option value="chicken">الدجاج</option><option value="fries">الفريت</option><option value="other">أخرى</option></select></div><div class="history-filter no-print">
+  <select id="historyPeriodMode" onchange="renderProduction()">
+    <option value="all">كل الفترات</option>
+    <option value="day">يوم محدد</option>
+    <option value="week">أسبوع محدد</option>
+    <option value="month">شهر محدد</option>
+    <option value="year">سنة محددة</option>
+  </select>
+  <input id="historyDate" type="date" onchange="renderProduction()">
+  <input id="historyMonth" type="month" onchange="renderProduction()">
+  <input id="historyYear" type="number" min="2020" max="2100" placeholder="السنة" onchange="renderProduction()">
+  <input id="historyWeek" type="number" min="1" max="53" placeholder="رقم الأسبوع" onchange="renderProduction()">
+  <input id="historyFromTime" type="time" title="من الساعة" onchange="renderProduction()">
+  <input id="historyToTime" type="time" title="إلى الساعة" onchange="renderProduction()">
+  <button type="button" class="btn btn-soft" onclick="clearProductionDateFilters()">مسح الفلاتر</button>
+</div>
+<div class="table-wrap"><table><thead><tr><th>الرقم</th><th>تاريخ ووقت البداية</th><th>تاريخ ووقت النهاية</th><th>الإنتاج</th><th>الفئة</th><th>الكمية</th><th>الهدر</th><th>المدة</th><th>المستخدم</th><th>الحالة</th></tr></thead><tbody id="productionBody"></tbody></table></div></div>
+</section>
 
     
     
@@ -270,7 +799,11 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
 <section id="chicken_transform" class="page">
       <div class="page-title">
         <h2>مركز طبخ وتحويل المنتجات</h2>
-        <button class="btn btn-soft no-print" onclick="printPage('chicken_transform')">طباعة السجل</button>
+        <div class="actions no-print">
+  <button class="btn btn-soft" onclick="setTransformStartNow()">بدء الآن</button>
+  <button class="btn btn-soft" onclick="scrollToTransformReport()">عرض السجل والتقارير</button>
+  <button class="btn btn-soft" onclick="printPage('chicken_transform')">طباعة السجل</button>
+</div>
       </div>
 
       <div class="grid">
@@ -287,11 +820,19 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
           <select id="ctProcessProfile" onchange="loadProcessProfile()"></select>
           <select id="ctInputProduct" onchange="syncProcessProducts()"></select>
           <select id="ctOutputProduct" onchange="renderChickenTransforms()"></select>
-          <input id="ctDate" type="date">
+          <input id="ctDate" type="hidden">
           <input id="ctBatch" placeholder="رقم الدفعة / Batch">
+          <div>
+            <label for="ctStartedAt">بداية الطبخ أو التحويل</label>
+            <div class="datetime-action">
+              <input id="ctStartedAt" type="datetime-local">
+              <button type="button" class="btn btn-soft" onclick="setTransformStartNow()">الآن</button>
+            </div>
+          </div>
+          <input id="ctEndedAt" type="hidden">
         </div>
 
-        <div id="ctProcessHelp" class="notice"></div>
+        <div id="ctProcessHelp" class="hidden" aria-hidden="true"></div>
 
         <div class="form-grid">
           <input id="ctRaw" type="number" step="0.001" min="0" placeholder="الكمية قبل الطبخ">
@@ -304,7 +845,7 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
 
         <div class="actions">
           <button class="btn btn-primary" onclick="saveChickenTransform()">اعتماد الدفعة وإضافة الناتج إلى البيع</button>
-          <button class="btn btn-soft" onclick="openProcessProfileModal()">إضافة نوع تحويل جديد</button>
+          
           <button class="btn btn-soft" onclick="clearChickenForm()">مسح</button>
         </div>
       </div>
@@ -313,7 +854,7 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
         <table>
           <thead>
             <tr>
-              <th>الدفعة</th><th>التاريخ</th><th>العملية</th><th>المنتج الداخل</th>
+              <th>الدفعة</th><th>بداية العملية</th><th>نهاية العملية</th><th>المدة</th><th>العملية</th><th>المنتج الداخل</th>
               <th>قبل الطبخ</th><th>بعد الطبخ</th><th>المنتج الناتج</th>
               <th>الكمية النهائية</th><th>الفقد/الهدر</th><th>المردودية</th>
               <th>رصيد الإنتاج بعد الدفعة</th><th>المستخدم</th><th class="no-print">إجراء</th>
@@ -445,7 +986,72 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
       <div class="table-wrap"><table><thead><tr><th>التاريخ والساعة</th><th>المستخدم</th><th>العملية</th><th>التفاصيل</th></tr></thead><tbody id="auditBody"></tbody></table></div>
     </section>
 
-    <section id="settings" class="page">
+    
+<section id="transform_admin" class="page">
+  <div class="page-title">
+    <div>
+      <h2>إعدادات التحويل والإنتاج</h2>
+      <div style="color:var(--muted);margin-top:5px">هذه الصفحة مخصصة للشخص المسؤول عن إعداد المنتجات وأنواع التحويل.</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>إضافة أو تعديل نوع تحويل</h3>
+      <div class="form-grid">
+        <select id="adminTransformProfile" onchange="loadAdminTransformProfile()"></select>
+        <input id="adminTransformName" placeholder="اسم العملية">
+        <select id="adminTransformMode">
+          <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
+          <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
+          <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
+        </select>
+        <input id="adminRawLabel" placeholder="اسم خانة البداية">
+        <input id="adminCookedLabel" placeholder="اسم خانة بعد الطبخ">
+        <input id="adminNetLabel" placeholder="اسم خانة الناتج النهائي">
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="saveAdminTransformProfile()">حفظ النوع</button>
+        <button class="btn btn-soft" onclick="newAdminTransformProfile()">نوع جديد</button>
+        <button class="btn btn-danger" onclick="deleteAdminTransformProfile()">حذف المحدد</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>إضافة منتج للتحويل</h3>
+      <div class="form-grid">
+        <input id="adminProductName" placeholder="اسم المنتج">
+        <select id="adminProductType">
+          <option value="منتج نصف مصنع">منتج نصف مصنع</option>
+          <option value="منتج نهائي">منتج نهائي</option>
+          <option value="مادة أولية">مادة أولية</option>
+        </select>
+        <input id="adminProductCategory" value="تحويل وإنتاج" placeholder="الفئة">
+        <select id="adminProductUnit">
+          <option>كغ</option><option>لتر</option><option>وحدة</option><option>علبة</option>
+        </select>
+        <input id="adminProductCost" type="number" min="0" step="0.01" placeholder="التكلفة">
+        <input id="adminProductMin" type="number" min="0" step="0.001" placeholder="الحد الأدنى">
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="saveAdminTransformProduct()">إضافة المنتج</button>
+      </div>
+      <div class="notice">بعد الحفظ يظهر المنتج تلقائيًا في قوائم المنتج الداخل والمنتج الناتج.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>المنتجات المتاحة للتحويل</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>المنتج</th><th>النوع</th><th>الفئة</th><th>الوحدة</th><th>إجراء</th></tr></thead>
+        <tbody id="adminTransformProductsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="settings" class="page">
       <div class="card" style="margin-bottom:14px">
         <h3>تثبيت التطبيق</h3>
         <div class="notice">يمكن تثبيت Machawi Dajaj ERP على الهاتف أو الحاسوب وفتحه كتطبيق مستقل.</div>
@@ -626,19 +1232,43 @@ const groupExists=db.permissions_catalog.some(g=>g.group==='المنتجات');
 
 let current=JSON.parse(sessionStorage.getItem('machawiCurrent')||'null');
 let editingUser=null;
-const pages=[
- ['dashboard','لوحة التحكم','dashboard.view'],['products','المنتجات','products.view'],['inventory','المخزون','inventory.view'],['recipes','الوصفات','recipes.view'],['recipe_stations','بوسطات التحضير','recipe_stations.view'],
- ['production','الإنتاج','production.view'],['production_requirements','احتياجات الإنتاج','production_requirements.view'],['chicken_transform','تحويل الدجاج','chicken_transform.view'],['transfers','التحويلات','transfers.view'],['sales','المبيعات','sales.view'],
- ['purchases','المشتريات','purchases.view'],['expenses','المصاريف','expenses.view'],['reports','التقارير','reports.view'],
- ['users','المستخدمون','users.view'],['audit','سجل النشاط','audit.view'],['settings','الإعدادات','settings.view']
+const navGroups=[
+ {id:'home',label:'الرئيسية',items:[['dashboard','لوحة التحكم','dashboard.view']]},
+ {id:'catalog',label:'المنتجات',items:[
+  ['products','المنتجات','products.view'],
+  ['recipes','الوصفات والتركيبات','recipes.view'],
+  ['recipe_stations','بوسطات التحضير','recipe_stations.view']
+ ]},
+ {id:'stock',label:'المخزون',items:[
+  ['inventory','المخزون','inventory.view'],
+  ['production_requirements','احتياجات الإنتاج','production_requirements.view'],
+  ['transfers','التحويلات','transfers.view']
+ ]},
+ {id:'production',label:'الإنتاج',items:[
+  ['production','مركز الإنتاج','production.view'],
+  ['chicken_transform','تحويل وإنتاج الدجاج','chicken_transform.view']
+ ]},
+ {id:'sales',label:'المبيعات',items:[['sales','المبيعات','sales.view']]},
+ {id:'purchases',label:'المشتريات',items:[['purchases','المشتريات','purchases.view']]},
+ {id:'finance',label:'المالية',items:[['expenses','المصاريف','expenses.view']]},
+ {id:'reports',label:'التقارير',items:[['reports','التقارير','reports.view']]},
+ {id:'admin',label:'الإدارة',items:[
+  ['users','المستخدمون','users.view'],
+  ['transform_admin','إعدادات التحويل والإنتاج','settings.view'],
+  ['audit','سجل النشاط','audit.view'],
+  ['transform_admin','إعدادات التحويل والإنتاج','settings.view','','','الإدارة'],
+  ['settings','الإعدادات','settings.view']
+ ]}
 ];
+const pages=navGroups.flatMap(g=>g.items.map(item=>[...item,g.id,g.label]));
+let activeNavGroup='home';
 const roleNames={admin:'المدير العام',stock:'مسؤول المخزون',production:'مسؤول الإنتاج',accounting:'المحاسب',manager:'مدير',custom:'مخصص'};
 
 function setCloudStatus(text,type='warn'){
-  const el=document.getElementById('cloudSyncStatus');
-  if(!el)return;
-  el.textContent=text;
-  el.className='badge '+type;
+ const el=document.getElementById('cloudSyncStatus');if(!el)return;el.textContent=text;el.className='cloud-pill';
+ if(type==='bad'){el.style.background='#fff0f0';el.style.color='#991b1b';el.style.borderColor='#f0caca'}
+ else if(type==='warn'){el.style.background='#fff8d8';el.style.color='#7c5b00';el.style.borderColor='#f0dfa0'}
+ else{el.style.background='#f0fbf4';el.style.color='#167245';el.style.borderColor='#d8eadf'}
 }
 
 function cloudHeaders(extra={}){
@@ -779,12 +1409,223 @@ function repairLegacyInventoryLocations(){
   });
 }
 
-function start(){ensureProductsModule();ensureRecipePermissionsModule();ensureChickenTransformModule();repairLegacyInventoryLocations();cacheDbLocally();login.classList.add('hidden');app.classList.remove('hidden');currentName.textContent=current.name;currentRole.textContent=roleNames[current.role]||current.role;buildMenu();setDates();renderAll()}
-function buildMenu(){menu.innerHTML='';let first=null;pages.forEach(([id,label,perm])=>{if(!can(perm))return;const b=document.createElement('button');b.textContent=label;b.onclick=()=>showPage(id,b);if(!first){first=b;b.classList.add('active')}menu.appendChild(b)});if(first){const id=pages.find(x=>x[1]===first.textContent)[0];document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));document.getElementById(id).classList.add('show')}}
-function showPage(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));document.getElementById(id).classList.add('show');document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('active'));b.classList.add('active');app.classList.remove('menu-open')}
-function setDates(){const d=new Date().toISOString().slice(0,10);['prodDate','trDate','saleDate','purDate','expDate','ctDate','prDate'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=d});todayLabel.textContent=new Date().toLocaleDateString('ar-MA',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
+function start(){
+ ensureProductsModule();ensureRecipePermissionsModule();ensureChickenTransformModule();repairLegacyInventoryLocations();cacheDbLocally();
+ login.classList.add('hidden');app.classList.remove('hidden');currentName.textContent=current.name;currentRole.textContent=roleNames[current.role]||current.role;
+ buildNavigation();setDates();renderAll()
+}
+function availableNavGroups(){
+ return navGroups.map(group=>({...group,items:group.items.filter(([, ,perm])=>can(perm))})).filter(group=>group.items.length)
+}
+function buildNavigation(){
+ const groups=availableNavGroups();
+ if(!groups.length)return;
+ if(!groups.some(g=>g.id===activeNavGroup))activeNavGroup=groups[0].id;
+
+ iconRail.innerHTML='';
+ groups.forEach(group=>{
+  const button=document.createElement('button');
+  button.className='rail-item text-rail-item'+(group.id===activeNavGroup?' active':'');
+  button.type='button';
+  button.textContent=group.label;
+  button.onclick=()=>{
+   activeNavGroup=group.id;
+   buildNavigation()
+  };
+  iconRail.appendChild(button)
+ });
+ renderActiveGroup()
+}
+function renderActiveGroup(){
+ const groups=availableNavGroups();
+ const group=groups.find(g=>g.id===activeNavGroup)||groups[0];
+ if(!group)return;
+
+ navGroupTitle.textContent=group.label;
+ menu.innerHTML='';
+ let firstButton=null;
+ const currentVisible=document.querySelector('.page.show')?.id;
+
+ group.items.forEach(([id,label,perm])=>{
+  const button=document.createElement('button');
+  button.type='button';
+  button.innerHTML=`<span>${label}</span>`;
+  button.onclick=()=>showPage(id,button,group);
+  if(id===currentVisible)button.classList.add('active');
+  if(!firstButton)firstButton=button;
+  menu.appendChild(button)
+ });
+
+ if(!menu.querySelector('.active')&&firstButton){
+  const first=group.items[0];
+  showPage(first[0],firstButton,group)
+ }
+}
+
+function toggleSideMenu(){
+  const appEl=document.getElementById('app');
+  appEl.classList.toggle('menu-open');
+  document.body.classList.toggle('menu-is-open',appEl.classList.contains('menu-open'));
+}
+function closeSideMenu(){
+  const appEl=document.getElementById('app');
+  appEl.classList.remove('menu-open');
+  document.body.classList.remove('menu-is-open');
+}
+function showPage(id,button,group){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));document.getElementById(id)?.classList.add('show');
+ document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('active'));if(button)button.classList.add('active');
+ const info=pages.find(x=>x[0]===id);activePageTitle.textContent=info?.[1]||'';activePageGroup.textContent=group?.label||info?.[6]||'';
+ closeSideMenu()
+}
+function setDates(){const d=new Date().toISOString().slice(0,10);['prodDate','trDate','saleDate','purDate','expDate','ctDate','prDate'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=d});if(document.getElementById('ctStartedAt')&&!ctStartedAt.value)ctStartedAt.value=localDateTimeValue();todayLabel.textContent=new Date().toLocaleDateString('ar-MA',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
 function money(n){return Number(n||0).toFixed(2)+' DH'}
-function renderDashboard(){const today=new Date().toISOString().slice(0,10);const sales=db.sales.filter(x=>x.date===today).reduce((s,x)=>s+Number(x.amount),0);const exp=db.expenses.filter(x=>x.date===today).reduce((s,x)=>s+Number(x.amount),0);const low=db.inventory.filter(x=>Number(x.stock)<=Number(x.min));kpiSales.textContent=money(sales);kpiExpenses.textContent=money(exp);kpiLow.textContent=low.length;kpiTransfers.textContent=db.transfers.filter(x=>x.status!=='تم الاستلام'&&x.status!=='ملغى').length;alerts.innerHTML=low.length?low.map(x=>`<div class="notice">${x.name}: ${x.stock} ${x.unit} فقط</div>`).join(''):'<span class="badge ok">لا توجد تنبيهات</span>';const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-(6-i));return d.toISOString().slice(0,10)});const vals=days.map(d=>db.sales.filter(x=>x.date===d).reduce((s,x)=>s+Number(x.amount),0));const max=Math.max(...vals,1);salesChart.innerHTML=vals.map((v,i)=>`<div class="bar" title="${days[i]}: ${v}" style="height:${Math.max(4,v/max*100)}%"></div>`).join('')}
+
+function localDateTimeValue(date=new Date()){
+  const pad=n=>String(n).padStart(2,'0');
+  return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+function localIsoTimestamp(date=new Date()){
+  const pad=n=>String(n).padStart(2,'0');
+  const offset=-date.getTimezoneOffset();
+  const sign=offset>=0?'+':'-';
+  const oh=pad(Math.floor(Math.abs(offset)/60));
+  const om=pad(Math.abs(offset)%60);
+  return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}${sign}${oh}:${om}`;
+}
+function parseLocalDateTime(value){
+  if(!value)return null;
+  const d=new Date(value);
+  return Number.isNaN(d.getTime())?null:d;
+}
+function formatDateTime(value){
+  const d=parseLocalDateTime(value);
+  if(!d)return '-';
+  return new Intl.DateTimeFormat('ar-MA',{
+    year:'numeric',month:'2-digit',day:'2-digit',
+    hour:'2-digit',minute:'2-digit',second:'2-digit',
+    hour12:false
+  }).format(d);
+}
+function formatDateOnly(value){
+  const d=parseLocalDateTime(value);
+  if(!d)return String(value||'-').slice(0,10)||'-';
+  return new Intl.DateTimeFormat('ar-MA',{
+    year:'numeric',month:'2-digit',day:'2-digit'
+  }).format(d);
+}
+function durationBetween(start,end){
+  const a=parseLocalDateTime(start),b=parseLocalDateTime(end);
+  if(!a||!b||b<a)return {minutes:0,text:'-'};
+  const minutes=Math.round((b-a)/60000);
+  const hours=Math.floor(minutes/60),mins=minutes%60;
+  return {minutes,text:hours?`${hours}س ${mins}د`:`${mins}د`}
+}
+function getOperationTimestamp(row){
+  return row.completedAt||row.endedAt||row.createdAt||
+    (row.date&&row.endTime?`${row.date}T${row.endTime}`:
+    row.date&&row.startTime?`${row.date}T${row.startTime}`:
+    row.date?`${String(row.date).slice(0,10)}T00:00`:null)
+}
+function isoWeekInfo(date){
+  const d=new Date(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate()));
+  const day=d.getUTCDay()||7;
+  d.setUTCDate(d.getUTCDate()+4-day);
+  const yearStart=new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  const week=Math.ceil((((d-yearStart)/86400000)+1)/7);
+  return {year:d.getUTCFullYear(),week}
+}
+function operationMatchesDateFilter(row,prefix='history'){
+  const ts=getOperationTimestamp(row);
+  const date=parseLocalDateTime(ts);
+  if(!date)return true;
+  const mode=document.getElementById(prefix+'PeriodMode')?.value||'all';
+  const selectedDate=document.getElementById(prefix+'Date')?.value;
+  const selectedMonth=document.getElementById(prefix+'Month')?.value;
+  const selectedYear=Number(document.getElementById(prefix+'Year')?.value||0);
+  const selectedWeek=Number(document.getElementById(prefix+'Week')?.value||0);
+  const fromTime=document.getElementById(prefix+'FromTime')?.value;
+  const toTime=document.getElementById(prefix+'ToTime')?.value;
+
+  if(mode==='day'&&selectedDate&&String(ts).slice(0,10)!==selectedDate)return false;
+  if(mode==='month'&&selectedMonth&&String(ts).slice(0,7)!==selectedMonth)return false;
+  if(mode==='year'&&selectedYear&&date.getFullYear()!==selectedYear)return false;
+  if(mode==='week'){
+    const info=isoWeekInfo(date);
+    if(selectedYear&&info.year!==selectedYear)return false;
+    if(selectedWeek&&info.week!==selectedWeek)return false;
+  }
+  const hhmm=`${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+  if(fromTime&&hhmm<fromTime)return false;
+  if(toTime&&hhmm>toTime)return false;
+  return true;
+}
+function setPreparationStartNow(){
+  const el=document.getElementById('prodStartedAt');
+  if(el)el.value=localDateTimeValue();
+}
+function setPreparationEndNow(){
+  const el=document.getElementById('prodEndedAt');
+  if(el)el.value=localDateTimeValue();
+}
+function reportGeneratedStamp(){
+  return `تاريخ ووقت إصدار التقرير: ${formatDateTime(localIsoTimestamp())}`;
+}
+
+function localDateKey(date=new Date()){const y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,'0'),d=String(date.getDate()).padStart(2,'0');return `${y}-${m}-${d}`}
+function normalizeProductionName(value=''){return String(value).toLowerCase().replace(/[éèêë]/g,'e').replace(/[âàä]/g,'a').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ûü]/g,'u').trim()}
+function productionDateInRange(value,start,end){const d=String(value||'').slice(0,10);return d>=start&&d<=end}
+function classifyDashboardProduction(name='',recipeId=''){
+ const recipe=(db.recipes||[]).find(r=>r.id===recipeId||r.name===name);const station=recipe?.stationId&&db.recipe_stations?(db.recipe_stations.find(s=>s.id===recipe.stationId)?.name||''):'';
+ const t=normalizeProductionName(`${name} ${station}`);
+ const map=[['salad',['سلطة','salade','salad','ليباط','pates','vis']],['sauce',['صوص','صلصة','sauce','barbecue','bbq','bigue','biggy','مايونيز','mayonnaise']],['rice',['أرز','رز','riz','kabsa','كبسة']],['juice',['عصير','jus','juice','ليمون','حامض','بيجامة','orange']],['chicken',['poulet','دجاج','haché','hache','mariné','marine','cuit']],['fries',['فريت','frite','fries','بطاطس مقلية']]];
+ for(const [c,ws] of map)if(ws.some(w=>t.includes(normalizeProductionName(w))))return c;return 'other'
+}
+function productionCategoryLabel(c){return {salad:'سلطة',sauce:'صوص',rice:'أرز',juice:'عصير',chicken:'دجاج',fries:'فريت',other:'أخرى'}[c]||'أخرى'}
+function productionCategoryBadge(c){return {salad:'ok',sauce:'warn',rice:'warn',juice:'ok',chicken:'bad',fries:'warn',other:''}[c]||''}
+function dashboardProductionRecords(){
+ const a=(db.production||[]).map(x=>({date:String(x.date||'').slice(0,10),createdAt:x.createdAt||x.date||'',name:x.recipe||x.name||'',recipeId:x.recipeId||'',qty:Number(x.qty||0),unit:x.unit||'',user:x.user||''}));
+ const b=(db.chicken_transforms||[]).map(x=>({date:String(x.date||'').slice(0,10),createdAt:x.createdAt||x.date||'',name:x.outputProductName||x.profileName||'',recipeId:'',qty:Number(x.net||0),unit:x.outputUnit||x.inputUnit||'كغ',user:x.user||''}));
+ return [...a,...b].filter(x=>x.name&&Number.isFinite(x.qty)).map(x=>({...x,category:classifyDashboardProduction(x.name,x.recipeId)}))
+}
+function periodKeys(){const now=new Date(),today=localDateKey(now),w=new Date(now);w.setDate(now.getDate()-6);return {today,weekStart:localDateKey(w),monthStart:`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`}}
+function productionTargetKey(name,unit=''){return `${normalizeProductionName(name)}__${unit||''}`}
+function ensureProductionTargets(){if(!db.production_targets)db.production_targets={}}
+function getProductionTarget(name,unit=''){ensureProductionTargets();return Number(db.production_targets[productionTargetKey(name,unit)]||0)}
+function setProductionTarget(name,unit,value){ensureProductionTargets();db.production_targets[productionTargetKey(name,unit)]=Number(value||0)}
+function allKnownProductionTypes(){
+ const records=dashboardProductionRecords(),map={};
+ records.forEach(r=>{const k=productionTargetKey(r.name,r.unit);if(!map[k])map[k]={name:r.name,unit:r.unit,category:r.category,records:[]};map[k].records.push(r)});
+ (db.recipes||[]).forEach(r=>{const k=productionTargetKey(r.name,r.unit||'');if(!map[k])map[k]={name:r.name,unit:r.unit||'',category:classifyDashboardProduction(r.name,r.id),records:[]}});
+ return Object.values(map)
+}
+function renderProductionStatsTable(){
+ const body=document.getElementById('dashboardProductionStatsBody');if(!body)return;const {today,weekStart,monthStart}=periodKeys(),filter=dashProductionFilter?.value||'all';
+ const rows=allKnownProductionTypes().filter(i=>filter==='all'||i.category===filter).map(i=>{
+  const todayR=i.records.filter(x=>x.date===today),weekR=i.records.filter(x=>productionDateInRange(x.date,weekStart,today)),monthR=i.records.filter(x=>productionDateInRange(x.date,monthStart,today));
+  const tq=todayR.reduce((s,x)=>s+x.qty,0),wq=weekR.reduce((s,x)=>s+x.qty,0),mq=monthR.reduce((s,x)=>s+x.qty,0),target=getProductionTarget(i.name,i.unit),pct=target?tq/target*100:0,last=[...i.records].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)))[0];
+  return {...i,tq,wq,mq,target,pct,lastDate:last?.date||'-',lastUser:last?.user||'-'}
+ }).sort((a,b)=>b.tq-a.tq||b.wq-a.wq||a.name.localeCompare(b.name,'ar'));
+ body.innerHTML=rows.length?rows.map(i=>`<tr><td><b>${i.name}</b></td><td><span class="badge ${productionCategoryBadge(i.category)}">${productionCategoryLabel(i.category)}</span></td><td>${i.tq.toFixed(3)}</td><td>${i.target?i.target.toFixed(3):'-'}</td><td>${i.target?`<div style="min-width:110px"><div class="brand-progress" style="height:8px;margin:0 0 5px"><i style="width:${Math.min(100,i.pct)}%"></i></div><small>${i.pct.toFixed(1)}%</small></div>`:'غير محدد'}</td><td>${i.wq.toFixed(3)}</td><td>${i.mq.toFixed(3)}</td><td>${i.unit||'-'}</td><td>${i.lastUser}</td><td>${i.lastDate}</td></tr>`).join(''):'<tr><td colspan="10">لا توجد بيانات إنتاج.</td></tr>'
+}
+function openProductionTargetsModal(){
+ ensureProductionTargets();productionTargetsBody.innerHTML=allKnownProductionTypes().sort((a,b)=>a.name.localeCompare(b.name,'ar')).map(i=>`<tr><td><b>${i.name}</b></td><td>${productionCategoryLabel(i.category)}</td><td>${i.unit||'-'}</td><td><input class="dynamic-production-target" data-name="${i.name.replace(/"/g,'&quot;')}" data-unit="${(i.unit||'').replace(/"/g,'&quot;')}" type="number" min="0" step="0.001" value="${getProductionTarget(i.name,i.unit)||''}"></td></tr>`).join('');productionTargetsModal.classList.add('open')
+}
+function saveAllProductionTargets(){document.querySelectorAll('.dynamic-production-target').forEach(i=>setProductionTarget(i.dataset.name,i.dataset.unit,i.value));log('تعديل أهداف الإنتاج','تحديث الأهداف اليومية');closeModal('productionTargetsModal');save()}
+function productionMatches(name,terms){const n=normalizeProductionName(name);return terms.some(t=>n.includes(normalizeProductionName(t)))}
+function setProductionProgress(qty,target,qtyId,pctId,barId,unit=''){const pct=Number(target)>0?Number(qty)/Number(target)*100:0;document.getElementById(qtyId).textContent=`${Number(qty).toFixed(3)} ${unit}`.trim();document.getElementById(pctId).textContent=`${pct.toFixed(1)}%`;document.getElementById(barId).style.width=`${Math.min(100,Math.max(0,pct))}%`}
+function loadDashboardTargets(){if(!db.dashboard_targets)db.dashboard_targets={pouletCuit:0,pouletHache:0,fries:0};targetPouletCuit.value=db.dashboard_targets.pouletCuit||'';targetPouletHache.value=db.dashboard_targets.pouletHache||'';targetFries.value=db.dashboard_targets.fries||''}
+function saveDashboardTargets(){if(!db.dashboard_targets)db.dashboard_targets={};db.dashboard_targets.pouletCuit=Number(targetPouletCuit.value||0);db.dashboard_targets.pouletHache=Number(targetPouletHache.value||0);db.dashboard_targets.fries=Number(targetFries.value||0);log('تعديل أهداف الإنتاج','الأهداف الرئيسية');save()}
+function renderDashboard(){
+ const {today}=periodKeys(),sales=db.sales.filter(x=>String(x.date).slice(0,10)===today).reduce((s,x)=>s+Number(x.amount),0),exp=db.expenses.filter(x=>String(x.date).slice(0,10)===today).reduce((s,x)=>s+Number(x.amount),0),low=db.inventory.filter(x=>Number(x.stock)<=Number(x.min));
+ kpiSales.textContent=money(sales);kpiExpenses.textContent=money(exp);alerts.innerHTML=low.length?low.slice(0,8).map(x=>`<div class="notice">${x.name}: ${x.stock} ${x.unit}</div>`).join(''):'<span class="badge ok">لا توجد تنبيهات</span>';
+ const records=dashboardProductionRecords(),salads=records.filter(x=>x.date===today&&x.category==='salad').reduce((s,x)=>s+x.qty,0),sauces=records.filter(x=>x.date===today&&x.category==='sauce').reduce((s,x)=>s+x.qty,0);
+ kpiSaladsToday.textContent=salads.toFixed(3);kpiSaucesToday.textContent=sauces.toFixed(3);loadDashboardTargets();
+ const cuit=records.filter(x=>x.date===today&&productionMatches(x.name,['poulet cuit','دجاج مطهي','دجاج مطبوخ'])).reduce((s,x)=>s+x.qty,0),hache=records.filter(x=>x.date===today&&productionMatches(x.name,['poulet hache','poulet haché','دجاج مفروم'])).reduce((s,x)=>s+x.qty,0),fries=records.filter(x=>x.date===today&&x.category==='fries').reduce((s,x)=>s+x.qty,0);
+ setProductionProgress(cuit,db.dashboard_targets.pouletCuit,'dashPouletCuitQty','dashPouletCuitPct','dashPouletCuitBar','كغ');setProductionProgress(hache,db.dashboard_targets.pouletHache,'dashPouletHacheQty','dashPouletHachePct','dashPouletHacheBar','كغ');setProductionProgress(fries,db.dashboard_targets.fries,'dashFriesQty','dashFriesPct','dashFriesBar','');
+ renderProductionStatsTable();
+ const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-(6-i));return localDateKey(d)}),vals=days.map(d=>db.sales.filter(x=>String(x.date).slice(0,10)===d).reduce((s,x)=>s+Number(x.amount),0)),max=Math.max(...vals,1);salesChart.innerHTML=vals.map((v,i)=>`<div class="bar" title="${days[i]}: ${v}" style="height:${Math.max(4,v/max*100)}%"></div>`).join('')
+}
 
 function renderProducts(){
   productsCount.textContent=db.products.length;
@@ -1234,7 +2075,12 @@ function printProductDetail(){
   <p><b>الكود:</b> ${p.id} — <b>النوع:</b> ${p.type} — <b>الوحدة:</b> ${p.unit}</p>
   <p><b>سعر الشراء:</b> ${money(p.cost)} — <b>سعر البيع:</b> ${money(p.salePrice)}</p>
   <table><thead><tr><th>المخزن</th><th>الكمية</th><th>الوحدة</th><th>القيمة</th></tr></thead><tbody>${rows}</tbody></table>
-  <script>onload=()=>print()<\/script></body></html>`);
+  <script>onload=()=>print()<\/script><div id="productionTargetsModal" class="modal"><div class="modal-box">
+<div class="page-title"><div><h3 style="margin:0">الأهداف اليومية لأنواع الإنتاج</h3><small style="color:var(--muted)">هدف مستقل لكل وصفة</small></div><button class="btn btn-soft" onclick="closeModal('productionTargetsModal')">إغلاق</button></div>
+<div class="table-wrap"><table><thead><tr><th>نوع الإنتاج</th><th>الفئة</th><th>الوحدة</th><th>الهدف اليومي</th></tr></thead><tbody id="productionTargetsBody"></tbody></table></div>
+<div class="actions" style="margin-top:14px"><button class="btn btn-primary" onclick="saveAllProductionTargets()">حفظ الأهداف</button></div>
+</div></div>
+</body></html>`);
   w.document.close();
 }
 
@@ -1600,6 +2446,7 @@ function approveProduction(recipeIndex,q){
   db.production.unshift({
     id:'PROD-'+Date.now(),
     date:prodDate.value,
+    createdAt:localIsoTimestamp(),
     recipe:r.name,
     recipeId:r.id,
     qty,
@@ -1790,7 +2637,7 @@ function createBatchTransfer(){
   }
 
   const transfer={
-    id:'TR-'+Date.now(),
+    id:'TR-'+Date.now(),createdAt:localIsoTimestamp(),
     date:trDate.value,
     from:trFrom.value,
     to:trTo.value,
@@ -1842,27 +2689,6 @@ function viewTransfer(i){
     <table><thead><tr><th>المادة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${rows}</tbody></table>
     ${x.note?`<p><b>ملاحظة:</b> ${x.note}</p>`:''}
     
-
-<div id="processProfileModal" class="modal"><div class="modal-box">
-  <h3>إضافة نوع طبخ أو تحويل</h3>
-  <div class="form-grid">
-    <input id="ppName" placeholder="اسم العملية">
-    <select id="ppMode">
-      <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
-      <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
-      <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
-    </select>
-    <input id="ppRawLabel" placeholder="اسم خانة البداية">
-    <input id="ppCookedLabel" placeholder="اسم خانة بعد الطبخ">
-    <input id="ppNetLabel" placeholder="اسم خانة الناتج النهائي">
-  </div>
-  <div class="actions">
-    <button class="btn btn-primary" onclick="saveProcessProfile()">حفظ</button>
-    <button class="btn btn-soft" onclick="closeModal('processProfileModal')">إلغاء</button>
-  </div>
-</div></div>
-
-
 
 </body></html>`);
   w.document.close();
@@ -2136,7 +2962,20 @@ function renderAudit(){auditBody.innerHTML=db.audit.map(x=>`<tr><td>${x.date}</t
 function csv(name,rows){const t='\uFEFF'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download=name;a.click()}
 function exportInventory(){if(!requirePerm('inventory.export')&&!requirePerm('reports.export'))return;csv('inventory.csv',[['الكود','المادة','الفئة','الموقع','الوحدة','المخزون','الحد الأدنى','التكلفة'],...db.inventory.map(x=>[x.id,x.name,x.category,x.location,x.unit,x.stock,x.min,x.cost])])}
 function exportSimple(key,name){if(!requirePerm(key+'.export')&&!requirePerm('reports.export'))return;const rows=db[key];if(!rows.length)return alert('لا توجد بيانات');csv(name,[Object.keys(rows[0]),...rows.map(x=>Object.values(x))])}
-function printPage(id){const p=document.getElementById(id);p.classList.add('printing');print();setTimeout(()=>p.classList.remove('printing'),400)}
+function printPage(id){
+ const page=document.getElementById(id);
+ if(!page)return;
+ const oldStamp=page.querySelector('.print-report-stamp');
+ if(oldStamp)oldStamp.remove();
+ const stamp=document.createElement('div');
+ stamp.className='print-report-stamp';
+ stamp.textContent=reportGeneratedStamp();
+ page.prepend(stamp);
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('printing'));
+ page.classList.add('printing');
+ window.print();
+ setTimeout(()=>{page.classList.remove('printing');stamp.remove()},500)
+}
 function backup(){if(!requirePerm('settings.backup'))return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='machawi_erp_backup.json';a.click()}
 function restore(e){if(!requirePerm('settings.restore'))return;const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();alert('تمت الاستعادة')}catch{alert('ملف غير صالح')}};r.readAsText(f)}
 function resetDB(){if(!requirePerm('settings.restore'))return;if(confirm('سيتم حذف جميع البيانات الحالية')){db=JSON.parse(JSON.stringify(seed));save()}}
@@ -2397,7 +3236,7 @@ function createRequirementsTransfer(){
   }
 
   const transfer={
-    id:'TR-'+Date.now(),
+    id:'TR-'+Date.now(),createdAt:localIsoTimestamp(),
     date:c.date,
     from:c.from,
     to:c.to,
@@ -2492,7 +3331,10 @@ function loadProcessProfile(){
   ctCooked.style.display=profile.mode==='two_stage'?'none':'block';
   const inputProduct=db.products.find(x=>x.id===ctInputProduct.value);
   const balance=inputProduct?getProductBalance(inputProduct.id,'مخزن الإنتاج'):0;
-  ctProcessHelp.innerHTML=`العملية: <b>${profile.name}</b><br>${profile.rawLabel} → ${profile.cookedLabel} → ${profile.netLabel}<br>الرصيد الحالي في مخزن الإنتاج: <b>${balance.toFixed(3)} ${inputProduct?.unit||''}</b>${balance===0?'<br><span style="color:#991b1b">لا يوجد رصيد في مخزن الإنتاج. نفّذ تحويل المنتج من المخزن الرئيسي أولاً.</span>':''}`;
+  if(document.getElementById('ctProcessHelp')){
+    ctProcessHelp.textContent='';
+    ctProcessHelp.classList.add('hidden');
+  }
   updateChickenPreview();
   renderChickenTransforms();
 }
@@ -2536,29 +3378,16 @@ function updateChickenPreview(){
 function clearChickenForm(){
   ctBatch.value=ctRaw.value=ctCooked.value=ctNet.value=ctNote.value='';
   updateChickenPreview();
+  if(document.getElementById('ctStartedAt'))ctStartedAt.value=localDateTimeValue();
+  if(document.getElementById('ctEndedAt'))ctEndedAt.value='';
 }
 
-function openProcessProfileModal(){
-  ppName.value=ppRawLabel.value=ppCookedLabel.value=ppNetLabel.value='';
-  processProfileModal.classList.add('open');
+function setTransformStartNow(){
+  if(document.getElementById('ctStartedAt'))ctStartedAt.value=localDateTimeValue()
 }
-
-function saveProcessProfile(){
-  if(!ppName.value.trim())return alert('أدخل اسم العملية');
-  db.process_profiles.push({
-    id:'PROC-'+Date.now(),
-    name:ppName.value.trim(),
-    mode:ppMode.value,
-    rawLabel:ppRawLabel.value.trim()||'الكمية قبل الطبخ',
-    cookedLabel:ppCookedLabel.value.trim()||'الكمية بعد الطبخ',
-    netLabel:ppNetLabel.value.trim()||'الكمية النهائية'
-  });
-  closeModal('processProfileModal');
-  log('إضافة نوع تحويل',ppName.value);
-  save();
-  renderProcessSelectors();
+function setTransformEndNow(){
+  if(document.getElementById('ctEndedAt'))ctEndedAt.value=localDateTimeValue()
 }
-
 function saveChickenTransform(){
   if(!requirePerm('chicken_transform.create'))return;
 
@@ -2569,6 +3398,12 @@ function saveChickenTransform(){
 
   if(!input||!output)return alert('اختر المنتج الداخل والمنتج الناتج');
   if(!ctBatch.value.trim())return alert('أدخل رقم الدفعة');
+  if(!ctStartedAt.value)return alert('حدد تاريخ ووقت بداية العملية أو اضغط زر الآن');
+  const startedAt=localIsoTimestamp(new Date(ctStartedAt.value));
+  const endedAt=localIsoTimestamp();
+  if(document.getElementById('ctEndedAt'))ctEndedAt.value=localDateTimeValue();
+  if(parseLocalDateTime(endedAt)<parseLocalDateTime(startedAt))return alert('وقت البداية لا يمكن أن يكون بعد الوقت الحالي');
+  const operationDuration=durationBetween(startedAt,endedAt);
   if(c.raw<=0||c.net<=0)return alert('أدخل الكمية قبل الطبخ والكمية النهائية');
   if(profile.mode!=='two_stage' && c.cooked<=0)return alert('أدخل الكمية بعد الطبخ');
   if(c.cooked>c.raw)return alert('الكمية بعد الطبخ لا يمكن أن تتجاوز الكمية قبل الطبخ');
@@ -2588,7 +3423,12 @@ function saveChickenTransform(){
   const record={
     id:'CT-'+Date.now(),
     batch:ctBatch.value.trim(),
-    date:ctDate.value,
+    date:String(startedAt).slice(0,10),
+    startedAt,
+    endedAt,
+    completedAt:endedAt,
+    durationMinutes:operationDuration.minutes,
+    createdAt:localIsoTimestamp(),
     profileId:profile.id,
     profileName:profile.name,
     inputProductId:input.id,
@@ -2613,8 +3453,8 @@ function saveChickenTransform(){
   db.chicken_transforms.unshift(record);
 
   db.transfers.unshift({
-    id:'TR-'+Date.now(),
-    date:ctDate.value,
+    id:'TR-'+Date.now(),createdAt:endedAt,completedAt:endedAt,
+    date:String(endedAt).slice(0,10),
     from:'مخزن الإنتاج',
     to:'مخزن البيع',
     items:[{item:output.name,qty:c.net}],
@@ -2626,24 +3466,136 @@ function saveChickenTransform(){
   });
 
   log('طبخ وتحويل منتج',
-      `${input.name}: ${c.raw} ${input.unit} → ${output.name}: ${c.net} ${output.unit}`);
+      `${input.name}: ${c.raw} ${input.unit} → ${output.name}: ${c.net} ${output.unit} — البداية ${formatDateTime(startedAt)} — النهاية ${formatDateTime(endedAt)} — المدة ${operationDuration.text}`);
 
   clearChickenForm();
   save();
 }
 
+
+function scrollToTransformReport(){
+  document.getElementById('transformReportSection')?.scrollIntoView({behavior:'smooth',block:'start'})
+}
+function setTransformRange(start,end,label=''){
+  ctReportFromDate.value=start;
+  ctReportToDate.value=end;
+  ctReportMonth.value='';
+  renderChickenTransforms();
+  if(label)transformReportSummary.textContent=label;
+}
+function setTransformReportToday(){
+  const today=localDateKey();
+  setTransformRange(today,today,'دفعات اليوم');
+  scrollToTransformReport()
+}
+function setTransformReportYesterday(){
+  const d=new Date();d.setDate(d.getDate()-1);
+  const day=localDateKey(d);
+  setTransformRange(day,day,'دفعات أمس');
+  scrollToTransformReport()
+}
+function setTransformReportThisWeek(){
+  const now=new Date();
+  const day=(now.getDay()+6)%7;
+  const start=new Date(now);start.setDate(now.getDate()-day);
+  const end=new Date(start);end.setDate(start.getDate()+6);
+  setTransformRange(localDateKey(start),localDateKey(end),'دفعات هذا الأسبوع');
+  scrollToTransformReport()
+}
+function setTransformReportThisMonth(){
+  const now=new Date();
+  const month=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  ctReportMonth.value=month;
+  applyTransformReportMonth();
+  scrollToTransformReport()
+}
+function applyTransformReportMonth(){
+  const value=ctReportMonth.value;
+  if(!value)return renderChickenTransforms();
+  const [year,month]=value.split('-').map(Number);
+  const lastDay=new Date(year,month,0).getDate();
+  ctReportFromDate.value=`${value}-01`;
+  ctReportToDate.value=`${value}-${String(lastDay).padStart(2,'0')}`;
+  renderChickenTransforms()
+}
+function clearTransformReportFilters(){
+  ctReportFromDate.value=ctReportToDate.value=ctReportMonth.value=ctReportSearch.value='';
+  ctReportProfile.value='';
+  renderChickenTransforms()
+}
+function transformRecordDate(record){
+  return String(record.startedAt||record.createdAt||record.date||'').slice(0,10)
+}
+function filteredChickenTransformRecords(){
+  const from=ctReportFromDate?.value||'';
+  const to=ctReportToDate?.value||'';
+  const profile=ctReportProfile?.value||'';
+  const search=normalizeProductionName(ctReportSearch?.value||'');
+  return (db.chicken_transforms||[]).filter(x=>{
+    const date=transformRecordDate(x);
+    if(from&&date<from)return false;
+    if(to&&date>to)return false;
+    if(profile&&String(x.profileName||'')!==profile)return false;
+    if(search){
+      const hay=normalizeProductionName(`${x.batch||''} ${x.profileName||''} ${x.inputProductName||''} ${x.outputProductName||''} ${x.user||''}`);
+      if(!hay.includes(search))return false
+    }
+    return true
+  }).sort((a,b)=>String(b.startedAt||b.createdAt||b.date||'').localeCompare(String(a.startedAt||a.createdAt||a.date||'')))
+}
+function downloadTransformReport(){
+  const records=filteredChickenTransformRecords();
+  if(!records.length)return alert('لا توجد دفعات مطابقة للفترة المختارة');
+  const rows=records.map(x=>({
+    الدفعة:x.batch||'',
+    التاريخ:transformRecordDate(x),
+    بداية_العملية:formatDateTime(x.startedAt||x.createdAt||x.date),
+    نهاية_العملية:formatDateTime(x.endedAt||x.completedAt),
+    المدة:durationBetween(x.startedAt||x.createdAt,x.endedAt||x.completedAt).text,
+    العملية:x.profileName||'',
+    المنتج_الداخل:x.inputProductName||'',
+    قبل_الطبخ:Number(x.raw||0).toFixed(3),
+    بعد_الطبخ:Number(x.cooked||0).toFixed(3),
+    المنتج_الناتج:x.outputProductName||'',
+    الكمية_النهائية:Number(x.net||0).toFixed(3),
+    الهدر:Number(x.totalWaste||0).toFixed(3),
+    المردودية:Number(x.yieldPct||0).toFixed(1)+'%',
+    المستخدم:x.user||''
+  }));
+  const headers=Object.keys(rows[0]);
+  const csv=[headers,...rows.map(r=>headers.map(h=>r[h]))]
+    .map(row=>row.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`تقرير_التحويل_${localDateTimeValue().replace(/[:T]/g,'-')}.csv`;
+  a.click();
+  URL.revokeObjectURL(url)
+}
 function renderChickenTransforms(){
+  if(document.getElementById('ctReportFromDate')&&!ctReportFromDate.value&&!ctReportToDate.value&&!window.transformReportInitialized){
+    window.transformReportInitialized=true;
+    const today=localDateKey();
+    ctReportFromDate.value=today;
+    ctReportToDate.value=today;
+  }
   if(!db.chicken_transforms)return;
   const input=db.products.find(x=>x.id===ctInputProduct.value);
   const output=db.products.find(x=>x.id===ctOutputProduct.value);
 
   const inputBalance=input?getProductBalance(input.id,'مخزن الإنتاج'):0;
   const outputBalance=output?getProductBalance(output.id,'مخزن البيع'):0;
-  const records=db.chicken_transforms.filter(x=>
-    (!input||x.inputProductId===input.id||x.inputProductName===input.name) &&
-    (!output||x.outputProductId===output.id||x.outputProductName===output.name)
-  );
 
+  if(document.getElementById('ctReportProfile')){
+    const current=ctReportProfile.value;
+    const profiles=[...new Set((db.chicken_transforms||[]).map(x=>x.profileName).filter(Boolean))];
+    ctReportProfile.innerHTML='<option value="">جميع أنواع التحويل</option>'+
+      profiles.map(name=>`<option value="${name.replace(/"/g,'&quot;')}">${name}</option>`).join('');
+    if(profiles.includes(current))ctReportProfile.value=current
+  }
+
+  const records=filteredChickenTransformRecords();
   const totalRaw=records.reduce((s,x)=>s+Number(x.raw||0),0);
   const totalNet=records.reduce((s,x)=>s+Number(x.net||0),0);
   const avg=totalRaw>0?(totalNet/totalRaw*100):0;
@@ -2653,9 +3605,20 @@ function renderChickenTransforms(){
   ctRawTotal.textContent=totalRaw.toFixed(3);
   ctYieldAvg.textContent=avg.toFixed(1)+'%';
 
-  chickenTransformBody.innerHTML=db.chicken_transforms.map((x,i)=>`
-    <tr>
-      <td>${x.batch}</td><td>${x.date}</td><td>${x.profileName||''}</td>
+  if(document.getElementById('transformReportSummary')){
+    const from=ctReportFromDate?.value||'';
+    const to=ctReportToDate?.value||'';
+    transformReportSummary.textContent=`${records.length} دفعة${from||to?` — الفترة: ${from||'البداية'} إلى ${to||'اليوم'}`:' — جميع الفترات'}`
+  }
+
+  chickenTransformBody.innerHTML=records.length?records.map(x=>{
+    const originalIndex=db.chicken_transforms.indexOf(x);
+    return `<tr>
+      <td>${x.batch||'-'}</td>
+      <td>${formatDateTime(x.startedAt||x.createdAt||x.date)}</td>
+      <td>${formatDateTime(x.endedAt||x.completedAt)}</td>
+      <td>${durationBetween(x.startedAt||x.createdAt,x.endedAt||x.completedAt).text}</td>
+      <td>${x.profileName||''}</td>
       <td>${x.inputProductName||'Poulet mariné kg'}</td>
       <td>${Number(x.raw||0).toFixed(3)} ${x.inputUnit||'كغ'}</td>
       <td>${Number(x.cooked||0).toFixed(3)} ${x.inputUnit||'كغ'}</td>
@@ -2664,11 +3627,11 @@ function renderChickenTransforms(){
       <td>${Number(x.totalWaste||0).toFixed(3)}</td>
       <td><span class="badge ${Number(x.yieldPct)>=40?'ok':'warn'}">${Number(x.yieldPct||0).toFixed(1)}%</span></td>
       <td>${Number(x.productionBalanceAfter||0).toFixed(3)}</td>
-      <td>${x.user}</td>
-      <td class="no-print"><button class="btn btn-soft" onclick="printChickenBatch(${i})">طباعة</button></td>
-    </tr>`).join('');
+      <td>${x.user||'-'}</td>
+      <td class="no-print"><button class="btn btn-soft" onclick="printChickenBatch(${originalIndex})">طباعة</button></td>
+    </tr>`
+  }).join(''):'<tr><td colspan="15">لا توجد دفعات مطابقة للفترة أو البحث المحدد.</td></tr>'
 }
-
 function printChickenBatch(i){
   if(!requirePerm('chicken_transform.print'))return;
   const x=db.chicken_transforms[i];
@@ -2681,7 +3644,9 @@ function printChickenBatch(i){
   </style><body>
   <h1>مشاوي الدجاج</h1><h2>بطاقة طبخ وتحويل منتج</h2>
   <table>
-  <tr><th>رقم الدفعة</th><td>${x.batch}</td><th>التاريخ</th><td>${x.date}</td></tr>
+  <tr><th>رقم الدفعة</th><td>${x.batch}</td><th>تاريخ العملية</th><td>${formatDateOnly(x.startedAt||x.date)}</td></tr>
+  <tr><th>بداية العملية</th><td>${formatDateTime(x.startedAt||x.createdAt||x.date)}</td><th>نهاية العملية</th><td>${formatDateTime(x.endedAt||x.completedAt)}</td></tr>
+  <tr><th>مدة العملية</th><td>${durationBetween(x.startedAt||x.createdAt,x.endedAt||x.completedAt).text}</td><th>وقت طباعة البطاقة</th><td>${formatDateTime(localIsoTimestamp())}</td></tr>
   <tr><th>العملية</th><td colspan="3">${x.profileName||''}</td></tr>
   <tr><th>المنتج الداخل</th><td>${x.inputProductName||''}</td><th>المنتج الناتج</th><td>${x.outputProductName||''}</td></tr>
   <tr><th>قبل الطبخ</th><td>${x.raw} ${x.inputUnit||''}</td><th>بعد الطبخ</th><td>${x.cooked} ${x.inputUnit||''}</td></tr>
@@ -2720,6 +3685,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(e)e.addEventListener('input',updateChickenPreview);
   });
   initializeCloudApp();
+  renderTransformAdmin();
 });
 
 // ---------- PWA installation ----------
@@ -2761,6 +3727,156 @@ if ('serviceWorker' in navigator) {
 }
 
 </script>
+<script src="./pwa-register.js" defer>
+function ensureUnifiedProductionModule(){
+ if(!db.production_types)db.production_types=[];
+ const defaults=[{id:'PT-CUIT',name:'Poulet cuit',category:'chicken',unit:'كغ',active:true},{id:'PT-HACHE',name:'Poulet haché',category:'chicken',unit:'كغ',active:true}];
+ defaults.forEach(i=>{if(!db.production_types.some(x=>normalizeProductionName(x.name)===normalizeProductionName(i.name)))db.production_types.push(i)});
+ (db.recipes||[]).forEach((r,index)=>{if(!db.production_types.some(x=>x.recipeIndex===index||normalizeProductionName(x.name)===normalizeProductionName(r.name)))db.production_types.push({id:'PT-R-'+index,name:r.name,category:classifyDashboardProduction(r.name,''),unit:r.unit||'كغ',recipeIndex:index,dailyTarget:getProductionTarget(r.name,r.unit||''),active:true})})
+}
+function productionCategoryIcon(c){return {salad:'salad',sauce:'flask-conical',rice:'cooking-pot',juice:'cup-soda',chicken:'drumstick',fries:'utensils',other:'factory'}[c]||'factory'}
+function toggleCreateProductionType(){ensureUnifiedProductionModule();createProductionTypePanel.classList.toggle('hidden');if(!createProductionTypePanel.classList.contains('hidden')){newProductionOutputProduct.innerHTML='<option value="">بدون ربط بمنتج</option>'+db.products.map((p,i)=>`<option value="${i}">${p.name} — ${p.unit}</option>`).join('');newProductionStation.innerHTML='<option value="">بدون بوسط</option>'+(db.recipe_stations||[]).map((s,i)=>`<option value="${i}">${s.name}</option>`).join('')}}
+function createProductionType(){ensureUnifiedProductionModule();const name=newProductionName.value.trim();if(!name)return alert('أدخل اسم الإنتاج');if(db.production_types.some(x=>normalizeProductionName(x.name)===normalizeProductionName(name)))return alert('نوع الإنتاج موجود');const t={id:'PT-'+Date.now(),name,category:newProductionCategory.value,unit:newProductionUnit.value,outputProductIndex:newProductionOutputProduct.value,stationIndex:newProductionStation.value,dailyTarget:Number(newProductionDailyTarget.value||0),active:true,createdAt:new Date().toISOString()};db.production_types.push(t);if(t.dailyTarget>0)setProductionTarget(t.name,t.unit,t.dailyTarget);log('إضافة نوع إنتاج',name);createProductionTypePanel.classList.add('hidden');newProductionName.value='';newProductionDailyTarget.value='';save()}
+let activeProductionCategory='all';
+function filterProductionTypes(c,b){activeProductionCategory=c;document.querySelectorAll('[data-prod-cat]').forEach(x=>x.classList.remove('active'));b?.classList.add('active');renderProductionTypeGrid()}
+function renderProductionTypeGrid(){ensureUnifiedProductionModule();const types=db.production_types.filter(x=>x.active!==false&&(activeProductionCategory==='all'||x.category===activeProductionCategory));productionTypeGrid.innerHTML=types.length?types.map(t=>`<div class="production-type-card" onclick="selectProductionType('${t.id}')"><div style="display:flex;justify-content:space-between;align-items:center"><span class="badge ${productionCategoryBadge(t.category)}">${productionCategoryLabel(t.category)}</span></div><h4>${t.name}</h4><small>${t.unit||'-'} · الهدف: ${Number(t.dailyTarget||getProductionTarget(t.name,t.unit)||0)||'غير محدد'}</small></div>`).join(''):'<div class="notice">لا توجد أنواع إنتاج.</div>';}
+function selectProductionType(id){ensureUnifiedProductionModule();const t=db.production_types.find(x=>x.id===id);if(!t)return;const value=Number.isInteger(t.recipeIndex)?String(t.recipeIndex):`AUTO-${t.id}`;if(!Array.from(prodRecipe.options).some(o=>o.value===value)){const o=document.createElement('option');o.value=value;o.textContent=t.name;prodRecipe.appendChild(o)}prodRecipe.value=value;selectedProductionTitle.textContent=`تسجيل إنتاج: ${t.name}`;window.currentSelectedProductionTypeId=t.id;prodQty.focus()}
+function clearProductionDateFilters(){
+ ['historyDate','historyMonth','historyYear','historyWeek','historyFromTime','historyToTime'].forEach(id=>{
+   const el=document.getElementById(id);if(el)el.value=''
+ });
+ const mode=document.getElementById('historyPeriodMode');if(mode)mode.value='all';
+ renderProduction()
+}
+function renderProduction(){
+ ensureUnifiedProductionModule();
+ renderProductionTypeGrid();
+
+ const allowed=db.recipes.map((r,i)=>({r,i})).filter(x=>canCurrentUserProduce(x.r));
+ prodRecipe.innerHTML=
+   allowed.map(x=>`<option value="${x.i}">${x.r.name}</option>`).join('')+
+   db.production_types.filter(t=>!Number.isInteger(t.recipeIndex))
+     .map(t=>`<option value="AUTO-${t.id}">${t.name}</option>`).join('');
+
+ const categoryFilter=document.getElementById('productionLogFilter')?.value||'all';
+ const rows=(db.production||[]).filter(x=>{
+   const category=classifyDashboardProduction(x.recipe||'',x.recipeId||'');
+   return (categoryFilter==='all'||category===categoryFilter) &&
+          operationMatchesDateFilter(x,'history')
+ }).sort((a,b)=>String(getOperationTimestamp(b)||'').localeCompare(String(getOperationTimestamp(a)||'')));
+
+ const stamp=document.getElementById('productionReportStamp');
+ if(stamp)stamp.textContent=reportGeneratedStamp();
+
+ productionBody.innerHTML=rows.length?rows.map(x=>{
+   const category=classifyDashboardProduction(x.recipe||'',x.recipeId||'');
+   const started=x.startedAt||(x.date&&x.startTime?`${x.date}T${x.startTime}`:x.createdAt||'');
+   const ended=x.endedAt||(x.date&&x.endTime?`${x.date}T${x.endTime}`:x.completedAt||'');
+   const duration=durationBetween(started,ended).text;
+   return `<tr>
+     <td>${x.id}</td>
+     <td>${formatDateTime(started)}</td>
+     <td>${formatDateTime(ended)}</td>
+     <td><b>${x.recipe}</b></td>
+     <td><span class="badge ${productionCategoryBadge(category)}">${productionCategoryLabel(category)}</span></td>
+     <td>${Number(x.qty||0).toFixed(3)} ${x.unit||''}</td>
+     <td>${Number(x.waste||0).toFixed(3)} ${x.unit||''}</td>
+     <td>${duration}</td>
+     <td>${x.user||'-'}</td>
+     <td><span class="badge ok">${x.status||'مكتمل'}</span></td>
+   </tr>`
+ }).join(''):'<tr><td colspan="10">لا توجد عمليات إنتاج مطابقة للفترة المختارة.</td></tr>';
+
+ const reportData=rows.map(x=>({
+   الرقم:x.id,
+   البداية:formatDateTime(x.startedAt||(x.date&&x.startTime?`${x.date}T${x.startTime}`:x.createdAt)),
+   النهاية:formatDateTime(x.endedAt||(x.date&&x.endTime?`${x.date}T${x.endTime}`:x.completedAt)),
+   الإنتاج:x.recipe,
+   الكمية:Number(x.qty||0),
+   الوحدة:x.unit||'',
+   الهدر:Number(x.waste||0),
+   المدة:durationBetween(
+     x.startedAt||(x.date&&x.startTime?`${x.date}T${x.startTime}`:x.createdAt),
+     x.endedAt||(x.date&&x.endTime?`${x.date}T${x.endTime}`:x.completedAt)
+   ).text,
+   المستخدم:x.user||'',
+   الحالة:x.status||''
+ }));
+ window.currentProductionReportRows=reportData
+}
+function calculateProduction(){
+ if(!prodStartedAt.value)prodStartedAt.value=localDateTimeValue();
+ if(!prodEndedAt.value)prodEndedAt.value=localDateTimeValue();
+ ensureUnifiedProductionModule();const selected=prodRecipe.value;let r=null,recipeIndex=-1;
+ if(selected.startsWith('AUTO-')){const t=db.production_types.find(x=>x.id===selected.slice(5));if(t)r={name:t.name,unit:t.unit,yield:1,items:[],isVirtualProductionType:true}}
+ else{recipeIndex=Number(selected);r=db.recipes[recipeIndex]}
+ const q=Number(prodQty.value||0);if(!r)return alert('اختر نوع الإنتاج');if(!r.isVirtualProductionType&&!canCurrentUserProduce(r))return alert('ليست لديك صلاحية إنتاج '+r.name);if(!Number.isFinite(q)||q<=0)return alert('أدخل كمية صحيحة');
+ const factor=r.isVirtualProductionType?1:q/Number(r.yield||1);let allAvailable=true;const rows=(r.items||[]).map(it=>{const {product,row}=getProductionIngredientStock(it.ingredient),need=Number(it.qty||0)*factor,available=Number(row?.stock||0);if(available<need)allAvailable=false;return {it,product,row,need,available}});
+ prodCalc.innerHTML=`<div class="notice"><b>${r.name}</b> — ${q} ${r.unit}</div>${rows.length?`<div class="table-wrap"><table><thead><tr><th>المادة</th><th>المطلوب</th><th>المتوفر</th><th>الحالة</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x.product?.name||x.it.ingredient}</td><td>${x.need.toFixed(3)}</td><td>${x.available.toFixed(3)}</td><td><span class="badge ${x.available>=x.need?'ok':'bad'}">${x.available>=x.need?'متوفر':'ناقص'}</span></td></tr>`).join('')}</tbody></table></div>`:'<div class="notice">سيتم تسجيل الإنتاج مباشرة بدون خصم مكونات.</div>'}<div class="actions" style="margin-top:10px"><button class="btn btn-primary" ${allAvailable?'':'disabled'} onclick="approveUnifiedProduction()">اعتماد الإنتاج</button></div>`;window.currentProduction={r,q,rows,recipeIndex}
+}
+function approveUnifiedProduction(){
+ const p=window.currentProduction;if(!p)return;
+ const {r,q,rows,recipeIndex}=p;
+ const startedAt=prodStartedAt.value?localIsoTimestamp(new Date(prodStartedAt.value)):localIsoTimestamp();
+ const endedAt=prodEndedAt.value?localIsoTimestamp(new Date(prodEndedAt.value)):localIsoTimestamp();
+ if(parseLocalDateTime(endedAt)<parseLocalDateTime(startedAt))return alert('وقت النهاية يجب أن يكون بعد وقت البداية');
+
+ rows.forEach(x=>{if(x.row)x.row.stock=Number(x.row.stock||0)-x.need});
+ const duration=durationBetween(startedAt,endedAt);
+
+ db.production.unshift({
+   id:'PROD-'+Date.now(),
+   date:String(startedAt).slice(0,10),
+   createdAt:localIsoTimestamp(),
+   startedAt,
+   endedAt,
+   completedAt:endedAt,
+   durationMinutes:duration.minutes,
+   recipe:r.name,
+   recipeId:recipeIndex>=0?String(recipeIndex):'',
+   productionTypeId:window.currentSelectedProductionTypeId||'',
+   qty:q,
+   waste:Number(prodWaste.value||0),
+   unit:r.unit,
+   status:'مكتمل',
+   user:current.name
+ });
+
+ log('إنتاج',`${r.name} — ${q} ${r.unit} — البداية ${formatDateTime(startedAt)} — النهاية ${formatDateTime(endedAt)}`);
+ prodQty.value='';prodWaste.value='';prodStartedAt.value='';prodEndedAt.value='';
+ prodCalc.innerHTML='';window.currentSelectedProductionTypeId='';window.currentProduction=null;
+ save()
+}
+
+const originalStart=start;
+start=function(){ensureUnifiedProductionModule();originalStart();setTimeout(()=>{},0)}
+
+
+function csvEscape(value){
+ const text=String(value??'');
+ return `"${text.replace(/"/g,'""')}"`
+}
+function downloadProductionReport(){
+ renderProduction();
+ const rows=window.currentProductionReportRows||[];
+ if(!rows.length)return alert('لا توجد بيانات مطابقة لتحميلها');
+ const headers=Object.keys(rows[0]);
+ const lines=[
+   [reportGeneratedStamp()],
+   headers,
+   ...rows.map(row=>headers.map(h=>row[h]))
+ ].map(row=>row.map(csvEscape).join(',')).join('\n');
+ const blob=new Blob(['\uFEFF'+lines],{type:'text/csv;charset=utf-8'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;
+ a.download=`تقرير_الإنتاج_${localDateTimeValue().replace(/[:T]/g,'-')}.csv`;
+ a.click();
+ URL.revokeObjectURL(url)
+}
+
+</script>
+
 
 
 <div id="processProfileModal" class="modal"><div class="modal-box">
