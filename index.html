@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Machawi Dajaj ERP Cloud V3.0</title>
+<title>Machawi Dajaj ERP Cloud V3.5</title>
 
 <style>
 :root{
@@ -466,6 +466,38 @@ table{
 @media(max-width:620px){
   #transform_admin .grid{grid-template-columns:1fr!important}
 }
+
+.action-message-box{
+  position:fixed;
+  left:50%;
+  bottom:28px;
+  transform:translate(-50%,20px);
+  z-index:9999;
+  background:#7f1115;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:12px;
+  box-shadow:0 12px 30px rgba(60,0,0,.25);
+  opacity:0;
+  pointer-events:none;
+  transition:.2s ease;
+  font-weight:700;
+  text-align:center
+}
+.action-message-box.show{
+  opacity:1;
+  transform:translate(-50%,0)
+}
+.report-highlight{
+  outline:4px solid var(--gold);
+  box-shadow:0 0 0 8px rgba(255,196,0,.18),0 14px 34px rgba(80,20,20,.14)!important
+}
+#transformStartNowBtn,
+#transformShowReportBtn,
+#transformPrintBtn{
+  cursor:pointer;
+  touch-action:manipulation
+}
 </style>
 
 
@@ -495,7 +527,7 @@ table{
   <div id="iconRail" class="icon-rail"></div>
   <div class="nav-panel">
     <div class="brand-box">
-      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.0</small></div>
+      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.5</small></div>
     </div>
     <button id="closeSideMenuBtn" class="btn btn-soft close-side-menu" type="button" onclick="closeSideMenu()">إرجاع القائمة</button>
     <div class="nav-heading"><strong id="navGroupTitle">الرئيسية</strong><span>القائمة</span></div>
@@ -800,9 +832,9 @@ table{
       <div class="page-title">
         <h2>مركز طبخ وتحويل المنتجات</h2>
         <div class="actions no-print">
-  <button class="btn btn-soft" onclick="setTransformStartNow()">بدء الآن</button>
-  <button class="btn btn-soft" onclick="scrollToTransformReport()">عرض السجل والتقارير</button>
-  <button class="btn btn-soft" onclick="printPage('chicken_transform')">طباعة السجل</button>
+  <button id="transformStartNowBtn" type="button" class="btn btn-soft" onclick="handleTransformStartNow()">بدء الآن</button>
+  <button id="transformShowReportBtn" type="button" class="btn btn-soft" onclick="handleShowTransformReport()">عرض السجل والتقارير</button>
+  <button id="transformPrintBtn" type="button" class="btn btn-soft" onclick="handlePrintTransformReport()">طباعة السجل</button>
 </div>
       </div>
 
@@ -1083,7 +1115,7 @@ table{
 
 <div id="permModal" class="modal"><div class="modal-box">
   <h3 id="permTitle">صلاحيات المستخدم</h3><div class="actions"><button class="btn btn-soft" onclick="selectAllPerms(true)">تحديد الكل</button><button class="btn btn-soft" onclick="selectAllPerms(false)">إلغاء الكل</button></div><div id="permissionsBox"></div>
-  <div class="actions"><button class="btn btn-primary" onclick="savePermissions()">حفظ الصلاحيات</button><button class="btn btn-soft" onclick="closeModal('permModal')">إلغاء</button></div>
+  <div id="permissionSaveHint" class="notice" style="margin-bottom:10px">اضغط حفظ الصلاحيات، وسيتم الحفظ محليًا ثم مزامنته مع السحابة.</div><div class="actions"><button class="btn btn-primary" onclick="savePermissions()">حفظ الصلاحيات</button><button class="btn btn-soft" onclick="retryPermissionsCloudSave()">إعادة المزامنة</button><button class="btn btn-soft" onclick="closeModal('permModal')">إلغاء</button></div>
 </div></div>
 
 <script>
@@ -1282,14 +1314,21 @@ function cloudHeaders(extra={}){
 
 function cacheDbLocally(){
   localStorage.setItem('machawiERP',JSON.stringify(db));
+  window.lastLocalWriteAt=Date.now();
 }
 
 async function loadDbFromCloud(){
   setCloudStatus('جاري المزامنة...','warn');
   try{
     const response=await fetch(
-      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at`,
-      {headers:cloudHeaders()}
+      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at&t=${Date.now()}`,
+      {
+        headers:cloudHeaders({
+          'Cache-Control':'no-cache',
+          'Pragma':'no-cache'
+        }),
+        cache:'no-store'
+      }
     );
     if(!response.ok)throw new Error(await response.text());
     const rows=await response.json();
@@ -1342,6 +1381,7 @@ async function saveDbToCloud(force=false){
     console.error('Supabase save error',error);
     cloudReady=false;
     setCloudStatus('تعذر الحفظ السحابي','bad');
+    throw error;
   }finally{
     cloudSaving=false;
   }
@@ -1354,11 +1394,19 @@ function scheduleCloudSave(){
 }
 
 async function pollCloudChanges(){
+  if(window.lastLocalWriteAt && Date.now()-window.lastLocalWriteAt<8000)return;
   if(cloudSaving)return;
+  if(document.getElementById('permModal')?.classList.contains('open'))return;
   try{
     const response=await fetch(
-      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at`,
-      {headers:cloudHeaders()}
+      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at&t=${Date.now()}`,
+      {
+        headers:cloudHeaders({
+          'Cache-Control':'no-cache',
+          'Pragma':'no-cache'
+        }),
+        cache:'no-store'
+      }
     );
     if(!response.ok)return;
     const rows=await response.json();
@@ -2075,12 +2123,7 @@ function printProductDetail(){
   <p><b>الكود:</b> ${p.id} — <b>النوع:</b> ${p.type} — <b>الوحدة:</b> ${p.unit}</p>
   <p><b>سعر الشراء:</b> ${money(p.cost)} — <b>سعر البيع:</b> ${money(p.salePrice)}</p>
   <table><thead><tr><th>المخزن</th><th>الكمية</th><th>الوحدة</th><th>القيمة</th></tr></thead><tbody>${rows}</tbody></table>
-  <script>onload=()=>print()<\/script><div id="productionTargetsModal" class="modal"><div class="modal-box">
-<div class="page-title"><div><h3 style="margin:0">الأهداف اليومية لأنواع الإنتاج</h3><small style="color:var(--muted)">هدف مستقل لكل وصفة</small></div><button class="btn btn-soft" onclick="closeModal('productionTargetsModal')">إغلاق</button></div>
-<div class="table-wrap"><table><thead><tr><th>نوع الإنتاج</th><th>الفئة</th><th>الوحدة</th><th>الهدف اليومي</th></tr></thead><tbody id="productionTargetsBody"></tbody></table></div>
-<div class="actions" style="margin-top:14px"><button class="btn btn-primary" onclick="saveAllProductionTargets()">حفظ الأهداف</button></div>
-</div></div>
-</body></html>`);
+  <script>onload=()=>print()<\/script></body></html>`);
   w.document.close();
 }
 
@@ -2762,30 +2805,7 @@ function printTransfer(i){
     <table><thead><tr><th>المادة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${rows}</tbody></table>
     ${x.note?`<p><b>ملاحظة:</b> ${x.note}</p>`:''}
     <div class="sign"><div>توقيع المرسل<br><br>................</div><div>توقيع المستلم<br><br>................</div></div>
-    <script>onload=()=>print()<\/script>
-
-<div id="processProfileModal" class="modal"><div class="modal-box">
-  <h3>إضافة نوع طبخ أو تحويل</h3>
-  <div class="form-grid">
-    <input id="ppName" placeholder="اسم العملية">
-    <select id="ppMode">
-      <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
-      <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
-      <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
-    </select>
-    <input id="ppRawLabel" placeholder="اسم خانة البداية">
-    <input id="ppCookedLabel" placeholder="اسم خانة بعد الطبخ">
-    <input id="ppNetLabel" placeholder="اسم خانة الناتج النهائي">
-  </div>
-  <div class="actions">
-    <button class="btn btn-primary" onclick="saveProcessProfile()">حفظ</button>
-    <button class="btn btn-soft" onclick="closeModal('processProfileModal')">إلغاء</button>
-  </div>
-</div></div>
-
-
-
-</body></html>`);
+    <script>onload=()=>print()<\/script></body></html>`);
   w.document.close();
 }
 
@@ -2890,27 +2910,6 @@ function viewPurchase(i){
   <table><thead><tr><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>سعر الوحدة</th><th>المجموع</th></tr></thead><tbody>${rows}</tbody></table>
   <h3>الإجمالي: ${money(x.amount)}</h3>
 
-<div id="processProfileModal" class="modal"><div class="modal-box">
-  <h3>إضافة نوع طبخ أو تحويل</h3>
-  <div class="form-grid">
-    <input id="ppName" placeholder="اسم العملية">
-    <select id="ppMode">
-      <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
-      <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
-      <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
-    </select>
-    <input id="ppRawLabel" placeholder="اسم خانة البداية">
-    <input id="ppCookedLabel" placeholder="اسم خانة بعد الطبخ">
-    <input id="ppNetLabel" placeholder="اسم خانة الناتج النهائي">
-  </div>
-  <div class="actions">
-    <button class="btn btn-primary" onclick="saveProcessProfile()">حفظ</button>
-    <button class="btn btn-soft" onclick="closeModal('processProfileModal')">إلغاء</button>
-  </div>
-</div></div>
-
-
-
 </body></html>`);
   w.document.close();
 }
@@ -2946,16 +2945,196 @@ function editPermissions(i){
   permModal.classList.add('open');
 }
 function selectAllPerms(v){document.querySelectorAll('#permissionsBox input').forEach(x=>x.checked=v)}
-function savePermissions(){if(!requirePerm('users.permissions'))return;const user=db.users[editingUser];
-  user.permissions=[...document.querySelectorAll('#permissionsBox input:checked:not(.recipe-perm-checkbox)')].map(x=>x.value);
-  if(!db.recipe_user_permissions)db.recipe_user_permissions={};
-  db.recipe_user_permissions[user.id]={};
-  document.querySelectorAll('#permissionsBox .recipe-perm-checkbox:checked').forEach(cb=>{
-    const rid=cb.dataset.recipeId;
-    if(!db.recipe_user_permissions[user.id][rid])db.recipe_user_permissions[user.id][rid]=[];
-    db.recipe_user_permissions[user.id][rid].push(cb.value);
-  });
-  log('تعديل صلاحيات',user.name);closeModal('permModal');save()}
+
+async function savePermissionsToCloudVerified(userId, expectedPermissions, expectedRecipePermissions){
+  const payload={
+    id:CLOUD_STATE_ID,
+    data:db,
+    updated_at:new Date().toISOString()
+  };
+
+  const saveResponse=await fetch(
+    `${SUPABASE_URL}/rest/v1/machawi_app_state?on_conflict=id`,
+    {
+      method:'POST',
+      headers:cloudHeaders({
+        'Prefer':'resolution=merge-duplicates,return=representation'
+      }),
+      body:JSON.stringify([payload])
+    }
+  );
+
+  if(!saveResponse.ok){
+    throw new Error(`Supabase save failed: ${await saveResponse.text()}`);
+  }
+
+  const verifyResponse=await fetch(
+    `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at&t=${Date.now()}`,
+    {
+      method:'GET',
+      headers:cloudHeaders({
+        'Cache-Control':'no-cache',
+        'Pragma':'no-cache'
+      }),
+      cache:'no-store'
+    }
+  );
+
+  if(!verifyResponse.ok){
+    throw new Error(`Supabase verify failed: ${await verifyResponse.text()}`);
+  }
+
+  const rows=await verifyResponse.json();
+  if(!rows.length || !rows[0].data){
+    throw new Error('لم يتم العثور على البيانات بعد الحفظ');
+  }
+
+  const remoteDb=rows[0].data;
+  const remoteUser=(remoteDb.users||[]).find(x=>x.id===userId);
+  if(!remoteUser){
+    throw new Error('المستخدم غير موجود في النسخة السحابية');
+  }
+
+  const actual=[...(remoteUser.permissions||[])].sort();
+  const expected=[...(expectedPermissions||[])].sort();
+
+  if(JSON.stringify(actual)!==JSON.stringify(expected)){
+    throw new Error('Supabase أعاد صلاحيات مختلفة عن الصلاحيات المحفوظة');
+  }
+
+  const actualRecipePerms=remoteDb.recipe_user_permissions?.[userId]||{};
+  if(JSON.stringify(actualRecipePerms)!==JSON.stringify(expectedRecipePermissions||{})){
+    throw new Error('لم يتم تأكيد صلاحيات الوصفات في Supabase');
+  }
+
+  lastCloudUpdatedAt=rows[0].updated_at||payload.updated_at;
+  cloudReady=true;
+  return true;
+}
+
+async function savePermissions(){
+  if(!requirePerm('users.permissions'))return;
+
+  const user=db.users?.[editingUser];
+  if(!user){
+    alert('المستخدم غير موجود');
+    return;
+  }
+
+  const saveButton=document.querySelector('#permModal button[onclick="savePermissions()"]');
+  const originalText=saveButton?.textContent||'حفظ الصلاحيات';
+
+  if(saveButton){
+    saveButton.disabled=true;
+    saveButton.textContent='جاري الحفظ والتحقق...';
+  }
+
+  try{
+    const permissions=Array.from(
+      document.querySelectorAll('#permissionsBox input[type="checkbox"]:checked:not(.recipe-perm-checkbox)')
+    ).map(input=>input.value).filter(Boolean);
+
+    const recipePermissions={};
+    document.querySelectorAll('#permissionsBox .recipe-perm-checkbox:checked').forEach(input=>{
+      const recipeId=String(input.dataset.recipeId||'');
+      if(!recipeId)return;
+      if(!recipePermissions[recipeId])recipePermissions[recipeId]=[];
+      if(input.value)recipePermissions[recipeId].push(input.value);
+    });
+
+    const previousPermissions=[...(user.permissions||[])];
+    const previousRecipePermissions=JSON.parse(JSON.stringify(db.recipe_user_permissions?.[user.id]||{}));
+
+    user.permissions=[...new Set(permissions)];
+    if(!db.recipe_user_permissions)db.recipe_user_permissions={};
+    db.recipe_user_permissions[user.id]=recipePermissions;
+
+    try{
+      localStorage.setItem('machawiERP',JSON.stringify(db));
+      window.lastLocalWriteAt=Date.now();
+    }catch(localError){
+      console.warn(localError);
+    }
+
+    setCloudStatus('جاري حفظ الصلاحيات بالسحابة...','warn');
+
+    try{
+      await savePermissionsToCloudVerified(
+        user.id,
+        user.permissions,
+        recipePermissions
+      );
+    }catch(cloudError){
+      user.permissions=previousPermissions;
+      db.recipe_user_permissions[user.id]=previousRecipePermissions;
+
+      try{
+        localStorage.setItem('machawiERP',JSON.stringify(db));
+      }catch(e){}
+
+      setCloudStatus('فشل حفظ الصلاحيات','bad');
+      throw cloudError;
+    }
+
+    if(Array.isArray(db.audit)){
+      db.audit.unshift({
+        id:'LOG-'+Date.now(),
+        at:new Date().toISOString(),
+        user:current?.name||'النظام',
+        action:'تعديل صلاحيات',
+        details:`${user.name} — ${user.permissions.length} صلاحية`
+      });
+    }
+
+    try{
+      localStorage.setItem('machawiERP',JSON.stringify(db));
+      window.lastLocalWriteAt=Date.now();
+    }catch(e){}
+
+    const modal=document.getElementById('permModal');
+    if(modal)modal.classList.remove('open');
+
+    try{
+      if(typeof renderUsers==='function')renderUsers();
+    }catch(e){}
+
+    setCloudStatus('تم حفظ الصلاحيات والتأكد منها','ok');
+    if(typeof showActionMessage==='function'){
+      showActionMessage(`تم حفظ صلاحيات ${user.name} بنجاح`);
+    }else{
+      alert(`تم حفظ صلاحيات ${user.name} بنجاح`);
+    }
+  }catch(error){
+    console.error('Verified permission save failed',error);
+    alert(`لم يتم حفظ الصلاحيات في Supabase:\n${error?.message||'خطأ غير معروف'}`);
+  }finally{
+    if(saveButton){
+      saveButton.disabled=false;
+      saveButton.textContent=originalText;
+    }
+  }
+}
+async function retryPermissionsCloudSave(){
+  try{
+    localStorage.setItem('machawiERP',JSON.stringify(db));
+    window.lastLocalWriteAt=Date.now();
+  }catch(error){
+    console.warn(error);
+  }
+
+  setCloudStatus('جاري إعادة المزامنة...','warn');
+  try{
+    await saveDbToCloud(true);
+    setCloudStatus('تمت المزامنة','ok');
+    const modal=document.getElementById('permModal');
+    if(modal)modal.classList.remove('open');
+    if(typeof showActionMessage==='function')showActionMessage('تمت مزامنة الصلاحيات مع السحابة');
+  }catch(error){
+    console.error(error);
+    setCloudStatus('فشلت المزامنة','bad');
+    alert(`تعذر الاتصال بـ Supabase: ${error?.message||'تحقق من الإنترنت وإعدادات المشروع'}`);
+  }
+}
 function toggleUser(i){if(!requirePerm('users.edit'))return;if(db.users[i].username==='admin')return alert('لا يمكن إيقاف المدير الافتراضي');db.users[i].active=!db.users[i].active;log('تغيير حالة مستخدم',db.users[i].name);save()}
 function deleteUser(i){if(!requirePerm('users.delete'))return;if(db.users[i].username==='admin')return alert('لا يمكن حذف المدير الافتراضي');if(confirm('حذف المستخدم؟')){log('حذف مستخدم',db.users[i].name);db.users.splice(i,1);save()}}
 function renderAudit(){auditBody.innerHTML=db.audit.map(x=>`<tr><td>${x.date}</td><td>${x.user}</td><td>${x.action}</td><td>${x.details}</td></tr>`).join('')}
@@ -3019,11 +3198,6 @@ function ensureChickenTransformModule(){
     });
   }
 
-  const prodUser=db.users.find(u=>u.role==='production');
-  if(prodUser && !prodUser.permissions.includes('*')){
-    ['chicken_transform.view','chicken_transform.create','chicken_transform.transfer','chicken_transform.print']
-      .forEach(p=>{if(!prodUser.permissions.includes(p))prodUser.permissions.push(p)});
-  }
 }
 
 function getStockRow(productId, location){
@@ -3382,8 +3556,42 @@ function clearChickenForm(){
   if(document.getElementById('ctEndedAt'))ctEndedAt.value='';
 }
 
+
+function showActionMessage(message){
+  let box=document.getElementById('actionMessageBox');
+  if(!box){
+    box=document.createElement('div');
+    box.id='actionMessageBox';
+    box.className='action-message-box';
+    document.body.appendChild(box);
+  }
+  box.textContent=message;
+  box.classList.add('show');
+  clearTimeout(window.actionMessageTimer);
+  window.actionMessageTimer=setTimeout(()=>box.classList.remove('show'),2200)
+}
+function handleTransformStartNow(){
+  const field=document.getElementById('ctStartedAt');
+  if(!field)return alert('تعذر العثور على خانة بداية العملية');
+  field.value=localDateTimeValue();
+  field.dispatchEvent(new Event('change',{bubbles:true}));
+  showActionMessage('تم تسجيل وقت بداية العملية الآن');
+  setTimeout(()=>field.scrollIntoView({behavior:'smooth',block:'center'}),80)
+}
+function handleShowTransformReport(){
+  const section=document.getElementById('transformReportSection');
+  if(!section)return alert('تعذر العثور على سجل التقارير');
+  renderChickenTransforms();
+  section.classList.add('report-highlight');
+  section.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>section.classList.remove('report-highlight'),1800)
+}
+function handlePrintTransformReport(){
+  renderChickenTransforms();
+  setTimeout(()=>printPage('chicken_transform'),80)
+}
 function setTransformStartNow(){
-  if(document.getElementById('ctStartedAt'))ctStartedAt.value=localDateTimeValue()
+  handleTransformStartNow()
 }
 function setTransformEndNow(){
   if(document.getElementById('ctEndedAt'))ctEndedAt.value=localDateTimeValue()
@@ -3671,7 +3879,7 @@ function testCompositionStorage(){
   }
 }
 
-function renderAll(){renderDashboard();renderProducts();renderInventory();renderRecipes();renderRecipeStations();renderProduction();renderProductionRequirementsSetup();renderProcessSelectors();renderChickenTransforms();renderTransfers();renderFinance();renderUsers();renderAudit();renderPurchaseSetup()}
+function renderAll(){renderDashboard();renderProducts();renderInventory();renderRecipes();renderRecipeStations();renderProduction();renderProductionRequirementsSetup();renderProcessSelectors();renderChickenTransforms();renderTransfers();renderFinance();renderUsers();renderTransformAdmin();renderAudit();renderPurchaseSetup()}
 
 document.addEventListener('DOMContentLoaded',()=>{
   const invP=document.getElementById('invProduct');
@@ -3726,8 +3934,10 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+
 </script>
-<script src="./pwa-register.js" defer>
+<script src="./pwa-register.js" defer></script>
+<script>
 function ensureUnifiedProductionModule(){
  if(!db.production_types)db.production_types=[];
  const defaults=[{id:'PT-CUIT',name:'Poulet cuit',category:'chicken',unit:'كغ',active:true},{id:'PT-HACHE',name:'Poulet haché',category:'chicken',unit:'كغ',active:true}];
@@ -3875,9 +4085,11 @@ function downloadProductionReport(){
  URL.revokeObjectURL(url)
 }
 
+
+
+
+
 </script>
-
-
 
 <div id="processProfileModal" class="modal"><div class="modal-box">
   <h3>إضافة نوع طبخ أو تحويل</h3>

@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'machawi-erp-cloud-v3-0-transform-admin-filters';
+const CACHE_NAME = 'machawi-erp-cloud-v3-5-permissions-verified-cloud';
 const STATIC_FILES = [
   './manifest.json',
   './icon-192.png',
