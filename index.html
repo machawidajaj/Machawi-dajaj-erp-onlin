@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Machawi Dajaj ERP Cloud V3.6</title>
+<title>Machawi Dajaj ERP Cloud V3.7</title>
 
 <style>
 :root{
@@ -527,7 +527,7 @@ table{
   <div id="iconRail" class="icon-rail"></div>
   <div class="nav-panel">
     <div class="brand-box">
-      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.6</small></div>
+      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.7</small></div>
     </div>
     <button id="closeSideMenuBtn" class="btn btn-soft close-side-menu" type="button" onclick="closeSideMenu()">إرجاع القائمة</button>
     <div class="nav-heading"><strong id="navGroupTitle">الرئيسية</strong><span>القائمة</span></div>
@@ -1129,7 +1129,10 @@ let cloudReady=false;
 let cloudSaving=false;
 let cloudSaveTimer=null;
 let lastCloudUpdatedAt='';
+
 let cloudPollingTimer=null;
+const MANUAL_PERMISSIONS_VERSION='v3.7';
+
 
 
 function ensureRecipePermissionsModule(){
@@ -1177,9 +1180,6 @@ function ensureRecipePermissionsModule(){
       ['recipe_stations.assign','توزيع الوصفات على البوسطات']
     ]});
   }
-  db.users.forEach(u=>{
-    if(u.role==='production'&&!u.permissions.includes('*')&&!u.permissions.includes('recipe_stations.view'))u.permissions.push('recipe_stations.view');
-  });
 }
 function ensureProductsModule(){
   if(!db.product_documents) db.product_documents=[];
@@ -1215,17 +1215,6 @@ function ensureProductsModule(){
     });
   }
 
-  db.users.forEach(u=>{
-    if(u.role==='stock'){
-      ['production_requirements.view','production_requirements.create','production_requirements.transfer','production_requirements.print','production_requirements.export']
-        .forEach(p=>{if(!u.permissions.includes(p))u.permissions.push(p)});
-    }
-    if(u.role==='production'){
-      ['production_requirements.view','production_requirements.create','production_requirements.print']
-        .forEach(p=>{if(!u.permissions.includes(p))u.permissions.push(p)});
-    }
-  });
-
 const groupExists=db.permissions_catalog.some(g=>g.group==='المنتجات');
   if(!groupExists){
     db.permissions_catalog.splice(1,0,{
@@ -1239,18 +1228,6 @@ const groupExists=db.permissions_catalog.some(g=>g.group==='المنتجات');
       ]
     });
   }
-
-  const admin=db.users.find(u=>u.role==='admin');
-  if(admin && !admin.permissions.includes('*')) admin.permissions.push('products.view','products.add','products.edit','products.delete','products.export');
-
-  db.users.forEach(u=>{
-    if(u.role==='stock'){
-      ['products.view','products.add','products.edit','products.export'].forEach(p=>{if(!u.permissions.includes(p))u.permissions.push(p)});
-    }
-    if(u.role==='production'||u.role==='accounting'){
-      ['products.view'].forEach(p=>{if(!u.permissions.includes(p))u.permissions.push(p)});
-    }
-  });
 
   // Convert old purchases to item-based structure
   db.purchases=db.purchases.map(x=>{

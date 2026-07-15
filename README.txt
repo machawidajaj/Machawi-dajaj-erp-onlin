@@ -1,7 +1,8 @@
-Machawi ERP Cloud V3.6
+Machawi ERP Cloud V3.7
 
-إصلاح Supabase:
-- حذف معامل t غير الصالح من روابط PostgREST.
-- إبقاء تعطيل الكاش باستخدام cache:no-store وCache-Control.
-- إصلاح التحقق من حفظ الصلاحيات بعد الكتابة.
-- الحفاظ على المقارنة بين الصلاحيات المحلية والسحابية.
+الإصلاح الحقيقي للصلاحيات:
+- حذف 3 كتل كانت تعيد الصلاحيات تلقائيًا حسب الدور.
+- production لن يسترجع recipe_stations.view أو production_requirements أو products.view تلقائيًا.
+- stock وaccounting لن تضاف لهما صلاحيات تلقائيًا.
+- ما تختاره في شاشة الصلاحيات هو المصدر الوحيد.
+- الحفظ في Supabase يبقى مفعلاً ومتحققًا منه.
