@@ -44,7 +44,7 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Machawi ERP">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 
 </head>
 <body>
@@ -1234,48 +1234,7 @@ function printProductDetail(){
   <p><b>الكود:</b> ${p.id} — <b>النوع:</b> ${p.type} — <b>الوحدة:</b> ${p.unit}</p>
   <p><b>سعر الشراء:</b> ${money(p.cost)} — <b>سعر البيع:</b> ${money(p.salePrice)}</p>
   <table><thead><tr><th>المخزن</th><th>الكمية</th><th>الوحدة</th><th>القيمة</th></tr></thead><tbody>${rows}</tbody></table>
-  <script>onload=()=>print()<\/script>
-<script>
-let deferredPwaPrompt = null;
-
-window.addEventListener('beforeinstallprompt', (event) => {
-  event.preventDefault();
-  deferredPwaPrompt = event;
-  const btn = document.getElementById('installPwaBtn');
-  if (btn) btn.style.display = 'inline-flex';
-});
-
-window.addEventListener('appinstalled', () => {
-  deferredPwaPrompt = null;
-  const btn = document.getElementById('installPwaBtn');
-  if (btn) btn.style.display = 'none';
-});
-
-document.addEventListener('click', async (event) => {
-  if (event.target?.id !== 'installPwaBtn') return;
-  if (!deferredPwaPrompt) {
-    alert('افتح قائمة Chrome ثم اختر تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.');
-    return;
-  }
-  deferredPwaPrompt.prompt();
-  await deferredPwaPrompt.userChoice;
-  deferredPwaPrompt = null;
-  event.target.style.display = 'none';
-});
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      await navigator.serviceWorker.register('./service-worker.js');
-      console.log('Machawi ERP service worker registered');
-    } catch (error) {
-      console.error('Service worker registration failed', error);
-    }
-  });
-}
-</script>
-
-</body></html>`);
+  <script>onload=()=>print()<\/script></body></html>`);
   w.document.close();
 }
 
@@ -2762,6 +2721,45 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
   initializeCloudApp();
 });
+
+// ---------- PWA installation ----------
+let deferredPwaPrompt = null;
+
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  deferredPwaPrompt = event;
+  const button = document.getElementById('installPwaBtn');
+  if (button) button.style.display = 'inline-flex';
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPwaPrompt = null;
+  const button = document.getElementById('installPwaBtn');
+  if (button) button.style.display = 'none';
+});
+
+document.addEventListener('click', async event => {
+  if (event.target?.id !== 'installPwaBtn') return;
+
+  if (!deferredPwaPrompt) {
+    alert('من قائمة Chrome اختر: تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.');
+    return;
+  }
+
+  deferredPwaPrompt.prompt();
+  await deferredPwaPrompt.userChoice;
+  deferredPwaPrompt = null;
+  event.target.style.display = 'none';
+});
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('./service-worker.js')
+      .catch(error => console.error('Service Worker error:', error));
+  });
+}
+
 </script>
 
 
