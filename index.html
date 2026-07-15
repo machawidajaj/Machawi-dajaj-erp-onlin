@@ -1,0 +1,2837 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Machawi Dajaj ERP Online</title>
+<style>
+:root{--brand:#7f1d1d;--brand2:#b91c1c;--bg:#f5f7fb;--card:#fff;--text:#182234;--muted:#728096;--line:#e5eaf1;--ok:#15803d;--warn:#b7791f;--bad:#b91c1c;--blue:#2563eb}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}.hidden{display:none!important}
+.login{position:fixed;inset:0;background:linear-gradient(135deg,#450a0a,#991b1b);display:grid;place-items:center;padding:20px;z-index:99}
+.login-card{width:min(420px,100%);background:white;border-radius:20px;padding:28px;box-shadow:0 30px 90px #0007}
+.login-card h1{text-align:center;color:var(--brand);margin:0 0 6px}.login-card p{text-align:center;color:var(--muted)}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:#fff;border-left:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+.logo{font-size:22px;font-weight:800;color:var(--brand);padding:8px 6px 18px}.logo small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.menu button{width:100%;border:0;background:transparent;padding:11px 12px;border-radius:10px;text-align:right;cursor:pointer;color:#475569;margin-bottom:4px}
+.menu button.active,.menu button:hover{background:#fff1f2;color:var(--brand);font-weight:700}
+main{min-width:0}.topbar{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:0 24px;position:sticky;top:0;z-index:10}
+.userbox{display:flex;gap:10px;align-items:center}.avatar{width:38px;height:38px;border-radius:50%;background:#fee2e2;color:var(--brand);display:grid;place-items:center;font-weight:800}
+.content{padding:24px;max-width:1500px;margin:auto}.page{display:none}.page.show{display:block}
+.page-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.page-title h2{margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 18px #0f172a0a}
+.kpi span{color:var(--muted);font-size:13px}.kpi strong{display:block;font-size:28px;margin-top:8px}.kpi small{color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+input,select{width:100%;padding:10px 11px;border:1px solid #cfd7e3;border-radius:9px;background:#fff}
+.btn{border:0;border-radius:9px;padding:10px 14px;cursor:pointer;font-weight:700}.btn-primary{background:var(--brand);color:#fff}.btn-soft{background:#f1f5f9;color:#334155}.btn-danger{background:#fee2e2;color:#991b1b}.btn-blue{background:#dbeafe;color:#1d4ed8}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;border-bottom:1px solid var(--line);text-align:right;font-size:13px}th{background:#f8fafc;color:#475569;position:sticky;top:0}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700}.ok{background:#dcfce7;color:#166534}.warn{background:#fef3c7;color:#92400e}.bad{background:#fee2e2;color:#991b1b}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.open{display:flex}.modal-box{background:#fff;border-radius:18px;padding:20px;width:min(1000px,100%);max-height:90vh;overflow:auto}
+.perm-group{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}.perm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.perm-item{display:flex;gap:8px;align-items:center;padding:7px;background:#f8fafc;border-radius:8px}
+.recipe-row{display:grid;grid-template-columns:2fr 1fr auto;gap:8px;margin:7px 0}.transfer-item-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin:8px 0;align-items:center}.purchase-item-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;margin:8px 0;align-items:center}.production-plan-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin:8px 0;align-items:center}.composition-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin:8px 0;align-items:center}.transfer-item-row .stock-info{font-size:12px;color:var(--muted)}
+.notice{padding:12px;border-radius:10px;background:#fff7ed;border-right:4px solid #f59e0b;margin:10px 0}
+.chart{height:220px;display:flex;align-items:end;gap:8px;padding:20px;border:1px solid var(--line);border-radius:12px}.bar{flex:1;background:linear-gradient(#fca5a5,#b91c1c);border-radius:7px 7px 0 0;min-width:20px}
+.mobile-menu{display:none}
+@media(max-width:900px){.app{grid-template-columns:1fr}aside{position:fixed;right:-270px;z-index:40;width:250px;transition:.25s}.app.menu-open aside{right:0}.mobile-menu{display:inline-flex}.content{padding:14px}.topbar{padding:0 14px}}
+@media print{aside,.topbar,.no-print{display:none!important}.app{display:block}.content{padding:0}.page{display:none!important}.page.printing{display:block!important}.card{box-shadow:none;border:0}body{background:#fff}}
+</style>
+</head>
+<body>
+<div id="login" class="login">
+  <div class="login-card">
+    <h1>Machawi ERP</h1>
+    <p>نظام إدارة مشاوي الدجاج</p>
+    <input id="loginUser" placeholder="اسم المستخدم" style="margin-bottom:10px">
+    <input id="loginPass" type="password" placeholder="كلمة المرور" style="margin-bottom:10px">
+    <button class="btn btn-primary" style="width:100%" onclick="doLogin()">تسجيل الدخول</button>
+    <div class="notice">المدير الافتراضي: admin / 1234</div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+<aside>
+  <div class="logo">مشاوي الدجاج<small>Machawi ERP V1.0</small></div>
+  <div id="menu" class="menu"></div>
+</aside>
+<main>
+  <div class="topbar">
+    <div><button class="btn btn-soft mobile-menu" onclick="document.getElementById('app').classList.toggle('menu-open')">☰</button></div>
+    <div class="userbox"><div><b id="currentName"></b><br><small id="currentRole"></small></div><div class="avatar">م</div><button class="btn btn-soft" onclick="logout()">خروج</button></div>
+  </div>
+  <div class="content">
+
+    <section id="dashboard" class="page show">
+      <div class="page-title"><h2>لوحة التحكم</h2><div id="todayLabel"></div></div>
+      <div class="grid">
+        <div class="card kpi"><span>مبيعات اليوم</span><strong id="kpiSales">0 DH</strong><small>إجمالي المبيعات المسجلة</small></div>
+        <div class="card kpi"><span>مصاريف اليوم</span><strong id="kpiExpenses">0 DH</strong><small>المصاريف المسجلة</small></div>
+        <div class="card kpi"><span>مواد منخفضة</span><strong id="kpiLow">0</strong><small>بلغت الحد الأدنى</small></div>
+        <div class="card kpi"><span>تحويلات مفتوحة</span><strong id="kpiTransfers">0</strong><small>لم يتم استلامها</small></div>
+      </div>
+      <div class="grid" style="margin-top:14px">
+        <div class="card"><h3>المبيعات خلال آخر 7 أيام</h3><div id="salesChart" class="chart"></div></div>
+        <div class="card"><h3>تنبيهات المخزون</h3><div id="alerts"></div></div>
+      </div>
+    </section>
+
+    
+    <section id="products" class="page">
+      <div class="page-title">
+        <h2>دليل المنتجات والمواد</h2>
+        <div class="actions no-print">
+          <button class="btn btn-soft" onclick="printPage('products')">طباعة</button>
+          <button class="btn btn-blue" onclick="exportProducts()">تصدير CSV</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card kpi"><span>إجمالي المنتجات</span><strong id="productsCount">0</strong></div>
+        <div class="card kpi"><span>مواد أولية</span><strong id="rawProductsCount">0</strong></div>
+        <div class="card kpi"><span>منتجات نصف مصنعة</span><strong id="semiProductsCount">0</strong></div>
+        <div class="card kpi"><span>منتجات نهائية</span><strong id="finishedProductsCount">0</strong></div>
+      </div>
+
+      <div class="card no-print" style="margin-top:14px">
+        <h3>إضافة منتج جديد</h3>
+        <div class="form-grid">
+          <input id="productName" placeholder="اسم المنتج">
+          <select id="productType">
+            <option value="مادة أولية">مادة أولية</option>
+            <option value="منتج نصف مصنع">منتج نصف مصنع</option>
+            <option value="منتج نهائي">منتج نهائي</option>
+            <option value="مواد النظافة">مواد النظافة</option>
+            <option value="مواد التغليف">مواد التغليف</option>
+          </select>
+          <input id="productCategory" placeholder="الفئة">
+          <select id="productUnit">
+            <option>كغ</option><option>لتر</option><option>وحدة</option><option>علبة</option><option>كرتون</option>
+          </select>
+          <input id="productBarcode" placeholder="الباركود اختياري">
+          <input id="productCost" type="number" step="0.01" min="0" placeholder="سعر الشراء">
+          <input id="productSalePrice" type="number" step="0.01" min="0" placeholder="سعر البيع اختياري">
+          <input id="productMin" type="number" step="0.001" min="0" placeholder="الحد الأدنى">
+          <button class="btn btn-primary" onclick="addProduct()">إضافة المنتج</button>
+        </div>
+        <div class="notice">
+          بعد إضافة المنتج سيظهر تلقائياً في قوائم الاختيار داخل المخزون والمشتريات والتحويلات والوصفات.
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead>
+            <tr>
+              <th>الكود</th><th>المنتج</th><th>النوع</th><th>الفئة</th><th>الوحدة</th>
+              <th>سعر الشراء</th><th>سعر البيع</th><th>الحد الأدنى</th><th>الباركود</th><th class="no-print">إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="productsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+<section id="inventory" class="page">
+      <div class="page-title"><h2>المخزون</h2><div class="actions no-print"><button class="btn btn-soft" onclick="printPage('inventory')">طباعة</button><button class="btn btn-blue" onclick="exportInventory()">تصدير CSV</button></div></div>
+      <div class="grid">
+        <div class="card kpi"><span>عدد المواد</span><strong id="invCount">0</strong></div>
+        <div class="card kpi"><span>قيمة المخزون</span><strong id="invValue">0 DH</strong></div>
+        <div class="card kpi"><span>مواد ناقصة</span><strong id="invLow">0</strong></div>
+      </div>
+      <div class="card no-print" style="margin-top:14px">
+        <h3>إضافة منتج إلى المخزون</h3>
+        <div class="form-grid">
+          <select id="invProduct"></select>
+          <select id="invLocation"></select>
+          <input id="invStock" type="number" step="0.001" placeholder="مخزون البداية">
+          <input id="invMin" type="number" step="0.001" placeholder="الحد الأدنى">
+          <input id="invCost" type="number" step="0.01" placeholder="تكلفة الوحدة">
+          <button class="btn btn-primary" onclick="addInventory()">إضافة إلى المخزون</button>
+        </div>
+        <div class="notice">المنتجات تؤخذ من قسم «المنتجات». لا يمكن إضافة منتج غير مسجل في دليل المنتجات.</div>
+      </div>
+      <div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>الكود</th><th>المادة</th><th>الفئة</th><th>الموقع</th><th>الوحدة</th><th>المخزون</th><th>الحد الأدنى</th><th>القيمة</th><th>الحالة</th><th class="no-print">إجراء</th></tr></thead><tbody id="inventoryBody"></tbody></table></div>
+    </section>
+
+    <section id="recipes" class="page">
+      <div class="page-title"><h2>الوصفات التقنية</h2><div class="actions no-print"><button class="btn btn-primary" onclick="openRecipe()">إضافة وصفة</button><button class="btn btn-soft" onclick="printPage('recipes')">طباعة</button></div></div>
+      <div id="recipesGrid" class="grid"></div>
+    </section>
+
+    
+<section id="recipe_stations" class="page">
+  <div class="page-title"><h2>بوسطات التحضير وصلاحيات الوصفات</h2><button class="btn btn-soft no-print" onclick="printPage('recipe_stations')">طباعة</button></div>
+  <div class="grid">
+    <div class="card kpi"><span>عدد الوصفات</span><strong id="rsRecipeCount">0</strong></div>
+    <div class="card kpi"><span>عدد البوسطات</span><strong id="rsStationCount">0</strong></div>
+    <div class="card kpi"><span>وصفات دون بوسط</span><strong id="rsUnassignedCount">0</strong></div>
+  </div>
+  <div class="card no-print" style="margin-top:14px">
+    <h3>إضافة بوسط تحضير</h3>
+    <div class="form-grid">
+      <input id="rsStationName" placeholder="اسم البوسط">
+      <input id="rsStationDescription" placeholder="وصف مختصر">
+      <button class="btn btn-primary" onclick="addRecipeStation()">إضافة البوسط</button>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>توزيع الوصفات على البوسطات</h3>
+    <div class="table-wrap"><table><thead><tr><th>نوع الإنتاج</th><th>البوسط</th><th>المستخدمون المسموح لهم</th><th>الحالة</th><th class="no-print">إجراء</th></tr></thead><tbody id="recipeStationsBody"></tbody></table></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>قائمة البوسطات</h3>
+    <div class="table-wrap"><table><thead><tr><th>البوسط</th><th>الوصف</th><th>عدد الوصفات</th><th class="no-print">إجراء</th></tr></thead><tbody id="stationsListBody"></tbody></table></div>
+  </div>
+</section>
+<section id="production" class="page">
+        
+      <div class="page-title"><h2>الإنتاج</h2><button class="btn btn-soft no-print" onclick="printPage('production')">طباعة</button></div>
+      <div class="card no-print">
+        <div class="form-grid"><input id="prodDate" type="date"><select id="prodRecipe"></select><input id="prodQty" type="number" step="0.1" placeholder="الكمية المطلوبة"><button class="btn btn-primary" onclick="calculateProduction()">حساب المواد</button></div>
+      </div>
+      <div id="prodCalc" style="margin-top:14px"></div>
+      <div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>الرقم</th><th>التاريخ</th><th>الوصفة</th><th>الكمية</th><th>الحالة</th><th>المستخدم</th></tr></thead><tbody id="productionBody"></tbody></table></div>
+    </section>
+
+    
+    
+    
+    
+    
+    <section id="production_requirements" class="page">
+      <div class="page-title">
+        <h2>تجميع احتياجات الإنتاج</h2>
+        <div class="actions no-print">
+          <button class="btn btn-soft" onclick="printPage('production_requirements')">طباعة</button>
+          <button class="btn btn-blue" onclick="exportProductionRequirements()">تصدير CSV</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card kpi"><span>عدد الوصفات المختارة</span><strong id="prRecipeCount">0</strong></div>
+        <div class="card kpi"><span>عدد المواد المطلوبة</span><strong id="prMaterialCount">0</strong></div>
+        <div class="card kpi"><span>مواد غير متوفرة</span><strong id="prShortageCount">0</strong></div>
+        <div class="card kpi"><span>حالة الخطة</span><strong id="prPlanStatus">جديدة</strong></div>
+      </div>
+
+      <div class="card no-print" style="margin-top:14px">
+        <h3>1. إدخال خطة الإنتاج</h3>
+        <div class="form-grid">
+          <input id="prDate" type="date">
+          <input id="prPlanName" placeholder="اسم الخطة، مثال: إنتاج صباح الجمعة">
+          <input id="prNote" placeholder="ملاحظة">
+          <select id="prFromLocation"></select>
+          <select id="prToLocation"></select>
+        </div>
+
+        <div id="productionPlanRows"></div>
+
+        <div class="actions" style="margin-top:12px">
+          <button class="btn btn-soft" onclick="addProductionPlanRow()">إضافة وصفة أخرى</button>
+          <button class="btn btn-primary" onclick="calculateProductionRequirements()">حساب وتجميع الاحتياجات</button>
+        </div>
+      </div>
+
+      <div id="productionRequirementsResult" style="margin-top:14px"></div>
+
+      <div class="card no-print" style="margin-top:14px">
+        <div class="actions">
+          <button class="btn btn-primary" onclick="createRequirementsTransfer()">إنشاء Order de Transfert جماعي</button>
+          <button class="btn btn-soft" onclick="clearProductionRequirements()">مسح الخطة</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3>سجل خطط الاحتياجات</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الرقم</th><th>التاريخ</th><th>اسم الخطة</th><th>عدد الوصفات</th>
+                <th>عدد المواد</th><th>الحالة</th><th>المستخدم</th><th class="no-print">إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="productionRequirementsHistoryBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+<section id="chicken_transform" class="page">
+      <div class="page-title">
+        <h2>مركز طبخ وتحويل المنتجات</h2>
+        <button class="btn btn-soft no-print" onclick="printPage('chicken_transform')">طباعة السجل</button>
+      </div>
+
+      <div class="grid">
+        <div class="card kpi"><span>رصيد المنتج داخل الإنتاج</span><strong id="ctProductionBalance">0</strong></div>
+        <div class="card kpi"><span>رصيد الناتج داخل البيع</span><strong id="ctSalesBalance">0</strong></div>
+        <div class="card kpi"><span>إجمالي الدفعات المعالجة</span><strong id="ctRawTotal">0</strong></div>
+        <div class="card kpi"><span>متوسط المردودية</span><strong id="ctYieldAvg">0%</strong></div>
+      </div>
+
+      <div class="card no-print" style="margin-top:14px">
+        <h3>تسجيل دفعة طبخ أو تحويل</h3>
+
+        <div class="form-grid">
+          <select id="ctProcessProfile" onchange="loadProcessProfile()"></select>
+          <select id="ctInputProduct" onchange="syncProcessProducts()"></select>
+          <select id="ctOutputProduct" onchange="renderChickenTransforms()"></select>
+          <input id="ctDate" type="date">
+          <input id="ctBatch" placeholder="رقم الدفعة / Batch">
+        </div>
+
+        <div id="ctProcessHelp" class="notice"></div>
+
+        <div class="form-grid">
+          <input id="ctRaw" type="number" step="0.001" min="0" placeholder="الكمية قبل الطبخ">
+          <input id="ctCooked" type="number" step="0.001" min="0" placeholder="الكمية بعد الطبخ">
+          <input id="ctNet" type="number" step="0.001" min="0" placeholder="الكمية النهائية إلى البيع">
+          <input id="ctNote" placeholder="ملاحظة">
+        </div>
+
+        <div id="ctPreview" class="notice">أدخل كميات الدفعة لمعاينة الحساب.</div>
+
+        <div class="actions">
+          <button class="btn btn-primary" onclick="saveChickenTransform()">اعتماد الدفعة وإضافة الناتج إلى البيع</button>
+          <button class="btn btn-soft" onclick="openProcessProfileModal()">إضافة نوع تحويل جديد</button>
+          <button class="btn btn-soft" onclick="clearChickenForm()">مسح</button>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead>
+            <tr>
+              <th>الدفعة</th><th>التاريخ</th><th>العملية</th><th>المنتج الداخل</th>
+              <th>قبل الطبخ</th><th>بعد الطبخ</th><th>المنتج الناتج</th>
+              <th>الكمية النهائية</th><th>الفقد/الهدر</th><th>المردودية</th>
+              <th>رصيد الإنتاج بعد الدفعة</th><th>المستخدم</th><th class="no-print">إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="chickenTransformBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+<section id="transfers" class="page">
+      <div class="page-title">
+        <h2>أوامر التحويل الجماعية</h2>
+        <button class="btn btn-soft no-print" onclick="printPage('transfers')">طباعة السجل</button>
+      </div>
+
+      <div class="card no-print">
+        <h3>إنشاء أمر تحويل جديد</h3>
+        <div class="form-grid">
+          <input id="trDate" type="date">
+          <select id="trFrom"></select>
+          <select id="trTo"></select>
+          <input id="trNote" placeholder="ملاحظة عامة">
+        </div>
+
+        <div class="notice">
+          اختر المخزن المرسل والمستلم مرة واحدة، ثم أضف جميع المواد والكميات المراد تحويلها داخل نفس الطلب.
+        </div>
+
+        <div id="transferItems"></div>
+
+        <div class="actions" style="margin-top:12px">
+          <button class="btn btn-soft" onclick="addTransferItemRow()">إضافة مادة أخرى</button>
+          <button class="btn btn-primary" onclick="createBatchTransfer()">إنشاء التحويل الجماعي</button>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead>
+            <tr>
+              <th>رقم التحويل</th>
+              <th>التاريخ</th>
+              <th>من</th>
+              <th>إلى</th>
+              <th>عدد المواد</th>
+              <th>الحالة</th>
+              <th>المرسل</th>
+              <th>المستلم</th>
+              <th class="no-print">إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="transfersBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="sales" class="page">
+      <div class="page-title"><h2>المبيعات</h2><button class="btn btn-blue no-print" onclick="exportSimple('sales','sales.csv')">تصدير</button></div>
+      <div class="card no-print"><div class="form-grid"><input id="saleDate" type="date"><input id="saleAmount" type="number" step="0.01" placeholder="المبلغ"><input id="saleChannel" placeholder="القناة: كاشير/توصيل"><input id="saleNote" placeholder="ملاحظة"><button class="btn btn-primary" onclick="addSale()">إضافة مبيعات</button></div></div>
+      <div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>الرقم</th><th>التاريخ</th><th>المبلغ</th><th>القناة</th><th>الملاحظة</th><th>المستخدم</th></tr></thead><tbody id="salesBody"></tbody></table></div>
+    </section>
+
+    
+    <section id="purchases" class="page">
+      <div class="page-title">
+        <h2>المشتريات</h2>
+        <button class="btn btn-blue no-print" onclick="exportSimple('purchases','purchases.csv')">تصدير</button>
+      </div>
+
+      <div class="card no-print">
+        <h3>إضافة فاتورة شراء</h3>
+        <div class="form-grid">
+          <input id="purDate" type="date">
+          <input id="purSupplier" placeholder="المورد">
+          <input id="purRef" placeholder="رقم الفاتورة">
+          <select id="purLocation"></select>
+          <input id="purNote" placeholder="ملاحظة">
+        </div>
+
+        <div id="purchaseItems"></div>
+
+        <div class="actions" style="margin-top:12px">
+          <button class="btn btn-soft" onclick="addPurchaseItemRow()">إضافة منتج آخر</button>
+          <button class="btn btn-primary" onclick="addPurchase()">حفظ الفاتورة وإضافة الكميات للمخزون</button>
+        </div>
+
+        <div id="purchaseTotalPreview" class="notice">إجمالي الفاتورة: 0.00 DH</div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead>
+            <tr>
+              <th>الرقم</th><th>التاريخ</th><th>المورد</th><th>عدد المنتجات</th>
+              <th>المبلغ</th><th>المرجع</th><th>المخزن</th><th>الحالة</th><th class="no-print">إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="purchasesBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="expenses" class="page">
+      <div class="page-title"><h2>المصاريف</h2><button class="btn btn-blue no-print" onclick="exportSimple('expenses','expenses.csv')">تصدير</button></div>
+      <div class="card no-print"><div class="form-grid"><input id="expDate" type="date"><input id="expCategory" placeholder="الفئة"><input id="expAmount" type="number" step="0.01" placeholder="المبلغ"><input id="expNote" placeholder="المبرر"><button class="btn btn-primary" onclick="addExpense()">إضافة مصروف</button></div></div>
+      <div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>الرقم</th><th>التاريخ</th><th>الفئة</th><th>المبلغ</th><th>المبرر</th><th>المستخدم</th></tr></thead><tbody id="expensesBody"></tbody></table></div>
+    </section>
+
+    <section id="reports" class="page">
+      <div class="page-title"><h2>التقارير</h2></div>
+      <div class="grid">
+        <div class="card kpi"><span>إجمالي المبيعات</span><strong id="repSales">0 DH</strong></div>
+        <div class="card kpi"><span>إجمالي المشتريات</span><strong id="repPurchases">0 DH</strong></div>
+        <div class="card kpi"><span>إجمالي المصاريف</span><strong id="repExpenses">0 DH</strong></div>
+        <div class="card kpi"><span>النتيجة الأولية</span><strong id="repNet">0 DH</strong></div>
+      </div>
+      <div class="card" style="margin-top:14px"><h3>تحميل التقارير</h3><div class="actions"><button class="btn btn-blue" onclick="exportInventory()">المخزون</button><button class="btn btn-blue" onclick="exportSimple('sales','sales.csv')">المبيعات</button><button class="btn btn-blue" onclick="exportSimple('purchases','purchases.csv')">المشتريات</button><button class="btn btn-blue" onclick="exportSimple('expenses','expenses.csv')">المصاريف</button></div></div>
+    </section>
+
+    <section id="users" class="page">
+      <div class="page-title"><h2>المستخدمون والصلاحيات</h2></div>
+      <div class="card no-print"><div class="form-grid"><input id="userName" placeholder="الاسم الكامل"><input id="userLogin" placeholder="اسم المستخدم"><input id="userPassword" type="password" placeholder="كلمة المرور"><select id="userRole"><option value="custom">مخصص</option><option value="stock">مسؤول المخزون</option><option value="production">مسؤول الإنتاج</option><option value="accounting">المحاسب</option><option value="manager">مدير</option></select><button class="btn btn-primary" onclick="addUser()">إضافة مستخدم</button></div></div>
+      <div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>الاسم</th><th>المستخدم</th><th>الدور</th><th>الحالة</th><th>عدد الصلاحيات</th><th class="no-print">إجراء</th></tr></thead><tbody id="usersBody"></tbody></table></div>
+    </section>
+
+    <section id="audit" class="page">
+      <div class="page-title"><h2>سجل النشاط</h2></div>
+      <div class="table-wrap"><table><thead><tr><th>التاريخ والساعة</th><th>المستخدم</th><th>العملية</th><th>التفاصيل</th></tr></thead><tbody id="auditBody"></tbody></table></div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="card" style="margin-bottom:14px">
+        <h3>المزامنة السحابية</h3>
+        <div class="notice">تتم المزامنة تلقائياً مع Supabase بين جميع الأجهزة.</div>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="saveDbToCloud(true)">رفع البيانات الحالية</button>
+          <button class="btn btn-soft" onclick="loadDbFromCloud().then(()=>renderAll())">تحميل من السحابة</button>
+        </div>
+      </div>
+
+      <div class="page-title"><h2>الإعدادات والنسخ الاحتياطي</h2></div>
+      <div class="card"><div class="actions"><button class="btn btn-primary" onclick="backup()">تحميل نسخة احتياطية</button><label class="btn btn-soft">استعادة نسخة<input type="file" accept=".json" style="display:none" onchange="restore(event)"></label><button class="btn btn-danger" onclick="resetDB()">إعادة ضبط</button></div><div class="notice">البيانات تحفظ داخل نفس المتصفح. حمّل نسخة احتياطية بشكل دوري.</div></div>
+    </section>
+  </div>
+</main>
+</div>
+
+<div id="recipeModal" class="modal"><div class="modal-box">
+  <h3>وصفة جديدة</h3><div class="form-grid"><input id="recName" placeholder="اسم الوصفة"><input id="recYield" type="number" step="0.1" placeholder="المردودية"><select id="recStation"></select><select id="recUnit"><option>كغ</option><option>لتر</option><option>وحدة</option></select></div>
+  <div id="recipeItems"></div><div class="actions"><button class="btn btn-soft" onclick="addRecipeRow()">إضافة مكون</button><button class="btn btn-primary" onclick="saveRecipe()">حفظ</button><button class="btn btn-soft" onclick="closeModal('recipeModal')">إلغاء</button></div>
+</div></div>
+
+<div id="permModal" class="modal"><div class="modal-box">
+  <h3 id="permTitle">صلاحيات المستخدم</h3><div class="actions"><button class="btn btn-soft" onclick="selectAllPerms(true)">تحديد الكل</button><button class="btn btn-soft" onclick="selectAllPerms(false)">إلغاء الكل</button></div><div id="permissionsBox"></div>
+  <div class="actions"><button class="btn btn-primary" onclick="savePermissions()">حفظ الصلاحيات</button><button class="btn btn-soft" onclick="closeModal('permModal')">إلغاء</button></div>
+</div></div>
+
+<script>
+const seed={"company": {"name": "مشاوي الدجاج", "branch": "العيون", "currency": "DH"}, "locations": ["المخزن الرئيسي", "مخزن الإنتاج", "مخزن البيع", "مخزن النظافة"], "permissions_catalog": [{"group": "لوحة التحكم", "items": [["dashboard.view", "مشاهدة لوحة التحكم"]]}, {"group": "المخزون", "items": [["inventory.view", "مشاهدة المخزون"], ["inventory.add", "إضافة مادة"], ["inventory.edit", "تعديل الكميات"], ["inventory.delete", "حذف مادة"], ["inventory.count", "إجراء الجرد"], ["inventory.approve_count", "اعتماد الجرد"], ["inventory.print", "طباعة المخزون"], ["inventory.export", "تصدير المخزون"]]}, {"group": "الوصفات", "items": [["recipes.view", "مشاهدة الوصفات"], ["recipes.add", "إضافة وصفة"], ["recipes.edit", "تعديل وصفة"], ["recipes.delete", "حذف وصفة"], ["recipes.print", "طباعة الوصفات"]]}, {"group": "الإنتاج", "items": [["production.view", "مشاهدة الإنتاج"], ["production.create", "إنشاء أمر إنتاج"], ["production.approve", "اعتماد الإنتاج"], ["production.cancel", "إلغاء الإنتاج"], ["production.waste", "تسجيل الهدر"], ["production.print", "طباعة الإنتاج"]]}, {"group": "التحويلات", "items": [["transfers.view", "مشاهدة التحويلات"], ["transfers.create", "إنشاء تحويل"], ["transfers.approve", "اعتماد التحويل"], ["transfers.receive", "تأكيد الاستلام"], ["transfers.cancel", "إلغاء التحويل"], ["transfers.print", "طباعة التحويل"]]}, {"group": "المبيعات", "items": [["sales.view", "مشاهدة المبيعات"], ["sales.add", "إضافة مبيعات"], ["sales.edit", "تعديل المبيعات"], ["sales.close", "إغلاق اليوم"], ["sales.export", "تصدير المبيعات"]]}, {"group": "المشتريات", "items": [["purchases.view", "مشاهدة المشتريات"], ["purchases.add", "إضافة شراء"], ["purchases.approve", "اعتماد الشراء"], ["purchases.receive", "استلام المشتريات"], ["purchases.export", "تصدير المشتريات"]]}, {"group": "المصاريف", "items": [["expenses.view", "مشاهدة المصاريف"], ["expenses.add", "إضافة مصروف"], ["expenses.approve", "اعتماد المصروف"], ["expenses.export", "تصدير المصاريف"]]}, {"group": "التقارير", "items": [["reports.view", "مشاهدة التقارير"], ["reports.print", "الطباعة"], ["reports.export", "تصدير Excel/CSV"]]}, {"group": "الملفات", "items": [["files.view", "مشاهدة الملفات"], ["files.upload", "رفع ملف"], ["files.download", "تحميل ملف"], ["files.delete", "حذف ملف"]]}, {"group": "المستخدمون", "items": [["users.view", "مشاهدة المستخدمين"], ["users.add", "إضافة مستخدم"], ["users.edit", "تعديل مستخدم"], ["users.delete", "حذف مستخدم"], ["users.permissions", "إدارة الصلاحيات"]]}, {"group": "النظام", "items": [["settings.view", "مشاهدة الإعدادات"], ["settings.backup", "نسخة احتياطية"], ["settings.restore", "استعادة نسخة"], ["audit.view", "مشاهدة سجل النشاط"]]}], "users": [{"id": 1, "name": "المدير العام", "username": "admin", "password": "1234", "role": "admin", "active": true, "permissions": ["*"]}, {"id": 2, "name": "مسؤول المخزون", "username": "stock", "password": "1234", "role": "stock", "active": true, "permissions": ["dashboard.view", "inventory.view", "inventory.add", "inventory.edit", "inventory.count", "inventory.print", "inventory.export", "transfers.view", "transfers.create", "transfers.approve", "transfers.receive", "transfers.print", "files.view", "files.upload", "files.download"]}, {"id": 3, "name": "مسؤول الإنتاج", "username": "production", "password": "1234", "role": "production", "active": true, "permissions": ["dashboard.view", "inventory.view", "recipes.view", "recipes.add", "recipes.edit", "recipes.print", "production.view", "production.create", "production.approve", "production.waste", "production.print", "transfers.view", "files.view", "files.download"]}, {"id": 4, "name": "المحاسب", "username": "accounting", "password": "1234", "role": "accounting", "active": true, "permissions": ["dashboard.view", "inventory.view", "sales.view", "sales.export", "purchases.view", "purchases.add", "purchases.export", "expenses.view", "expenses.add", "expenses.export", "reports.view", "reports.print", "reports.export", "files.view", "files.upload", "files.download"]}], "inventory": [{"id": "MAT-001", "name": "أرز خام", "category": "مواد أولية", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 50, "min": 10, "cost": 12}, {"id": "MAT-002", "name": "جزر", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 20, "min": 5, "cost": 6}, {"id": "MAT-003", "name": "طماطم", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 20, "min": 5, "cost": 7}, {"id": "MAT-004", "name": "خيار", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 15, "min": 4, "cost": 6}, {"id": "MAT-005", "name": "بصل", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 20, "min": 5, "cost": 5}, {"id": "MAT-006", "name": "فلفل", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 10, "min": 3, "cost": 10}, {"id": "MAT-007", "name": "زيت زيتون", "category": "زيوت", "unit": "لتر", "location": "المخزن الرئيسي", "stock": 12, "min": 3, "cost": 70}, {"id": "MAT-008", "name": "خل أبيض", "category": "توابل", "unit": "لتر", "location": "المخزن الرئيسي", "stock": 10, "min": 2, "cost": 8}, {"id": "MAT-009", "name": "ملح", "category": "توابل", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 5, "min": 1, "cost": 3}, {"id": "MAT-010", "name": "كمون", "category": "توابل", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 2, "min": 0.5, "cost": 50}], "recipes": [{"id": "REC-001", "name": "سلطة مغربية", "yield": 5, "unit": "كغ", "items": [{"ingredient": "طماطم", "qty": 1.5}, {"ingredient": "خيار", "qty": 1.4}, {"ingredient": "بصل", "qty": 0.75}, {"ingredient": "فلفل", "qty": 1.25}, {"ingredient": "زيت زيتون", "qty": 0.13}, {"ingredient": "ملح", "qty": 0.07}, {"ingredient": "كمون", "qty": 0.03}, {"ingredient": "خل أبيض", "qty": 0.072}]}, {"id": "REC-002", "name": "سلطة الأرز", "yield": 8, "unit": "كغ", "items": [{"ingredient": "أرز خام", "qty": 3}, {"ingredient": "جزر", "qty": 2}, {"ingredient": "زيت زيتون", "qty": 0.26}, {"ingredient": "ملح", "qty": 0.05}]}, {"id": "REC-003", "name": "أرز الكبسة", "yield": 5, "unit": "كغ", "items": [{"ingredient": "أرز خام", "qty": 5}, {"ingredient": "زيت زيتون", "qty": 0.8}, {"ingredient": "ملح", "qty": 0.017}]}], "production": [], "transfers": [], "sales": [], "purchases": [], "expenses": [], "files": [], "audit": []};
+
+const SUPABASE_URL='https://ivwdtmhjhafctxveramd.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_eoqiwJ1iHI9pOBcemfWBmQ_QRwqTv7q';
+const CLOUD_STATE_ID='main';
+let db=JSON.parse(localStorage.getItem('machawiERP')||'null')||seed;
+let cloudReady=false;
+let cloudSaving=false;
+let cloudSaveTimer=null;
+let lastCloudUpdatedAt='';
+let cloudPollingTimer=null;
+
+
+function ensureRecipePermissionsModule(){
+  if(!db.recipe_stations){
+    db.recipe_stations=[
+      {id:'ST-001',name:'بوسط السلطات',description:'تحضير السلطات'},
+      {id:'ST-002',name:'بوسط الأرز',description:'تحضير الأرز'},
+      {id:'ST-003',name:'بوسط الصوصات',description:'تحضير الصوصات'},
+      {id:'ST-004',name:'بوسط العصائر',description:'تحضير العصائر'}
+    ];
+  }
+  const wanted=[
+    ['صوص الباربيكيو','ST-003'],
+    ['سلطة ليباط','ST-001'],
+    ['السلطة المغربية','ST-001'],
+    ['سلطة الأرز','ST-002'],
+    ['أرز الكبسة','ST-002'],
+    ['صوص Bigué','ST-003'],
+    ['عصير الليمون','ST-004'],
+    ['عصير البيجامة','ST-004'],
+    ['عصير الحامض','ST-004']
+  ];
+  wanted.forEach(([name,stationId])=>{
+    let r=db.recipes.find(x=>x.name===name);
+    if(!r){
+      r={id:'REC-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),name,yield:1,unit:'كغ',stationId,items:[],active:true};
+      db.recipes.push(r);
+    }else{
+      if(!r.stationId)r.stationId=stationId;
+      if(r.active===undefined)r.active=true;
+    }
+  });
+  db.recipes.forEach((r,i)=>{
+      if(r.active===undefined)r.active=true;
+      if(!r.stationId)r.stationId='';
+      if(!r.accessCode)r.accessCode=String(1000+i);
+      if(r.assignedUserId===undefined)r.assignedUserId=null;
+    });
+    if(!db.unlocked_recipe_sessions)db.unlocked_recipe_sessions={};
+  if(!db.recipe_user_permissions)db.recipe_user_permissions={};
+  if(!db.permissions_catalog.some(g=>g.group==='بوسطات التحضير')){
+    db.permissions_catalog.splice(4,0,{group:'بوسطات التحضير',items:[
+      ['recipe_stations.view','مشاهدة بوسطات التحضير'],
+      ['recipe_stations.manage','إدارة البوسطات'],
+      ['recipe_stations.assign','توزيع الوصفات على البوسطات']
+    ]});
+  }
+  db.users.forEach(u=>{
+    if(u.role==='production'&&!u.permissions.includes('*')&&!u.permissions.includes('recipe_stations.view'))u.permissions.push('recipe_stations.view');
+  });
+}
+function ensureProductsModule(){
+  if(!db.product_documents) db.product_documents=[];
+  if(!db.product_compositions) db.product_compositions=[];
+  if(!db.products){
+    db.products=db.inventory.map((x,i)=>({
+      id:'PRD-'+String(i+1).padStart(3,'0'),
+      name:x.name,
+      type:x.category==='منتج نصف مصنع'?'منتج نصف مصنع':'مادة أولية',
+      category:x.category||'',
+      unit:x.unit,
+      barcode:'',
+      cost:Number(x.cost||0),
+      salePrice:0,
+      min:Number(x.min||0),
+      active:true
+    }));
+  }
+
+  
+  if(!db.production_requirement_plans) db.production_requirement_plans=[];
+  const reqGroupExists=db.permissions_catalog.some(g=>g.group==='احتياجات الإنتاج');
+  if(!reqGroupExists){
+    db.permissions_catalog.splice(5,0,{
+      group:'احتياجات الإنتاج',
+      items:[
+        ['production_requirements.view','مشاهدة احتياجات الإنتاج'],
+        ['production_requirements.create','إنشاء خطة احتياجات'],
+        ['production_requirements.transfer','إنشاء تحويل جماعي من الخطة'],
+        ['production_requirements.print','طباعة الخطة'],
+        ['production_requirements.export','تصدير الخطة']
+      ]
+    });
+  }
+
+  db.users.forEach(u=>{
+    if(u.role==='stock'){
+      ['production_requirements.view','production_requirements.create','production_requirements.transfer','production_requirements.print','production_requirements.export']
+        .forEach(p=>{if(!u.permissions.includes(p))u.permissions.push(p)});
+    }
+    if(u.role==='production'){
+      ['production_requirements.view','production_requirements.create','production_requirements.print']
+        .forEach(p=>{if(!u.permissions.includes(p))u.permissions.push(p)});
+    }
+  });
+
+const groupExists=db.permissions_catalog.some(g=>g.group==='المنتجات');
+  if(!groupExists){
+    db.permissions_catalog.splice(1,0,{
+      group:'المنتجات',
+      items:[
+        ['products.view','مشاهدة المنتجات'],
+        ['products.add','إضافة منتج'],
+        ['products.edit','تعديل منتج'],
+        ['products.delete','حذف منتج'],
+        ['products.export','تصدير المنتجات']
+      ]
+    });
+  }
+
+  const admin=db.users.find(u=>u.role==='admin');
+  if(admin && !admin.permissions.includes('*')) admin.permissions.push('products.view','products.add','products.edit','products.delete','products.export');
+
+  db.users.forEach(u=>{
+    if(u.role==='stock'){
+      ['products.view','products.add','products.edit','products.export'].forEach(p=>{if(!u.permissions.includes(p))u.permissions.push(p)});
+    }
+    if(u.role==='production'||u.role==='accounting'){
+      ['products.view'].forEach(p=>{if(!u.permissions.includes(p))u.permissions.push(p)});
+    }
+  });
+
+  // Convert old purchases to item-based structure
+  db.purchases=db.purchases.map(x=>{
+    if(Array.isArray(x.items)) return x;
+    return {
+      id:x.id,date:x.date,supplier:x.supplier,ref:x.ref||'',location:'المخزن الرئيسي',
+      items:[],amount:Number(x.amount||0),status:x.status||'مسجلة',note:'',user:x.user||''
+    };
+  });
+}
+
+let current=JSON.parse(sessionStorage.getItem('machawiCurrent')||'null');
+let editingUser=null;
+const pages=[
+ ['dashboard','لوحة التحكم','dashboard.view'],['products','المنتجات','products.view'],['inventory','المخزون','inventory.view'],['recipes','الوصفات','recipes.view'],['recipe_stations','بوسطات التحضير','recipe_stations.view'],
+ ['production','الإنتاج','production.view'],['production_requirements','احتياجات الإنتاج','production_requirements.view'],['chicken_transform','تحويل الدجاج','chicken_transform.view'],['transfers','التحويلات','transfers.view'],['sales','المبيعات','sales.view'],
+ ['purchases','المشتريات','purchases.view'],['expenses','المصاريف','expenses.view'],['reports','التقارير','reports.view'],
+ ['users','المستخدمون','users.view'],['audit','سجل النشاط','audit.view'],['settings','الإعدادات','settings.view']
+];
+const roleNames={admin:'المدير العام',stock:'مسؤول المخزون',production:'مسؤول الإنتاج',accounting:'المحاسب',manager:'مدير',custom:'مخصص'};
+
+function setCloudStatus(text,type='warn'){
+  const el=document.getElementById('cloudSyncStatus');
+  if(!el)return;
+  el.textContent=text;
+  el.className='badge '+type;
+}
+
+function cloudHeaders(extra={}){
+  return {
+    'apikey':SUPABASE_PUBLISHABLE_KEY,
+    'Authorization':'Bearer '+SUPABASE_PUBLISHABLE_KEY,
+    'Content-Type':'application/json',
+    ...extra
+  };
+}
+
+function cacheDbLocally(){
+  localStorage.setItem('machawiERP',JSON.stringify(db));
+}
+
+async function loadDbFromCloud(){
+  setCloudStatus('جاري المزامنة...','warn');
+  try{
+    const response=await fetch(
+      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at`,
+      {headers:cloudHeaders()}
+    );
+    if(!response.ok)throw new Error(await response.text());
+    const rows=await response.json();
+
+    if(rows.length && rows[0].data){
+      db=rows[0].data;
+      lastCloudUpdatedAt=rows[0].updated_at||'';
+      cacheDbLocally();
+      cloudReady=true;
+      setCloudStatus('متصل بالسحابة','ok');
+      return true;
+    }
+
+    // First run: upload the current local database.
+    await saveDbToCloud(true);
+    cloudReady=true;
+    setCloudStatus('تم إنشاء البيانات السحابية','ok');
+    return true;
+  }catch(error){
+    console.error('Supabase load error',error);
+    cloudReady=false;
+    setCloudStatus('حفظ محلي فقط','bad');
+    return false;
+  }
+}
+
+async function saveDbToCloud(force=false){
+  if(cloudSaving)return;
+  cloudSaving=true;
+  setCloudStatus('جاري الحفظ...','warn');
+  try{
+    const response=await fetch(
+      `${SUPABASE_URL}/rest/v1/machawi_app_state?on_conflict=id`,
+      {
+        method:'POST',
+        headers:cloudHeaders({'Prefer':'resolution=merge-duplicates,return=representation'}),
+        body:JSON.stringify([{
+          id:CLOUD_STATE_ID,
+          data:db,
+          updated_at:new Date().toISOString()
+        }])
+      }
+    );
+    if(!response.ok)throw new Error(await response.text());
+    const rows=await response.json();
+    if(rows?.[0]?.updated_at)lastCloudUpdatedAt=rows[0].updated_at;
+    cloudReady=true;
+    setCloudStatus('تم الحفظ','ok');
+  }catch(error){
+    console.error('Supabase save error',error);
+    cloudReady=false;
+    setCloudStatus('تعذر الحفظ السحابي','bad');
+  }finally{
+    cloudSaving=false;
+  }
+}
+
+function scheduleCloudSave(){
+  cacheDbLocally();
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer=setTimeout(()=>saveDbToCloud(),350);
+}
+
+async function pollCloudChanges(){
+  if(cloudSaving)return;
+  try{
+    const response=await fetch(
+      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at`,
+      {headers:cloudHeaders()}
+    );
+    if(!response.ok)return;
+    const rows=await response.json();
+    if(!rows.length)return;
+    const remote=rows[0];
+    if(remote.updated_at && remote.updated_at!==lastCloudUpdatedAt){
+      db=remote.data;
+      lastCloudUpdatedAt=remote.updated_at;
+      cacheDbLocally();
+      if(current)renderAll();
+      setCloudStatus('تم تحديث البيانات','ok');
+    }
+  }catch(error){
+    setCloudStatus('الاتصال متقطع','warn');
+  }
+}
+
+function startCloudPolling(){
+  clearInterval(cloudPollingTimer);
+  cloudPollingTimer=setInterval(pollCloudChanges,5000);
+}
+
+async function initializeCloudApp(){
+  await loadDbFromCloud();
+  startCloudPolling();
+  if(current)start();
+}
+
+function save(){scheduleCloudSave();renderAll()}
+function can(p){if(!current)return false;const u=db.users.find(x=>x.id===current.id);return u&&(u.permissions.includes('*')||u.permissions.includes(p))}
+function requirePerm(p){if(!can(p)){alert('ليست لديك صلاحية لهذه العملية');return false}return true}
+function log(action,details=''){db.audit.unshift({date:new Date().toLocaleString('ar-MA'),user:current?.name||'النظام',action,details});db.audit=db.audit.slice(0,500)}
+function doLogin(){const u=db.users.find(x=>x.username===loginUser.value.trim()&&x.password===loginPass.value&&x.active);if(!u)return alert('بيانات الدخول غير صحيحة');current={id:u.id,name:u.name,role:u.role};sessionStorage.setItem('machawiCurrent',JSON.stringify(current));log('تسجيل الدخول','دخول إلى النظام');scheduleCloudSave();start()}
+function logout(){sessionStorage.removeItem('machawiCurrent');location.reload()}
+function repairLegacyInventoryLocations(){
+  db.inventory.forEach(row=>{
+    const product=db.products.find(p=>p.id===row.productId || p.name===row.name);
+    if(product){
+      row.productId=product.id;
+      row.name=product.name;
+      row.unit=product.unit;
+      row.category=product.category||product.type;
+    }
+    if(!row.location || String(row.location).trim()===''){
+      // Legacy rows with no warehouse are assigned to the main warehouse.
+      row.location='المخزن الرئيسي';
+    }
+  });
+}
+
+function start(){ensureProductsModule();ensureRecipePermissionsModule();ensureChickenTransformModule();repairLegacyInventoryLocations();cacheDbLocally();login.classList.add('hidden');app.classList.remove('hidden');currentName.textContent=current.name;currentRole.textContent=roleNames[current.role]||current.role;buildMenu();setDates();renderAll()}
+function buildMenu(){menu.innerHTML='';let first=null;pages.forEach(([id,label,perm])=>{if(!can(perm))return;const b=document.createElement('button');b.textContent=label;b.onclick=()=>showPage(id,b);if(!first){first=b;b.classList.add('active')}menu.appendChild(b)});if(first){const id=pages.find(x=>x[1]===first.textContent)[0];document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));document.getElementById(id).classList.add('show')}}
+function showPage(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));document.getElementById(id).classList.add('show');document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('active'));b.classList.add('active');app.classList.remove('menu-open')}
+function setDates(){const d=new Date().toISOString().slice(0,10);['prodDate','trDate','saleDate','purDate','expDate','ctDate','prDate'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=d});todayLabel.textContent=new Date().toLocaleDateString('ar-MA',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
+function money(n){return Number(n||0).toFixed(2)+' DH'}
+function renderDashboard(){const today=new Date().toISOString().slice(0,10);const sales=db.sales.filter(x=>x.date===today).reduce((s,x)=>s+Number(x.amount),0);const exp=db.expenses.filter(x=>x.date===today).reduce((s,x)=>s+Number(x.amount),0);const low=db.inventory.filter(x=>Number(x.stock)<=Number(x.min));kpiSales.textContent=money(sales);kpiExpenses.textContent=money(exp);kpiLow.textContent=low.length;kpiTransfers.textContent=db.transfers.filter(x=>x.status!=='تم الاستلام'&&x.status!=='ملغى').length;alerts.innerHTML=low.length?low.map(x=>`<div class="notice">${x.name}: ${x.stock} ${x.unit} فقط</div>`).join(''):'<span class="badge ok">لا توجد تنبيهات</span>';const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-(6-i));return d.toISOString().slice(0,10)});const vals=days.map(d=>db.sales.filter(x=>x.date===d).reduce((s,x)=>s+Number(x.amount),0));const max=Math.max(...vals,1);salesChart.innerHTML=vals.map((v,i)=>`<div class="bar" title="${days[i]}: ${v}" style="height:${Math.max(4,v/max*100)}%"></div>`).join('')}
+
+function renderProducts(){
+  productsCount.textContent=db.products.length;
+  rawProductsCount.textContent=db.products.filter(x=>x.type==='مادة أولية').length;
+  semiProductsCount.textContent=db.products.filter(x=>x.type==='منتج نصف مصنع').length;
+  finishedProductsCount.textContent=db.products.filter(x=>x.type==='منتج نهائي').length;
+
+  productsBody.innerHTML=db.products.map((x,i)=>`
+    <tr>
+      <td>${x.id}</td><td>${x.name}</td><td>${x.type}</td><td>${x.category||''}</td><td>${x.unit}</td>
+      <td>${money(x.cost)}</td><td>${money(x.salePrice)}</td><td>${x.min}</td><td>${x.barcode||''}</td>
+      <td class="no-print">
+        <button class="btn btn-blue" onclick="openProductDetail(${i})">فتح التفاصيل</button>
+        <button class="btn btn-danger" onclick="deleteProduct(${i})">حذف</button>
+      </td>
+    </tr>`).join('');
+}
+
+
+let currentProductIndex=null;
+
+function openProductDetail(i){
+  currentProductIndex=i;
+  const p=db.products[i];
+  pdTitle.textContent=p.name;
+  pdSubtitle.textContent=`${p.id} — ${p.type} — ${p.unit}`;
+
+  pdName.value=p.name||'';
+  pdType.value=p.type||'مادة أولية';
+  pdCategory.value=p.category||'';
+  pdUnit.value=p.unit||'كغ';
+  pdBarcode.value=p.barcode||'';
+  pdCost.value=Number(p.cost||0);
+  pdSale.value=Number(p.salePrice||0);
+  pdMin.value=Number(p.min||0);
+
+  renderProductDetail();
+  showProductTab('info');
+  productDetailModal.classList.add('open');
+}
+
+function showProductTab(name){
+  const modal=document.getElementById('productDetailModal');
+  if(!modal)return;
+  modal.querySelectorAll('.product-tab').forEach(x=>x.classList.add('hidden'));
+  const map={
+    info:'pdTabInfo',
+    stock:'pdTabStock',
+    production:'pdTabProduction',
+    recipe:'pdTabRecipe',
+    composition:'pdTabComposition',
+    history:'pdTabHistory',
+    documents:'pdTabDocuments'
+  };
+  const target=document.getElementById(map[name]);
+  if(target)target.classList.remove('hidden');
+}
+
+function renderProductDetail(){
+  if(currentProductIndex===null)return;
+  const p=db.products[currentProductIndex];
+  const stocks=db.inventory.filter(x=>x.productId===p.id || x.name===p.name);
+  const totalStock=stocks.reduce((s,x)=>s+Number(x.stock||0),0);
+  const totalValue=stocks.reduce((s,x)=>s+Number(x.stock||0)*Number(x.cost||0),0);
+  const avgCost=totalStock>0?totalValue/totalStock:Number(p.cost||0);
+  const margin=Number(p.salePrice||0)>0?((Number(p.salePrice)-avgCost)/Number(p.salePrice)*100):0;
+
+  pdTotalStock.textContent=totalStock.toFixed(3)+' '+p.unit;
+  pdAvgCost.textContent=money(avgCost);
+  pdSalePrice.textContent=money(p.salePrice||0);
+  pdMargin.textContent=margin.toFixed(1)+'%';
+
+  pdStockBody.innerHTML=stocks.length?stocks.map(x=>`
+    <tr><td>${x.location}</td><td>${Number(x.stock).toFixed(3)}</td><td>${x.unit}</td><td>${money(Number(x.stock)*Number(x.cost||0))}</td></tr>
+  `).join(''):'<tr><td colspan="4">لا يوجد مخزون لهذا المنتج</td></tr>';
+
+  renderProductProduction(p);
+  renderProductRecipe(p);
+  renderProductComposition(p);
+  renderProductHistory(p);
+  renderProductDocuments(p);
+}
+
+function saveProductDetail(){
+  if(!requirePerm('products.edit'))return;
+  const p=db.products[currentProductIndex];
+  const oldName=p.name;
+  p.name=pdName.value.trim();
+  p.type=pdType.value;
+  p.category=pdCategory.value.trim();
+  p.unit=pdUnit.value;
+  p.barcode=pdBarcode.value.trim();
+  p.cost=Number(pdCost.value||0);
+  p.salePrice=Number(pdSale.value||0);
+  p.min=Number(pdMin.value||0);
+
+  db.inventory.forEach(x=>{
+    if(x.productId===p.id || x.name===oldName){
+      x.productId=p.id;
+      x.name=p.name;
+      x.category=p.category||p.type;
+      x.unit=p.unit;
+      if(!x.min)x.min=p.min;
+    }
+  });
+
+  db.recipes.forEach(r=>r.items.forEach(it=>{
+    if(it.ingredient===oldName)it.ingredient=p.name;
+  }));
+
+  log('تعديل منتج',p.name);
+  save();
+  renderProductDetail();
+}
+
+function renderProductProduction(p){
+  const isChicken=p.name==='Poulet mariné kg'||p.name==='Poulet Haché cuit';
+  const records=isChicken?(db.chicken_transforms||[]):[];
+
+  pdProductionFlow.innerHTML=isChicken?`
+    شراء / تحويل Poulet mariné
+    <br>↓<br>مخزن الإنتاج
+    <br>↓<br>وزن قبل الطبخ
+    <br>↓<br>وزن بعد الطبخ
+    <br>↓<br>الفرم وإزالة الجلد والهدر
+    <br>↓<br>Poulet Haché cuit إلى مخزن البيع
+  `:'لا توجد دورة إنتاج خاصة مسجلة لهذا المنتج.';
+
+  pdProductionBody.innerHTML=records.length?records.map(x=>`
+    <tr><td>${x.date}</td><td>${x.batch}</td><td>${x.raw}</td><td>${x.cooked}</td><td>${x.net}</td><td>${Number(x.totalWaste).toFixed(3)}</td><td>${Number(x.yieldPct).toFixed(1)}%</td></tr>
+  `).join(''):'<tr><td colspan="7">لا توجد دفعات إنتاج</td></tr>';
+}
+
+function renderProductRecipe(p){
+  const recipe=db.recipes.find(r=>r.name===p.name);
+  if(!recipe){
+    pdRecipeBody.innerHTML='<tr><td colspan="3">لا توجد وصفة مرتبطة بهذا المنتج</td></tr>';
+    return;
+  }
+  pdRecipeBody.innerHTML=recipe.items.map(it=>{
+    const ing=db.products.find(x=>x.name===it.ingredient);
+    return `<tr><td>${it.ingredient}</td><td>${it.qty}</td><td>${ing?.unit||''}</td></tr>`;
+  }).join('');
+}
+
+
+function renderProductComposition(p){
+  if(!db.product_compositions)db.product_compositions=[];
+  const comp=db.product_compositions.find(x=>x.productId===p.id);
+
+  pdCompositionUnit.innerHTML=['كغ','غ','لتر','مل','وحدة','علبة','كرتون']
+    .map(u=>`<option ${u===(comp?.unit||p.unit)?'selected':''}>${u}</option>`).join('');
+  pdCompositionYield.value=comp?.yieldQty||1;
+  pdCompositionRows.innerHTML='';
+
+  if(comp && comp.items?.length){
+    comp.items.forEach(it=>addProductCompositionRow(it.productId,it.qty,it.unit));
+  }else{
+    addProductCompositionRow();
+  }
+  renderProductCompositionSummary(p);
+}
+
+function addProductCompositionRow(productId='',qty='',unit=''){
+  if(currentProductIndex===null || !db.products[currentProductIndex])return;
+  const currentProduct=db.products[currentProductIndex];
+  const available=db.products.filter(x=>x.id!==currentProduct.id && x.active!==false);
+  const container=document.getElementById('pdCompositionRows');
+  if(!container)return;
+
+  const row=document.createElement('div');
+  row.className='composition-row';
+
+  const selectedProduct=available.find(x=>x.id===productId);
+  const defaultUnit=unit || selectedProduct?.unit || available[0]?.unit || 'كغ';
+
+  row.innerHTML=`
+    <select class="comp-product">
+      ${available.map(x=>`<option value="${x.id}" ${x.id===productId?'selected':''}>${x.name}</option>`).join('')}
+    </select>
+    <input class="comp-qty" type="number" step="0.001" min="0" value="${qty}" placeholder="الكمية">
+    <select class="comp-unit">
+      ${['كغ','غ','لتر','مل','وحدة','علبة','كرتون'].map(u=>`<option ${u===defaultUnit?'selected':''}>${u}</option>`).join('')}
+    </select>
+    <button type="button" class="btn btn-danger">حذف</button>`;
+
+  container.appendChild(row);
+
+  const productSelect=row.querySelector('.comp-product');
+  const unitSelect=row.querySelector('.comp-unit');
+  const deleteBtn=row.querySelector('button');
+
+  productSelect?.addEventListener('change',e=>{
+    const pr=db.products.find(x=>x.id===e.target.value);
+    if(pr && unitSelect)unitSelect.value=pr.unit;
+  });
+
+  deleteBtn?.addEventListener('click',()=>row.remove());
+}
+
+function normalizeCompositionQty(qty,unit){
+  if(unit==='غ')return {qty:qty/1000,unit:'كغ'};
+  if(unit==='مل')return {qty:qty/1000,unit:'لتر'};
+  return {qty,unit};
+}
+
+function saveProductComposition(){
+  if(!requirePerm('products.edit'))return;
+
+  if(currentProductIndex===null || !db.products[currentProductIndex]){
+    return alert('تعذر تحديد المنتج الحالي. أغلق البطاقة وافتحها من جديد.');
+  }
+
+  const p=db.products[currentProductIndex];
+  const yieldInput=document.getElementById('pdCompositionYield');
+  const unitSelect=document.getElementById('pdCompositionUnit');
+  const rowsContainer=document.getElementById('pdCompositionRows');
+
+  if(!yieldInput || !unitSelect || !rowsContainer){
+    return alert('حدث خطأ في واجهة التركيب. يرجى إعادة فتح بطاقة المنتج.');
+  }
+
+  const yieldQty=Number(yieldInput.value||0);
+  if(!Number.isFinite(yieldQty) || yieldQty<=0){
+    return alert('أدخل كمية نهائية صحيحة للمنتج');
+  }
+
+  const rowEls=[...rowsContainer.querySelectorAll('.composition-row')];
+  if(!rowEls.length){
+    return alert('أضف مكوّناً واحداً على الأقل');
+  }
+
+  const items=[];
+  for(const row of rowEls){
+    const productSelect=row.querySelector('.comp-product');
+    const qtyInput=row.querySelector('.comp-qty');
+    const unitInput=row.querySelector('.comp-unit');
+
+    if(!productSelect || !qtyInput || !unitInput)continue;
+
+    const productId=productSelect.value;
+    const qty=Number(qtyInput.value||0);
+    const unit=unitInput.value;
+
+    if(!productId || !Number.isFinite(qty) || qty<=0)continue;
+    if(productId===p.id){
+      return alert('لا يمكن ربط المنتج بنفسه');
+    }
+
+    items.push({productId,qty,unit});
+  }
+
+  if(!items.length){
+    return alert('أدخل كمية صحيحة لمكوّن واحد على الأقل');
+  }
+
+  const duplicate=items.find((x,i)=>items.findIndex(y=>y.productId===x.productId)!==i);
+  if(duplicate){
+    const pr=db.products.find(x=>x.id===duplicate.productId);
+    return alert('المكوّن مكرر: '+(pr?.name||''));
+  }
+
+  if(!Array.isArray(db.product_compositions))db.product_compositions=[];
+
+  const record={
+    id:(db.product_compositions.find(x=>x.productId===p.id)?.id)||('COMP-'+Date.now()),
+    productId:p.id,
+    productName:p.name,
+    yieldQty,
+    unit:unitSelect.value,
+    items,
+    updatedAt:new Date().toISOString(),
+    updatedBy:current.name
+  };
+
+  db.product_compositions=db.product_compositions.filter(x=>x.productId!==p.id);
+  db.product_compositions.push(record);
+
+  // Sync composition with recipes / production requirements
+  const recipeItems=items.map(it=>{
+    const pr=db.products.find(x=>x.id===it.productId);
+    const normalized=normalizeCompositionQty(it.qty,it.unit);
+    return {
+      ingredient:pr?.name||'',
+      productId:it.productId,
+      qty:normalized.qty,
+      sourceQty:it.qty,
+      sourceUnit:it.unit,
+      normalizedUnit:normalized.unit
+    };
+  }).filter(x=>x.ingredient);
+
+  let recipe=db.recipes.find(r=>r.productId===p.id || r.name===p.name);
+  if(recipe){
+    recipe.productId=p.id;
+    recipe.name=p.name;
+    recipe.yield=yieldQty;
+    recipe.unit=unitSelect.value;
+    recipe.items=recipeItems;
+  }else{
+    db.recipes.push({
+      id:'REC-'+Date.now(),
+      productId:p.id,
+      name:p.name,
+      yield:yieldQty,
+      unit:unitSelect.value,
+      items:recipeItems
+    });
+  }
+
+  log('حفظ مكونات منتج',`${p.name} — ${items.length} مكونات`);
+  scheduleCloudSave();
+
+  renderProducts();
+  renderRecipes();
+  renderProductComposition(p);
+  renderProductRecipe(p);
+  renderProductHistory(p);
+
+  alert('تم حفظ مكونات المنتج بنجاح');
+}
+
+function clearProductComposition(){
+  if(!requirePerm('products.edit'))return;
+  const p=db.products[currentProductIndex];
+  if(!confirm('حذف تركيب هذا المنتج؟'))return;
+  db.product_compositions=db.product_compositions.filter(x=>x.productId!==p.id);
+  db.recipes=db.recipes.filter(r=>r.name!==p.name);
+  log('حذف تركيب منتج',p.name);
+  save();
+  renderProductComposition(p);
+  renderProductRecipe(p);
+}
+
+function renderProductCompositionSummary(p){
+  const comp=(db.product_compositions||[]).find(x=>x.productId===p.id);
+  if(!comp||!comp.items?.length){
+    pdCompositionSummaryBody.innerHTML='<tr><td colspan="4">لا يوجد تركيب محفوظ لهذا المنتج</td></tr>';
+    return;
+  }
+
+  pdCompositionSummaryBody.innerHTML=comp.items.map(it=>{
+    const pr=db.products.find(x=>x.id===it.productId);
+    const pct=comp.yieldQty>0?(Number(it.qty)/Number(comp.yieldQty)*100):0;
+    return `<tr><td>${pr?.name||''}</td><td>${Number(it.qty).toFixed(3)}</td><td>${it.unit}</td><td>${pct.toFixed(1)}%</td></tr>`;
+  }).join('');
+}
+
+function renderProductHistory(p){
+  const rows=[];
+
+  (db.purchases||[]).forEach(x=>(x.items||[]).forEach(it=>{
+    if(it.productId===p.id||it.name===p.name)rows.push({
+      date:x.date,action:'شراء',value:`${it.qty} ${it.unit} / ${money(it.total)}`,
+      user:x.user||'',details:`المورد: ${x.supplier}`
+    });
+  }));
+
+  (db.transfers||[]).forEach(x=>(x.items||[]).forEach(it=>{
+    if(it.item===p.name)rows.push({
+      date:x.date,action:'تحويل',value:`${it.qty} ${p.unit}`,
+      user:x.sender||'',details:`${x.from} → ${x.to} — ${x.status}`
+    });
+  }));
+
+  (db.chicken_transforms||[]).forEach(x=>{
+    if(p.name==='Poulet mariné kg')rows.push({
+      date:x.date,action:'استهلاك في الطبخ',value:`${x.raw} كغ`,
+      user:x.user,details:`دفعة ${x.batch}`
+    });
+    if(p.name==='Poulet Haché cuit')rows.push({
+      date:x.date,action:'إنتاج صافي',value:`${x.net} كغ`,
+      user:x.user,details:`دفعة ${x.batch} — مردودية ${Number(x.yieldPct).toFixed(1)}%`
+    });
+  });
+
+  pdHistoryBody.innerHTML=rows.length?rows.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`
+    <tr><td>${x.date}</td><td>${x.action}</td><td>${x.value}</td><td>${x.user}</td><td>${x.details}</td></tr>
+  `).join(''):'<tr><td colspan="5">لا توجد حركات لهذا المنتج</td></tr>';
+}
+
+function renderProductDocuments(p){
+  if(!db.product_documents)db.product_documents=[];
+  const docs=db.product_documents.filter(x=>x.productId===p.id);
+  pdDocumentsList.innerHTML=docs.length?docs.map((d,i)=>`
+    <div class="file-card">
+      <b>${d.title}</b><br><small>${d.name} — ${d.date}</small>
+      <div class="actions">
+        <button class="btn btn-soft" onclick="downloadProductDocument('${d.id}')">تحميل</button>
+        <button class="btn btn-danger" onclick="deleteProductDocument('${d.id}')">حذف</button>
+      </div>
+    </div>
+  `).join(''):'<div class="notice">لا توجد ملفات مرتبطة بهذا المنتج.</div>';
+}
+
+function saveProductDocument(){
+  if(!requirePerm('files.upload'))return;
+  const p=db.products[currentProductIndex];
+  const f=pdDocFile.files[0];
+  if(!f)return alert('اختر ملفاً');
+  if(f.size>2*1024*1024)return alert('الحد الأقصى 2 ميغابايت في هذه النسخة');
+
+  const r=new FileReader();
+  r.onload=()=>{
+    if(!db.product_documents)db.product_documents=[];
+    db.product_documents.push({
+      id:'PDOC-'+Date.now(),
+      productId:p.id,
+      title:pdDocTitle.value.trim()||f.name,
+      name:f.name,
+      type:f.type,
+      data:r.result,
+      date:new Date().toLocaleString('ar-MA'),
+      user:current.name
+    });
+    pdDocTitle.value='';pdDocFile.value='';
+    log('رفع ملف للمنتج',`${p.name} — ${f.name}`);
+    save();
+    renderProductDocuments(p);
+  };
+  r.readAsDataURL(f);
+}
+
+function downloadProductDocument(id){
+  const d=(db.product_documents||[]).find(x=>x.id===id);
+  if(!d)return;
+  const a=document.createElement('a');a.href=d.data;a.download=d.name;a.click();
+}
+
+function deleteProductDocument(id){
+  if(!requirePerm('files.delete'))return;
+  if(confirm('حذف الملف؟')){
+    db.product_documents=db.product_documents.filter(x=>x.id!==id);
+    save();
+    renderProductDocuments(db.products[currentProductIndex]);
+  }
+}
+
+function printProductDetail(){
+  const p=db.products[currentProductIndex];
+  const stocks=db.inventory.filter(x=>x.productId===p.id||x.name===p.name);
+  const rows=stocks.map(x=>`<tr><td>${x.location}</td><td>${x.stock}</td><td>${x.unit}</td><td>${money(x.stock*x.cost)}</td></tr>`).join('');
+  const w=open('','_blank');
+  w.document.write(`<html dir="rtl"><meta charset="utf-8"><style>
+  body{font-family:Tahoma;padding:30px}h1,h2{text-align:center}table{width:100%;border-collapse:collapse}th,td{border:1px solid #555;padding:10px}
+  </style><body><h1>مشاوي الدجاج</h1><h2>بطاقة المنتج: ${p.name}</h2>
+  <p><b>الكود:</b> ${p.id} — <b>النوع:</b> ${p.type} — <b>الوحدة:</b> ${p.unit}</p>
+  <p><b>سعر الشراء:</b> ${money(p.cost)} — <b>سعر البيع:</b> ${money(p.salePrice)}</p>
+  <table><thead><tr><th>المخزن</th><th>الكمية</th><th>الوحدة</th><th>القيمة</th></tr></thead><tbody>${rows}</tbody></table>
+  <script>onload=()=>print()<\/script></body></html>`);
+  w.document.close();
+}
+
+function addProduct(){
+  if(!requirePerm('products.add'))return;
+  const name=productName.value.trim();
+  if(!name)return alert('أدخل اسم المنتج');
+  if(db.products.some(x=>x.name.toLowerCase()===name.toLowerCase()))return alert('المنتج موجود مسبقاً');
+
+  const product={
+    id:'PRD-'+String(db.products.length+1).padStart(3,'0'),
+    name,
+    type:productType.value,
+    category:productCategory.value.trim(),
+    unit:productUnit.value,
+    barcode:productBarcode.value.trim(),
+    cost:Number(productCost.value||0),
+    salePrice:Number(productSalePrice.value||0),
+    min:Number(productMin.value||0),
+    active:true
+  };
+  db.products.push(product);
+  log('إضافة منتج',product.name);
+  productName.value=productCategory.value=productBarcode.value=productCost.value=productSalePrice.value=productMin.value='';
+  save();
+}
+
+function deleteProduct(i){
+  if(!requirePerm('products.delete'))return;
+  const p=db.products[i];
+  const used=db.inventory.some(x=>x.productId===p.id||x.name===p.name);
+  if(used)return alert('لا يمكن حذف المنتج لأنه مرتبط بالمخزون. يمكنك تعطيله لاحقاً بدلاً من الحذف.');
+  if(confirm('حذف المنتج؟')){
+    log('حذف منتج',p.name);
+    db.products.splice(i,1);
+    save();
+  }
+}
+
+function exportProducts(){
+  if(!requirePerm('products.export'))return;
+  csv('products.csv',[['الكود','المنتج','النوع','الفئة','الوحدة','سعر الشراء','سعر البيع','الحد الأدنى','الباركود'],
+    ...db.products.map(x=>[x.id,x.name,x.type,x.category,x.unit,x.cost,x.salePrice,x.min,x.barcode])]);
+}
+
+function renderInventory(){
+  invLocation.innerHTML=db.locations.map(x=>`<option>${x}</option>`).join('');
+  invProduct.innerHTML=db.products.filter(x=>x.active!==false).map(x=>`<option value="${x.id}">${x.name} — ${x.unit}</option>`).join('');
+
+  const selected=db.products.find(x=>x.id===invProduct.value);
+  if(selected){
+    if(!invMin.value) invMin.value=selected.min||0;
+    if(!invCost.value) invCost.value=selected.cost||0;
+  }
+
+  invCount.textContent=db.inventory.length;
+  invValue.textContent=money(db.inventory.reduce((s,x)=>s+Number(x.stock)*Number(x.cost||0),0));
+  invLow.textContent=db.inventory.filter(x=>Number(x.stock)<=Number(x.min)).length;
+
+  inventoryBody.innerHTML=db.inventory.map((x,i)=>`
+    <tr>
+      <td>${x.id}</td><td>${x.name}</td><td>${x.category}</td><td>${x.location}</td><td>${x.unit}</td>
+      <td><input ${can('inventory.edit')?'':'disabled'} type="number" step="0.001" value="${x.stock}" onchange="updateInv(${i},this.value)"></td>
+      <td>${x.min}</td><td>${money(x.stock*x.cost)}</td>
+      <td><span class="badge ${x.stock<=x.min?'bad':'ok'}">${x.stock<=x.min?'ناقص':'متوفر'}</span></td>
+      <td class="no-print"><button class="btn btn-danger" onclick="deleteInv(${i})">حذف</button></td>
+    </tr>`).join('');
+}
+
+function addInventory(){
+  if(!requirePerm('inventory.add'))return;
+  const p=db.products.find(x=>x.id===invProduct.value);
+  if(!p)return alert('اختر منتجاً');
+
+  const exists=db.inventory.find(x=>x.productId===p.id && x.location===invLocation.value);
+  if(exists)return alert('هذا المنتج موجود مسبقاً في نفس المخزن');
+
+  db.inventory.push({
+    id:'MAT-'+String(db.inventory.length+1).padStart(3,'0'),
+    productId:p.id,
+    name:p.name,
+    category:p.category||p.type,
+    unit:p.unit,
+    location:invLocation.value,
+    stock:Number(invStock.value||0),
+    min:Number(invMin.value||p.min||0),
+    cost:Number(invCost.value||p.cost||0)
+  });
+  log('إضافة منتج إلى المخزون',`${p.name} — ${invLocation.value}`);
+  invStock.value='';
+  save();
+}
+
+function updateInv(i,v){if(!requirePerm('inventory.edit'))return;const old=db.inventory[i].stock;db.inventory[i].stock=Number(v);log('تعديل المخزون',`${db.inventory[i].name}: ${old} → ${v}`);save()}
+function deleteInv(i){if(!requirePerm('inventory.delete'))return;if(confirm('حذف المادة؟')){log('حذف مادة',db.inventory[i].name);db.inventory.splice(i,1);save()}}
+
+function hasRecipePermission(recipeId,action){
+  if(!current)return false;
+  const user=db.users.find(u=>u.id===current.id);
+  if(!user)return false;
+  if(user.permissions.includes('*'))return true;
+  return ((db.recipe_user_permissions?.[user.id]?.[recipeId])||[]).includes(action);
+}
+function getRecipeStationName(id){return db.recipe_stations.find(s=>s.id===id)?.name||'غير محدد'}
+
+function isRecipeAssignedToCurrentUser(recipe){
+  if(!current)return false;
+  const user=db.users.find(u=>u.id===current.id);
+  if(!user)return false;
+  if(user.permissions.includes('*'))return true;
+  if(Number(recipe.assignedUserId)===Number(user.id))return true;
+  return ((db.unlocked_recipe_sessions?.[user.id])||[]).includes(recipe.id);
+}
+
+function unlockRecipeByCode(){
+  const input=document.getElementById('recipeAccessCode');
+  const code=input?.value.trim();
+  if(!code)return alert('أدخل كود الوصفة');
+
+  const recipe=db.recipes.find(r=>String(r.accessCode)===code && r.active!==false);
+  if(!recipe)return alert('الكود غير صحيح أو الوصفة موقوفة');
+
+  const user=db.users.find(u=>u.id===current.id);
+  if(!user)return alert('المستخدم غير موجود');
+
+  if(!user.permissions.includes('*') && Number(recipe.assignedUserId)!==Number(user.id)){
+    return alert('هذه الوصفة مسندة إلى مستخدم آخر');
+  }
+
+  if(!db.unlocked_recipe_sessions)db.unlocked_recipe_sessions={};
+  if(!db.unlocked_recipe_sessions[current.id])db.unlocked_recipe_sessions[current.id]=[];
+  if(!db.unlocked_recipe_sessions[current.id].includes(recipe.id)){
+    db.unlocked_recipe_sessions[current.id].push(recipe.id);
+  }
+
+  scheduleCloudSave();
+  renderRecipes();
+  input.value='';
+  alert('تم فتح وصفة: '+recipe.name);
+}
+
+function assignRecipeUser(i,userId){
+  if(!requirePerm('recipe_stations.assign'))return;
+  const recipe=db.recipes[i];
+  recipe.assignedUserId=userId?Number(userId):null;
+
+  // Remove temporary access to this recipe from every user.
+  Object.keys(db.unlocked_recipe_sessions||{}).forEach(uid=>{
+    db.unlocked_recipe_sessions[uid]=(db.unlocked_recipe_sessions[uid]||[]).filter(rid=>rid!==recipe.id);
+  });
+
+  log('إسناد حصري لوصفة',`${recipe.name} → ${db.users.find(u=>u.id===Number(userId))?.name||'غير مسند'}`);
+  save();
+}
+
+function updateRecipeAccessCode(i,value){
+  if(!requirePerm('recipe_stations.assign'))return;
+  const code=String(value||'').trim();
+  if(!code)return alert('الكود لا يمكن أن يكون فارغاً');
+  if(db.recipes.some((r,idx)=>idx!==i && String(r.accessCode)===code))return alert('هذا الكود مستخدم لوصفة أخرى');
+  db.recipes[i].accessCode=code;
+  save();
+}
+
+function renderRecipeStations(){
+  if(!document.getElementById('recipeStationsBody'))return;
+  rsRecipeCount.textContent=db.recipes.length;
+  rsStationCount.textContent=db.recipe_stations.length;
+  rsUnassignedCount.textContent=db.recipes.filter(r=>!r.stationId).length;
+
+  recipeStationsBody.innerHTML=db.recipes.map((r,i)=>{
+    const stationOptions=db.recipe_stations.map(s=>`<option value="${s.id}" ${s.id===r.stationId?'selected':''}>${s.name}</option>`).join('');
+    const allowedUsers=db.users.filter(u=>u.permissions.includes('*')||u.permissions.includes(productionPermissionCode(r))).map(u=>u.name).join('، ')||'لا يوجد';
+    return `<tr>
+      <td>${r.name}</td>
+      <td><select ${can('recipe_stations.assign')?'':'disabled'} onchange="assignRecipeStation(${i},this.value)"><option value="">غير محدد</option>${stationOptions}</select></td>
+      <td>${allowedUsers}</td>
+      <td><span class="badge ${r.active!==false?'ok':'bad'}">${r.active!==false?'نشطة':'موقوفة'}</span></td>
+      <td class="no-print"><button class="btn btn-soft" onclick="toggleRecipeActive(${i})">${r.active!==false?'إيقاف':'تفعيل'}</button></td>
+    </tr>`;
+  }).join('');
+
+  stationsListBody.innerHTML=db.recipe_stations.map((s,i)=>`<tr><td>${s.name}</td><td>${s.description||''}</td><td>${db.recipes.filter(r=>r.stationId===s.id).length}</td><td class="no-print"><button class="btn btn-danger" onclick="deleteRecipeStation(${i})">حذف</button></td></tr>`).join('');
+}
+function addRecipeStation(){
+  if(!requirePerm('recipe_stations.manage'))return;
+  const name=rsStationName.value.trim();
+  if(!name)return alert('أدخل اسم البوسط');
+  db.recipe_stations.push({id:'ST-'+Date.now(),name,description:rsStationDescription.value.trim()});
+  rsStationName.value=rsStationDescription.value='';save();
+}
+function assignRecipeStation(i,id){if(!requirePerm('recipe_stations.assign'))return;db.recipes[i].stationId=id;save()}
+function toggleRecipeActive(i){if(!requirePerm('recipes.edit'))return;db.recipes[i].active=db.recipes[i].active===false?true:false;save()}
+function deleteRecipeStation(i){
+  if(!requirePerm('recipe_stations.manage'))return;
+  const s=db.recipe_stations[i];
+  if(db.recipes.some(r=>r.stationId===s.id))return alert('البوسط مرتبط بوصفات');
+  db.recipe_stations.splice(i,1);save();
+}
+function openRecipePreparation(i){
+  const r=db.recipes[i];
+  if(!canCurrentUserProduce(r))return alert('ليست لديك صلاحية إنتاج '+r.name);
+  prodRecipe.value=String(i);
+  const btn=[...document.querySelectorAll('#menu button')].find(b=>b.textContent==='الإنتاج');
+  if(btn)showPage('production',btn);
+}
+function productionPermissionCode(recipe){
+  return 'production.recipe.'+recipe.id;
+}
+
+function canCurrentUserProduce(recipe){
+  if(!current)return false;
+  const user=db.users.find(u=>u.id===current.id);
+  if(!user)return false;
+  if(user.permissions.includes('*'))return true;
+  return user.permissions.includes(productionPermissionCode(recipe));
+}
+
+function renderRecipes(){
+  const user=db.users.find(u=>u.id===current?.id);
+  const visible=db.recipes.map((r,i)=>({r,i})).filter(({r})=>
+    r.active!==false && (
+      user?.permissions.includes('*') ||
+      canCurrentUserProduce(r) ||
+      can('recipes.view')
+    )
+  );
+
+  recipesGrid.innerHTML=visible.map(({r,i})=>`
+    <div class="card">
+      <h3>${r.name}</h3>
+      <p>البوسط: <b>${typeof getRecipeStationName==='function'?getRecipeStationName(r.stationId):'غير محدد'}</b></p>
+      <p>المردودية: <b>${r.yield} ${r.unit}</b></p>
+      <table style="min-width:0">
+        <thead><tr><th>المكون</th><th>الكمية</th></tr></thead>
+        <tbody>${r.items?.length?r.items.map(x=>`<tr><td>${x.ingredient}</td><td>${x.qty}</td></tr>`).join(''):'<tr><td colspan="2">لم تتم إضافة المكونات</td></tr>'}</tbody>
+      </table>
+      <div class="actions no-print" style="margin-top:10px">
+        ${canCurrentUserProduce(r)?`<button class="btn btn-primary" onclick="openProductionItem(${i})">بدء الإنتاج</button>`:''}
+        ${user?.permissions.includes('*')?`<button class="btn btn-danger" onclick="deleteRecipe(${i})">حذف</button>`:''}
+      </div>
+    </div>`).join('');
+
+  const allowed=visible.filter(({r})=>canCurrentUserProduce(r));
+  prodRecipe.innerHTML=allowed.length
+    ?allowed.map(({r,i})=>`<option value="${i}">${r.name}</option>`).join('')
+    :'<option value="">لا توجد أنواع إنتاج مسموح بها</option>';
+
+  if(document.getElementById('recStation') && db.recipe_stations){
+    recStation.innerHTML='<option value="">اختر البوسط</option>'+db.recipe_stations.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  }
+}
+
+function openProductionItem(i){
+  const r=db.recipes[i];
+  if(!canCurrentUserProduce(r))return alert('ليست لديك صلاحية إنتاج '+r.name);
+  prodRecipe.value=String(i);
+  const btn=[...document.querySelectorAll('#menu button')].find(b=>b.textContent==='الإنتاج');
+  if(btn)showPage('production',btn);
+}
+
+function openRecipe(){if(!requirePerm('recipes.add'))return;recName.value='';recYield.value='';recipeItems.innerHTML='';addRecipeRow();recipeModal.classList.add('open')}
+function addRecipeRow(){const d=document.createElement('div');d.className='recipe-row';d.innerHTML=`<select>${db.inventory.map(x=>`<option>${x.name}</option>`).join('')}</select><input type="number" step="0.001" placeholder="الكمية"><button class="btn btn-danger" onclick="this.parentElement.remove()">×</button>`;recipeItems.appendChild(d)}
+function saveRecipe(){if(!requirePerm('recipes.add'))return;const items=[...document.querySelectorAll('.recipe-row')].map(x=>({ingredient:x.children[0].value,qty:Number(x.children[1].value||0)})).filter(x=>x.qty>0);if(!recName.value.trim()||!Number(recYield.value)||!items.length)return alert('أكمل الوصفة');db.recipes.push({id:'REC-'+Date.now(),name:recName.value.trim(),yield:Number(recYield.value),unit:recUnit.value,stationId:recStation.value,active:true,accessCode:String(Date.now()).slice(-4),assignedUserId:null,items});log('إضافة وصفة',recName.value);closeModal('recipeModal');save()}
+function deleteRecipe(i){if(!requirePerm('recipes.delete'))return;if(confirm('حذف الوصفة؟')){log('حذف وصفة',db.recipes[i].name);db.recipes.splice(i,1);save()}}
+function getProductionIngredientStock(ingredientName){
+  const product=db.products?.find(p=>p.name===ingredientName);
+  let row=db.inventory.find(x=>
+    x.name===ingredientName &&
+    x.location==='مخزن الإنتاج'
+  );
+
+  // Backward compatibility: if the ingredient exists only in one row, use it.
+  if(!row){
+    const rows=db.inventory.filter(x=>x.name===ingredientName);
+    if(rows.length===1)row=rows[0];
+  }
+
+  return {product,row};
+}
+
+function calculateProduction(){
+  const recipeIndex=Number(prodRecipe.value);
+  const r=db.recipes[recipeIndex];
+  const q=Number(prodQty.value||0);
+
+  if(!r)return alert('لا يوجد نوع إنتاج مسموح به');
+  if(!canCurrentUserProduce(r))return alert('ليست لديك صلاحية إنتاج '+r.name);
+  if(!Number.isFinite(q)||q<=0)return alert('أدخل كمية إنتاج صحيحة');
+  if(!Number(r.yield)||Number(r.yield)<=0)return alert('مردودية هذا الإنتاج غير محددة');
+  if(!Array.isArray(r.items)||!r.items.length)return alert('لم تتم إضافة مكونات لهذا الإنتاج');
+
+  const factor=q/Number(r.yield);
+  let allAvailable=true;
+
+  const rows=r.items.map(it=>{
+    const {product,row}=getProductionIngredientStock(it.ingredient);
+    const need=Number(it.qty||0)*factor;
+    const available=Number(row?.stock||0);
+    const unit=it.sourceUnit||product?.unit||row?.unit||'';
+    const ok=available>=need;
+    if(!ok)allAvailable=false;
+
+    return `<tr>
+      <td>${it.ingredient}</td>
+      <td>${need.toFixed(3)}</td>
+      <td>${unit}</td>
+      <td>${available.toFixed(3)}</td>
+      <td><span class="badge ${ok?'ok':'bad'}">${ok?'متوفر':'ناقص'}</span></td>
+    </tr>`;
+  }).join('');
+
+  prodCalc.innerHTML=`
+    <div class="card">
+      <h3>احتياجات إنتاج ${q} ${r.unit} من ${r.name}</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>المادة</th><th>المطلوب</th><th>الوحدة</th><th>المتوفر في الإنتاج</th><th>الحالة</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <div class="actions no-print" style="margin-top:10px">
+        <button class="btn btn-primary" ${allAvailable?'':'disabled'} onclick="approveProduction(${recipeIndex},${q})">
+          اعتماد وخصم المواد
+        </button>
+      </div>
+      ${allAvailable?'':'<div class="notice" style="border-color:#ef4444">لا يمكن الاعتماد قبل توفير جميع المواد داخل مخزن الإنتاج.</div>'}
+    </div>`;
+}
+
+function approveProduction(recipeIndex,q){
+  const r=db.recipes[recipeIndex];
+
+  if(!r)return alert('نوع الإنتاج غير موجود');
+  if(!canCurrentUserProduce(r))return alert('ليست لديك صلاحية إنتاج '+r.name);
+
+  const qty=Number(q||0);
+  if(!Number.isFinite(qty)||qty<=0)return alert('كمية الإنتاج غير صحيحة');
+  const factor=qty/Number(r.yield||1);
+
+  // Validate all ingredients before changing stock.
+  for(const it of r.items){
+    const {row}=getProductionIngredientStock(it.ingredient);
+    const need=Number(it.qty||0)*factor;
+    if(!row || Number(row.stock||0)<need){
+      return alert(`المادة ناقصة داخل مخزن الإنتاج: ${it.ingredient}`);
+    }
+  }
+
+  // Deduct ingredients.
+  r.items.forEach(it=>{
+    const {row}=getProductionIngredientStock(it.ingredient);
+    row.stock=Number(row.stock||0)-(Number(it.qty||0)*factor);
+  });
+
+  // Add the prepared product to production stock.
+  const finishedProduct=db.products?.find(p=>p.name===r.name);
+  if(finishedProduct){
+    const outputRow=ensureInventoryRowForLocation(finishedProduct,'مخزن الإنتاج');
+    outputRow.stock=Number(outputRow.stock||0)+qty;
+  }
+
+  db.production.unshift({
+    id:'PROD-'+Date.now(),
+    date:prodDate.value,
+    recipe:r.name,
+    recipeId:r.id,
+    qty,
+    unit:r.unit,
+    status:'مكتمل',
+    user:current.name
+  });
+
+  log('اعتماد إنتاج',`${r.name} - ${qty} ${r.unit}`);
+  prodCalc.innerHTML='';
+  prodQty.value='';
+  save();
+  alert('تم اعتماد الإنتاج وخصم المواد وإضافة المنتج المحضر إلى مخزن الإنتاج');
+}
+
+function renderProduction(){productionBody.innerHTML=db.production.map(x=>`<tr><td>${x.id}</td><td>${x.date}</td><td>${x.recipe}</td><td>${x.qty} ${x.unit||''}</td><td><span class="badge ok">${x.status}</span></td><td>${x.user}</td></tr>`).join('')}
+
+
+function getChickenProductionBalance(){
+  return Number(db.chicken_stock?.productionMarinated||0);
+}
+function getChickenSalesBalance(){
+  return Number(db.chicken_stock?.salesHache||0);
+}
+function applyChickenTransferToBalances(transfer){
+  if(transfer.balanceAlreadyApplied)return;
+  if(!db.chicken_stock) db.chicken_stock={productionMarinated:0,salesHache:0};
+  transfer.items.forEach(it=>{
+    if(it.item==='Poulet mariné kg' && transfer.to==='مخزن الإنتاج'){
+      db.chicken_stock.productionMarinated += Number(it.qty);
+    }
+    if(it.item==='Poulet mariné kg' && transfer.from==='مخزن الإنتاج'){
+      db.chicken_stock.productionMarinated -= Number(it.qty);
+    }
+    if(it.item==='Poulet Haché cuit' && transfer.to==='مخزن البيع'){
+      db.chicken_stock.salesHache += Number(it.qty);
+    }
+    if(it.item==='Poulet Haché cuit' && transfer.from==='مخزن البيع'){
+      db.chicken_stock.salesHache -= Number(it.qty);
+    }
+  });
+}
+
+function findProductByNameOrId(value){
+  return db.products.find(p=>p.id===value || p.name===value) || null;
+}
+
+function findInventoryRowForLocation(product, location){
+  if(!product)return null;
+  return db.inventory.find(x=>
+    (x.productId===product.id || x.name===product.name) &&
+    x.location===location
+  ) || null;
+}
+
+function ensureInventoryRowForLocation(product, location){
+  if(!product)return null;
+  let row=findInventoryRowForLocation(product,location);
+  if(!row){
+    row={
+      id:'MAT-'+String(db.inventory.length+1).padStart(3,'0'),
+      productId:product.id,
+      name:product.name,
+      category:product.category||product.type,
+      unit:product.unit,
+      location,
+      stock:0,
+      min:Number(product.min||0),
+      cost:Number(product.cost||0)
+    };
+    db.inventory.push(row);
+  }
+  return row;
+}
+
+function moveStockBetweenLocations(itemName, qty, fromLocation, toLocation){
+  const product=findProductByNameOrId(itemName);
+  if(!product)throw new Error('المنتج غير موجود: '+itemName);
+
+  const source=ensureInventoryRowForLocation(product,fromLocation);
+  const destination=ensureInventoryRowForLocation(product,toLocation);
+  const amount=Number(qty||0);
+
+  if(amount<=0)throw new Error('كمية غير صالحة للمنتج: '+product.name);
+  if(Number(source.stock||0)<amount){
+    throw new Error(`رصيد ${product.name} غير كافٍ في ${fromLocation}. المتوفر: ${Number(source.stock||0).toFixed(3)} ${product.unit}`);
+  }
+
+  source.stock=Number(source.stock||0)-amount;
+  destination.stock=Number(destination.stock||0)+amount;
+  return {product,source,destination};
+}
+
+function normalizeTransfers(){
+  db.transfers = db.transfers.map(x=>{
+    if(Array.isArray(x.items)) return x;
+    return {
+      id:x.id,date:x.date,from:x.from,to:x.to,
+      items:[{item:x.item,qty:Number(x.qty||0)}],
+      status:x.status||'مفتوح',sender:x.sender||'',receiver:x.receiver||'',
+      note:x.note||''
+    };
+  });
+}
+
+function addTransferItemRow(itemName='', qty=''){
+  const row=document.createElement('div');
+  row.className='transfer-item-row';
+  row.innerHTML=`
+    <select class="tr-item-select" onchange="updateTransferStockInfo(this)">
+      ${db.inventory.map(x=>`<option value="${x.name}" ${x.name===itemName?'selected':''}>${x.name}</option>`).join('')}
+    </select>
+    <input class="tr-item-qty" type="number" step="0.001" min="0" value="${qty}" placeholder="الكمية">
+    <div class="stock-info"></div>
+    <button class="btn btn-danger" onclick="this.parentElement.remove()">حذف</button>`;
+  transferItems.appendChild(row);
+  updateTransferStockInfo(row.querySelector('select'));
+}
+
+function updateTransferStockInfo(select){
+  const row=select.closest('.transfer-item-row');
+  const product=findProductByNameOrId(select.value);
+  const sourceLocation=document.getElementById('trFrom')?.value||'المخزن الرئيسي';
+  const ing=product?findInventoryRowForLocation(product,sourceLocation):null;
+  row.querySelector('.stock-info').textContent=product
+    ?`المتوفر في ${sourceLocation}: ${Number(ing?.stock||0).toFixed(3)} ${product.unit}`
+    :'غير موجود';
+}
+
+function renderTransfers(){
+  normalizeTransfers();
+  trFrom.innerHTML=trTo.innerHTML=db.locations.map(x=>`<option>${x}</option>`).join('');
+  trFrom.onchange=refreshTransferRowsStock;
+  if(!transferItems.children.length) addTransferItemRow();
+
+  transfersBody.innerHTML=db.transfers.map((x,i)=>`
+    <tr>
+      <td>${x.id}</td>
+      <td>${x.date}</td>
+      <td>${x.from}</td>
+      <td>${x.to}</td>
+      <td>${x.items.length}</td>
+      <td><span class="badge ${x.status==='تم الاستلام'?'ok':'warn'}">${x.status}</span></td>
+      <td>${x.sender}</td>
+      <td>${x.receiver||''}</td>
+      <td class="no-print">
+        <button class="btn btn-blue" onclick="viewTransfer(${i})">التفاصيل</button>
+        <button class="btn btn-soft" onclick="printTransfer(${i})">طباعة</button>
+        ${x.status==='مفتوح'&&!x.stockMoved?`<button class="btn btn-primary" onclick="receiveTransfer(${i})">تنفيذ التحويل</button>`:''}
+      </td>
+    </tr>`).join('');
+}
+
+function refreshTransferRowsStock(){
+  document.querySelectorAll('#transferItems .tr-item-select').forEach(updateTransferStockInfo);
+}
+function createBatchTransfer(){
+  if(!requirePerm('transfers.create'))return;
+  if(trFrom.value===trTo.value)return alert('يجب اختيار مخزنين مختلفين');
+
+  const rows=[...document.querySelectorAll('#transferItems .transfer-item-row')];
+  const items=rows.map(r=>({
+    item:r.querySelector('.tr-item-select').value,
+    qty:Number(r.querySelector('.tr-item-qty').value||0)
+  })).filter(x=>x.item&&x.qty>0);
+
+  if(!items.length)return alert('أضف مادة واحدة على الأقل مع الكمية');
+
+  const duplicate=items.find((x,idx)=>items.findIndex(y=>y.item===x.item)!==idx);
+  if(duplicate)return alert('المادة مكررة داخل نفس التحويل: '+duplicate.item);
+
+  // Validate all items before moving any stock
+  for(const it of items){
+    const product=findProductByNameOrId(it.item);
+    if(!product)return alert('المادة غير موجودة: '+it.item);
+    const source=findInventoryRowForLocation(product,trFrom.value);
+    const available=Number(source?.stock||0);
+    if(available<it.qty){
+      return alert(`الكمية غير كافية للمادة ${product.name} داخل ${trFrom.value}. المتوفر ${available.toFixed(3)} ${product.unit}`);
+    }
+  }
+
+  // Execute movement immediately
+  try{
+    items.forEach(it=>moveStockBetweenLocations(it.item,it.qty,trFrom.value,trTo.value));
+  }catch(err){
+    return alert(err.message);
+  }
+
+  const transfer={
+    id:'TR-'+Date.now(),
+    date:trDate.value,
+    from:trFrom.value,
+    to:trTo.value,
+    items,
+    status:'تم الاستلام',
+    sender:current.name,
+    receiver:current.name,
+    note:trNote.value.trim(),
+    stockMoved:true,
+    receivedAt:new Date().toISOString()
+  };
+
+  db.transfers.unshift(transfer);
+  log('إنشاء وتنفيذ تحويل جماعي',`${transfer.id} - ${items.length} مواد من ${transfer.from} إلى ${transfer.to}`);
+
+  transferItems.innerHTML='';
+  addTransferItemRow();
+  trNote.value='';
+  save();
+
+  alert(`تم التحويل بنجاح من ${transfer.from} إلى ${transfer.to} وتحديث الرصيد فوراً`);
+}
+
+function viewTransfer(i){
+  const x=db.transfers[i];
+  const rows=x.items.map(it=>{
+    const ing=db.inventory.find(m=>m.name===it.item);
+    return `<tr><td>${it.item}</td><td>${it.qty}</td><td>${ing?.unit||''}</td></tr>`;
+  }).join('');
+  const w=open('','_blank','width=850,height=650');
+  w.document.write(`
+    <html dir="rtl"><meta charset="utf-8"><title>${x.id}</title>
+    <style>
+      body{font-family:Tahoma;padding:25px;color:#222}
+      h1,h2{text-align:center}table{width:100%;border-collapse:collapse;margin-top:20px}
+      th,td{border:1px solid #777;padding:10px;text-align:right}th{background:#eee}
+      .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .box{border:1px solid #aaa;padding:10px;border-radius:8px}
+    </style><body>
+    <h1>مشاوي الدجاج</h1><h2>تفاصيل أمر التحويل ${x.id}</h2>
+    <div class="meta">
+      <div class="box"><b>التاريخ:</b> ${x.date}</div>
+      <div class="box"><b>الحالة:</b> ${x.status}</div>
+      <div class="box"><b>من:</b> ${x.from}</div>
+      <div class="box"><b>إلى:</b> ${x.to}</div>
+      <div class="box"><b>المرسل:</b> ${x.sender}</div>
+      <div class="box"><b>المستلم:</b> ${x.receiver||''}</div>
+    </div>
+    <table><thead><tr><th>المادة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${rows}</tbody></table>
+    ${x.note?`<p><b>ملاحظة:</b> ${x.note}</p>`:''}
+    
+
+<div id="processProfileModal" class="modal"><div class="modal-box">
+  <h3>إضافة نوع طبخ أو تحويل</h3>
+  <div class="form-grid">
+    <input id="ppName" placeholder="اسم العملية">
+    <select id="ppMode">
+      <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
+      <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
+      <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
+    </select>
+    <input id="ppRawLabel" placeholder="اسم خانة البداية">
+    <input id="ppCookedLabel" placeholder="اسم خانة بعد الطبخ">
+    <input id="ppNetLabel" placeholder="اسم خانة الناتج النهائي">
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveProcessProfile()">حفظ</button>
+    <button class="btn btn-soft" onclick="closeModal('processProfileModal')">إلغاء</button>
+  </div>
+</div></div>
+
+
+
+</body></html>`);
+  w.document.close();
+}
+
+function receiveTransfer(i){
+  if(!requirePerm('transfers.receive'))return;
+  const x=db.transfers[i];
+  if(!x)return alert('التحويل غير موجود');
+
+  if(x.stockMoved || x.status==='تم الاستلام'){
+    return alert('هذا التحويل تم تنفيذه مسبقاً');
+  }
+
+  const name=prompt('اسم المستلم',current.name);
+  if(!name)return;
+
+  for(const it of x.items){
+    const product=findProductByNameOrId(it.item);
+    if(!product)return alert('المنتج غير موجود: '+it.item);
+    const source=findInventoryRowForLocation(product,x.from);
+    const available=Number(source?.stock||0);
+    if(available<Number(it.qty)){
+      return alert(`لا يمكن التنفيذ: رصيد ${product.name} في ${x.from} غير كافٍ. المتوفر ${available.toFixed(3)} ${product.unit}`);
+    }
+  }
+
+  try{
+    x.items.forEach(it=>moveStockBetweenLocations(it.item,it.qty,x.from,x.to));
+  }catch(err){
+    return alert(err.message);
+  }
+
+  x.status='تم الاستلام';
+  x.receiver=name;
+  x.stockMoved=true;
+  x.receivedAt=new Date().toISOString();
+
+  log('تنفيذ تحويل قديم',`${x.id} — ${x.from} → ${x.to}`);
+  save();
+  alert('تم تنفيذ التحويل وتحديث رصيد المخزن المستلم');
+}
+
+function printTransfer(i){
+  if(!requirePerm('transfers.print'))return;
+  const x=db.transfers[i];
+  const rows=x.items.map(it=>{
+    const ing=db.inventory.find(m=>m.name===it.item);
+    return `<tr><td>${it.item}</td><td>${it.qty}</td><td>${ing?.unit||''}</td></tr>`;
+  }).join('');
+  const w=open('','_blank');
+  w.document.write(`
+    <html dir="rtl"><meta charset="utf-8">
+    <style>
+      body{font-family:Tahoma;padding:30px}h1,h2{text-align:center}
+      table{width:100%;border-collapse:collapse;margin-top:18px}
+      td,th{border:1px solid #555;padding:10px}
+      .sign{display:grid;grid-template-columns:1fr 1fr;margin-top:60px;gap:40px}
+      .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .box{border:1px solid #777;padding:9px}
+    </style><body>
+    <h1>مشاوي الدجاج</h1><h2>أمر تحويل مخزون جماعي</h2>
+    <div class="meta">
+      <div class="box"><b>رقم التحويل:</b> ${x.id}</div>
+      <div class="box"><b>التاريخ:</b> ${x.date}</div>
+      <div class="box"><b>من:</b> ${x.from}</div>
+      <div class="box"><b>إلى:</b> ${x.to}</div>
+      <div class="box"><b>المرسل:</b> ${x.sender}</div>
+      <div class="box"><b>المستلم:</b> ${x.receiver||''}</div>
+    </div>
+    <table><thead><tr><th>المادة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${rows}</tbody></table>
+    ${x.note?`<p><b>ملاحظة:</b> ${x.note}</p>`:''}
+    <div class="sign"><div>توقيع المرسل<br><br>................</div><div>توقيع المستلم<br><br>................</div></div>
+    <script>onload=()=>print()<\/script>
+
+<div id="processProfileModal" class="modal"><div class="modal-box">
+  <h3>إضافة نوع طبخ أو تحويل</h3>
+  <div class="form-grid">
+    <input id="ppName" placeholder="اسم العملية">
+    <select id="ppMode">
+      <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
+      <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
+      <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
+    </select>
+    <input id="ppRawLabel" placeholder="اسم خانة البداية">
+    <input id="ppCookedLabel" placeholder="اسم خانة بعد الطبخ">
+    <input id="ppNetLabel" placeholder="اسم خانة الناتج النهائي">
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveProcessProfile()">حفظ</button>
+    <button class="btn btn-soft" onclick="closeModal('processProfileModal')">إلغاء</button>
+  </div>
+</div></div>
+
+
+
+</body></html>`);
+  w.document.close();
+}
+
+function addSale(){if(!requirePerm('sales.add'))return;const a=Number(saleAmount.value);if(!a)return alert('أدخل المبلغ');db.sales.unshift({id:'SALE-'+Date.now(),date:saleDate.value,amount:a,channel:saleChannel.value,note:saleNote.value,user:current.name});log('إضافة مبيعات',a+' DH');save()}
+function addPurchaseItemRow(productId='',qty='',price=''){
+  const row=document.createElement('div');
+  row.className='purchase-item-row';
+  row.innerHTML=`
+    <select class="pur-product">
+      ${db.products.filter(x=>x.active!==false).map(x=>`<option value="${x.id}" ${x.id===productId?'selected':''}>${x.name} — ${x.unit}</option>`).join('')}
+    </select>
+    <input class="pur-qty" type="number" min="0" step="0.001" value="${qty}" placeholder="الكمية">
+    <input class="pur-price" type="number" min="0" step="0.01" value="${price}" placeholder="سعر الوحدة">
+    <div class="pur-line-total">0.00 DH</div>
+    <button class="btn btn-danger" onclick="this.parentElement.remove();updatePurchaseTotal()">حذف</button>`;
+  purchaseItems.appendChild(row);
+  row.querySelectorAll('input,select').forEach(e=>e.addEventListener('input',updatePurchaseTotal));
+  const p=db.products.find(x=>x.id===row.querySelector('.pur-product').value);
+  if(p && !price) row.querySelector('.pur-price').value=p.cost||0;
+  row.querySelector('.pur-product').addEventListener('change',e=>{
+    const pr=db.products.find(x=>x.id===e.target.value);
+    row.querySelector('.pur-price').value=pr?.cost||0;
+    updatePurchaseTotal();
+  });
+  updatePurchaseTotal();
+}
+
+function updatePurchaseTotal(){
+  let total=0;
+  document.querySelectorAll('#purchaseItems .purchase-item-row').forEach(row=>{
+    const q=Number(row.querySelector('.pur-qty').value||0);
+    const p=Number(row.querySelector('.pur-price').value||0);
+    const line=q*p;
+    total+=line;
+    row.querySelector('.pur-line-total').textContent=money(line);
+  });
+  purchaseTotalPreview.textContent='إجمالي الفاتورة: '+money(total);
+}
+
+function addPurchase(){
+  if(!requirePerm('purchases.add'))return;
+  const rows=[...document.querySelectorAll('#purchaseItems .purchase-item-row')];
+  const items=rows.map(row=>{
+    const product=db.products.find(x=>x.id===row.querySelector('.pur-product').value);
+    const qty=Number(row.querySelector('.pur-qty').value||0);
+    const price=Number(row.querySelector('.pur-price').value||0);
+    return product?{productId:product.id,name:product.name,unit:product.unit,qty,price,total:qty*price}:null;
+  }).filter(x=>x&&x.qty>0);
+
+  if(!purSupplier.value.trim())return alert('أدخل اسم المورد');
+  if(!items.length)return alert('أضف منتجاً واحداً على الأقل');
+
+  const amount=items.reduce((s,x)=>s+x.total,0);
+  const purchase={
+    id:'PUR-'+Date.now(),
+    date:purDate.value,
+    supplier:purSupplier.value.trim(),
+    ref:purRef.value.trim(),
+    location:purLocation.value,
+    items,
+    amount,
+    status:'مستلمة',
+    note:purNote.value.trim(),
+    user:current.name
+  };
+  db.purchases.unshift(purchase);
+
+  // Add/update stock in chosen location
+  items.forEach(it=>{
+    const product=db.products.find(p=>p.id===it.productId);
+    let stockRow=db.inventory.find(x=>x.productId===it.productId && x.location===purLocation.value);
+    if(!stockRow){
+      stockRow={
+        id:'MAT-'+String(db.inventory.length+1).padStart(3,'0'),
+        productId:product.id,name:product.name,category:product.category||product.type,
+        unit:product.unit,location:purLocation.value,stock:0,min:product.min||0,cost:it.price
+      };
+      db.inventory.push(stockRow);
+    }
+    const oldQty=Number(stockRow.stock||0);
+    const oldCost=Number(stockRow.cost||0);
+    const newQty=oldQty+it.qty;
+    stockRow.cost=newQty>0?((oldQty*oldCost)+(it.qty*it.price))/newQty:it.price;
+    stockRow.stock=newQty;
+    product.cost=stockRow.cost;
+  });
+
+  log('إضافة فاتورة شراء',`${purchase.id} — ${items.length} منتجات — ${amount.toFixed(2)} DH`);
+  purchaseItems.innerHTML='';
+  addPurchaseItemRow();
+  purSupplier.value=purRef.value=purNote.value='';
+  save();
+}
+
+function viewPurchase(i){
+  const x=db.purchases[i];
+  const rows=(x.items||[]).map(it=>`<tr><td>${it.name}</td><td>${it.qty}</td><td>${it.unit}</td><td>${money(it.price)}</td><td>${money(it.total)}</td></tr>`).join('');
+  const w=open('','_blank');
+  w.document.write(`<html dir="rtl"><meta charset="utf-8"><style>body{font-family:Tahoma;padding:30px}h1,h2{text-align:center}table{width:100%;border-collapse:collapse}th,td{border:1px solid #555;padding:10px}</style><body>
+  <h1>مشاوي الدجاج</h1><h2>فاتورة شراء ${x.id}</h2>
+  <p><b>المورد:</b> ${x.supplier} — <b>التاريخ:</b> ${x.date} — <b>المخزن:</b> ${x.location}</p>
+  <table><thead><tr><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>سعر الوحدة</th><th>المجموع</th></tr></thead><tbody>${rows}</tbody></table>
+  <h3>الإجمالي: ${money(x.amount)}</h3>
+
+<div id="processProfileModal" class="modal"><div class="modal-box">
+  <h3>إضافة نوع طبخ أو تحويل</h3>
+  <div class="form-grid">
+    <input id="ppName" placeholder="اسم العملية">
+    <select id="ppMode">
+      <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
+      <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
+      <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
+    </select>
+    <input id="ppRawLabel" placeholder="اسم خانة البداية">
+    <input id="ppCookedLabel" placeholder="اسم خانة بعد الطبخ">
+    <input id="ppNetLabel" placeholder="اسم خانة الناتج النهائي">
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveProcessProfile()">حفظ</button>
+    <button class="btn btn-soft" onclick="closeModal('processProfileModal')">إلغاء</button>
+  </div>
+</div></div>
+
+
+
+</body></html>`);
+  w.document.close();
+}
+
+function addExpense(){if(!requirePerm('expenses.add'))return;const a=Number(expAmount.value);if(!a)return alert('أدخل المبلغ');db.expenses.unshift({id:'EXP-'+Date.now(),date:expDate.value,category:expCategory.value,amount:a,note:expNote.value,user:current.name});log('إضافة مصروف',`${expCategory.value} - ${a}`);save()}
+function renderFinance(){salesBody.innerHTML=db.sales.map(x=>`<tr><td>${x.id}</td><td>${x.date}</td><td>${money(x.amount)}</td><td>${x.channel}</td><td>${x.note}</td><td>${x.user}</td></tr>`).join('');purchasesBody.innerHTML=db.purchases.map((x,i)=>`<tr>
+<td>${x.id}</td><td>${x.date}</td><td>${x.supplier}</td><td>${(x.items||[]).length}</td>
+<td>${money(x.amount)}</td><td>${x.ref||''}</td><td>${x.location||''}</td><td>${x.status}</td>
+<td class="no-print"><button class="btn btn-blue" onclick="viewPurchase(${i})">التفاصيل</button></td>
+</tr>`).join('');expensesBody.innerHTML=db.expenses.map(x=>`<tr><td>${x.id}</td><td>${x.date}</td><td>${x.category}</td><td>${money(x.amount)}</td><td>${x.note}</td><td>${x.user}</td></tr>`).join('');const s=db.sales.reduce((a,x)=>a+Number(x.amount),0),p=db.purchases.reduce((a,x)=>a+Number(x.amount),0),e=db.expenses.reduce((a,x)=>a+Number(x.amount),0);repSales.textContent=money(s);repPurchases.textContent=money(p);repExpenses.textContent=money(e);repNet.textContent=money(s-p-e)}
+function renderUsers(){usersBody.innerHTML=db.users.map((u,i)=>`<tr><td>${u.name}</td><td>${u.username}</td><td>${roleNames[u.role]||u.role}</td><td><span class="badge ${u.active?'ok':'bad'}">${u.active?'نشط':'موقوف'}</span></td><td>${u.permissions.includes('*')?'الكل':u.permissions.length}</td><td class="no-print"><button class="btn btn-blue" onclick="editPermissions(${i})">الصلاحيات</button><button class="btn btn-soft" onclick="toggleUser(${i})">${u.active?'إيقاف':'تفعيل'}</button><button class="btn btn-danger" onclick="deleteUser(${i})">حذف</button></td></tr>`).join('')}
+function addUser(){if(!requirePerm('users.add'))return;if(!userName.value.trim()||!userLogin.value.trim()||!userPassword.value)return alert('أكمل البيانات');if(db.users.some(x=>x.username===userLogin.value.trim()))return alert('اسم المستخدم موجود');db.users.push({id:Date.now(),name:userName.value.trim(),username:userLogin.value.trim(),password:userPassword.value,role:userRole.value,active:true,permissions:['dashboard.view']});log('إضافة مستخدم',userName.value);save()}
+function editPermissions(i){
+  if(!requirePerm('users.permissions'))return;
+  editingUser=i;
+  const u=db.users[i];
+  permTitle.textContent='صلاحيات: '+u.name;
+
+  const baseGroups=db.permissions_catalog.map(g=>{
+    let items=g.items;
+    if(g.group==='الإنتاج'){
+      items=items.filter(([code])=>!['production.create','production.approve'].includes(code));
+    }
+    return `<div class="perm-group"><h4>${g.group}</h4><div class="perm-grid">${items.map(([code,label])=>`<label class="perm-item"><input type="checkbox" value="${code}" ${u.permissions.includes('*')||u.permissions.includes(code)?'checked':''}> ${label}</label>`).join('')}</div></div>`;
+  }).join('');
+
+  const productionItems=`<div class="perm-group"><h4>أنواع الإنتاج</h4><div class="perm-grid">${db.recipes.map(r=>{
+    const code=productionPermissionCode(r);
+    return `<label class="perm-item"><input type="checkbox" value="${code}" ${u.permissions.includes('*')||u.permissions.includes(code)?'checked':''}> إنتاج ${r.name}</label>`;
+  }).join('')}</div></div>`;
+
+  permissionsBox.innerHTML=baseGroups+productionItems;
+  permModal.classList.add('open');
+}
+function selectAllPerms(v){document.querySelectorAll('#permissionsBox input').forEach(x=>x.checked=v)}
+function savePermissions(){if(!requirePerm('users.permissions'))return;const user=db.users[editingUser];
+  user.permissions=[...document.querySelectorAll('#permissionsBox input:checked:not(.recipe-perm-checkbox)')].map(x=>x.value);
+  if(!db.recipe_user_permissions)db.recipe_user_permissions={};
+  db.recipe_user_permissions[user.id]={};
+  document.querySelectorAll('#permissionsBox .recipe-perm-checkbox:checked').forEach(cb=>{
+    const rid=cb.dataset.recipeId;
+    if(!db.recipe_user_permissions[user.id][rid])db.recipe_user_permissions[user.id][rid]=[];
+    db.recipe_user_permissions[user.id][rid].push(cb.value);
+  });
+  log('تعديل صلاحيات',user.name);closeModal('permModal');save()}
+function toggleUser(i){if(!requirePerm('users.edit'))return;if(db.users[i].username==='admin')return alert('لا يمكن إيقاف المدير الافتراضي');db.users[i].active=!db.users[i].active;log('تغيير حالة مستخدم',db.users[i].name);save()}
+function deleteUser(i){if(!requirePerm('users.delete'))return;if(db.users[i].username==='admin')return alert('لا يمكن حذف المدير الافتراضي');if(confirm('حذف المستخدم؟')){log('حذف مستخدم',db.users[i].name);db.users.splice(i,1);save()}}
+function renderAudit(){auditBody.innerHTML=db.audit.map(x=>`<tr><td>${x.date}</td><td>${x.user}</td><td>${x.action}</td><td>${x.details}</td></tr>`).join('')}
+function csv(name,rows){const t='\uFEFF'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download=name;a.click()}
+function exportInventory(){if(!requirePerm('inventory.export')&&!requirePerm('reports.export'))return;csv('inventory.csv',[['الكود','المادة','الفئة','الموقع','الوحدة','المخزون','الحد الأدنى','التكلفة'],...db.inventory.map(x=>[x.id,x.name,x.category,x.location,x.unit,x.stock,x.min,x.cost])])}
+function exportSimple(key,name){if(!requirePerm(key+'.export')&&!requirePerm('reports.export'))return;const rows=db[key];if(!rows.length)return alert('لا توجد بيانات');csv(name,[Object.keys(rows[0]),...rows.map(x=>Object.values(x))])}
+function printPage(id){const p=document.getElementById(id);p.classList.add('printing');print();setTimeout(()=>p.classList.remove('printing'),400)}
+function backup(){if(!requirePerm('settings.backup'))return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='machawi_erp_backup.json';a.click()}
+function restore(e){if(!requirePerm('settings.restore'))return;const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();alert('تمت الاستعادة')}catch{alert('ملف غير صالح')}};r.readAsText(f)}
+function resetDB(){if(!requirePerm('settings.restore'))return;if(confirm('سيتم حذف جميع البيانات الحالية')){db=JSON.parse(JSON.stringify(seed));save()}}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+
+
+function ensureChickenTransformModule(){
+  if(!db.chicken_transforms) db.chicken_transforms=[];
+  if(!db.process_profiles){
+    db.process_profiles=[
+      {
+        id:'PROC-001',
+        name:'Poulet mariné kg → Poulet Haché cuit',
+        mode:'three_stage',
+        rawLabel:'الوزن قبل الطبخ',
+        cookedLabel:'الوزن بعد الطبخ',
+        netLabel:'وزن Haché الصافي'
+      },
+      {
+        id:'PROC-002',
+        name:'طبخ الدجاج الكامل بالعدد',
+        mode:'same_unit',
+        rawLabel:'عدد الدجاج قبل الطبخ',
+        cookedLabel:'عدد الدجاج بعد الطبخ',
+        netLabel:'العدد المحول إلى البيع'
+      }
+    ];
+  }
+
+  const groupExists=db.permissions_catalog.some(g=>g.group==='تحويل الدجاج');
+  if(!groupExists){
+    db.permissions_catalog.splice(4,0,{
+      group:'تحويل الدجاج',
+      items:[
+        ['chicken_transform.view','مشاهدة مركز الطبخ والتحويل'],
+        ['chicken_transform.create','تسجيل دفعة طبخ أو تحويل'],
+        ['chicken_transform.transfer','تحويل الناتج إلى مخزن البيع'],
+        ['chicken_transform.cancel','إلغاء دفعة'],
+        ['chicken_transform.print','طباعة سجل التحويل']
+      ]
+    });
+  }
+
+  const prodUser=db.users.find(u=>u.role==='production');
+  if(prodUser && !prodUser.permissions.includes('*')){
+    ['chicken_transform.view','chicken_transform.create','chicken_transform.transfer','chicken_transform.print']
+      .forEach(p=>{if(!prodUser.permissions.includes(p))prodUser.permissions.push(p)});
+  }
+}
+
+function getStockRow(productId, location){
+  const p=db.products.find(x=>x.id===productId);
+  if(!p)return null;
+
+  let row=db.inventory.find(x=>
+    (x.productId===productId || x.name===p.name) &&
+    x.location===location
+  ) || null;
+
+  // Repair older rows that were created without a location.
+  if(!row){
+    const orphan=db.inventory.find(x=>
+      (x.productId===productId || x.name===p.name) &&
+      (!x.location || String(x.location).trim()==='')
+    );
+    if(orphan){
+      orphan.productId=p.id;
+      orphan.location=location;
+      row=orphan;
+    }
+  }
+  return row;
+}
+
+function getProductBalance(productId, location){
+  return Number(getStockRow(productId,location)?.stock||0);
+}
+
+function ensureStockRow(productId, location){
+  const p=db.products.find(x=>x.id===productId);
+  if(!p)return null;
+  let row=getStockRow(productId,location);
+  if(!row){
+    row={
+      id:'MAT-'+String(db.inventory.length+1).padStart(3,'0'),
+      productId:p.id,name:p.name,category:p.category||p.type,
+      unit:p.unit,location,stock:0,min:Number(p.min||0),cost:Number(p.cost||0)
+    };
+    db.inventory.push(row);
+  }
+  return row;
+}
+
+
+let currentRequirementsCalculation=null;
+
+function renderProductionRequirementsSetup(){
+  prFromLocation.innerHTML=db.locations.map(x=>`<option ${x==='المخزن الرئيسي'?'selected':''}>${x}</option>`).join('');
+  prToLocation.innerHTML=db.locations.map(x=>`<option ${x==='مخزن الإنتاج'?'selected':''}>${x}</option>`).join('');
+  if(!productionPlanRows.children.length)addProductionPlanRow();
+  renderProductionRequirementsHistory();
+}
+
+function addProductionPlanRow(recipeIndex='',qty=''){
+  const row=document.createElement('div');
+  row.className='production-plan-row';
+  row.innerHTML=`
+    <select class="pr-recipe">
+      ${db.recipes.map((r,i)=>`<option value="${i}" ${String(i)===String(recipeIndex)?'selected':''}>${r.name} — مردودية ${r.yield} ${r.unit}</option>`).join('')}
+    </select>
+    <input class="pr-qty" type="number" min="0" step="0.001" value="${qty}" placeholder="كمية الإنتاج المطلوبة">
+    <div class="stock-info">الكمية النهائية</div>
+    <button class="btn btn-danger" onclick="this.parentElement.remove()">حذف</button>`;
+  productionPlanRows.appendChild(row);
+}
+
+function normalizeRequirementUnit(qty, unit){
+  const u=String(unit||'').toLowerCase();
+  if(u==='غ' || u==='gram' || u==='g') return {qty:qty/1000,unit:'كغ'};
+  if(u==='مل' || u==='ml') return {qty:qty/1000,unit:'لتر'};
+  return {qty,unit};
+}
+
+function calculateProductionRequirements(){
+  if(!requirePerm('production_requirements.create'))return;
+
+  const rows=[...document.querySelectorAll('#productionPlanRows .production-plan-row')];
+  const selections=rows.map(row=>({
+    recipeIndex:Number(row.querySelector('.pr-recipe').value),
+    qty:Number(row.querySelector('.pr-qty').value||0)
+  })).filter(x=>x.qty>0);
+
+  if(!selections.length)return alert('أدخل كمية إنتاج لوصفة واحدة على الأقل');
+
+  const grouped={};
+  const recipeSummary=[];
+
+  selections.forEach(sel=>{
+    const recipe=db.recipes[sel.recipeIndex];
+    if(!recipe)return;
+    const factor=sel.qty/Number(recipe.yield||1);
+    recipeSummary.push({recipeId:recipe.id,name:recipe.name,qty:sel.qty,unit:recipe.unit});
+
+    recipe.items.forEach(it=>{
+      const product=db.products.find(p=>p.name===it.ingredient);
+      const invUnit=it.sourceUnit || product?.unit || db.inventory.find(x=>x.name===it.ingredient)?.unit || '';
+      const normalized=normalizeRequirementUnit(Number(it.qty)*factor, invUnit);
+      const key=(product?.id||it.ingredient)+'|'+normalized.unit;
+
+      if(!grouped[key]){
+        grouped[key]={
+          productId:product?.id||'',
+          item:it.ingredient,
+          unit:normalized.unit,
+          qty:0
+        };
+      }
+      grouped[key].qty+=normalized.qty;
+    });
+  });
+
+  const materials=Object.values(grouped).map(m=>{
+    const stockRow=db.inventory.find(x=>
+      (m.productId && x.productId===m.productId || x.name===m.item) &&
+      x.location===prFromLocation.value
+    );
+    const available=Number(stockRow?.stock||0);
+    return {...m,available,shortage:Math.max(0,m.qty-available)};
+  });
+
+  currentRequirementsCalculation={
+    date:prDate.value,
+    name:prPlanName.value.trim()||'خطة إنتاج',
+    note:prNote.value.trim(),
+    from:prFromLocation.value,
+    to:prToLocation.value,
+    recipes:recipeSummary,
+    materials
+  };
+
+  renderProductionRequirementsResult();
+}
+
+function renderProductionRequirementsResult(){
+  if(!currentRequirementsCalculation){
+    productionRequirementsResult.innerHTML='';
+    prRecipeCount.textContent='0';prMaterialCount.textContent='0';
+    prShortageCount.textContent='0';prPlanStatus.textContent='جديدة';
+    return;
+  }
+
+  const c=currentRequirementsCalculation;
+  const shortages=c.materials.filter(x=>x.shortage>0);
+  prRecipeCount.textContent=c.recipes.length;
+  prMaterialCount.textContent=c.materials.length;
+  prShortageCount.textContent=shortages.length;
+  prPlanStatus.textContent=shortages.length?'يوجد نقص':'جاهزة للتحويل';
+
+  const recipeRows=c.recipes.map(r=>`<tr><td>${r.name}</td><td>${Number(r.qty).toFixed(3)}</td><td>${r.unit}</td></tr>`).join('');
+  const materialRows=c.materials.map(m=>`
+    <tr>
+      <td>${m.item}</td>
+      <td>${Number(m.qty).toFixed(3)}</td>
+      <td>${m.unit}</td>
+      <td>${Number(m.available).toFixed(3)}</td>
+      <td>${Number(m.shortage).toFixed(3)}</td>
+      <td><span class="badge ${m.shortage>0?'bad':'ok'}">${m.shortage>0?'ناقص':'متوفر'}</span></td>
+    </tr>`).join('');
+
+  productionRequirementsResult.innerHTML=`
+    <div class="grid">
+      <div class="card">
+        <h3>ملخص خطة الإنتاج</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>الوصفة</th><th>الكمية المطلوبة</th><th>الوحدة</th></tr></thead>
+          <tbody>${recipeRows}</tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <h3>المواد المجمعة</h3>
+        <div class="notice">
+          تم جمع المكونات المشتركة بين جميع الوصفات في سطر واحد لكل مادة.
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>المادة</th><th>الإجمالي المطلوب</th><th>الوحدة</th><th>المتوفر</th><th>النقص</th><th>الحالة</th></tr></thead>
+          <tbody>${materialRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function createRequirementsTransfer(){
+  if(!requirePerm('production_requirements.transfer'))return;
+  if(!currentRequirementsCalculation)return alert('احسب الاحتياجات أولاً');
+
+  const c=currentRequirementsCalculation;
+  const shortages=c.materials.filter(x=>x.shortage>0);
+  if(shortages.length){
+    return alert('لا يمكن إنشاء التحويل لأن بعض المواد غير متوفرة بالكمية المطلوبة');
+  }
+  if(c.from===c.to)return alert('المخزن المرسل والمستلم يجب أن يكونا مختلفين');
+
+  const items=c.materials.map(m=>({item:m.item,qty:Number(m.qty)}));
+
+  // Revalidate and execute immediately
+  for(const it of items){
+    const product=findProductByNameOrId(it.item);
+    const source=product?findInventoryRowForLocation(product,c.from):null;
+    if(!product || Number(source?.stock||0)<it.qty){
+      return alert(`رصيد ${it.item} تغيّر أو أصبح غير كافٍ. أعد حساب الاحتياجات.`);
+    }
+  }
+
+  try{
+    items.forEach(it=>moveStockBetweenLocations(it.item,it.qty,c.from,c.to));
+  }catch(err){
+    return alert(err.message);
+  }
+
+  const transfer={
+    id:'TR-'+Date.now(),
+    date:c.date,
+    from:c.from,
+    to:c.to,
+    items,
+    status:'تم الاستلام',
+    sender:current.name,
+    receiver:current.name,
+    note:`ناتج خطة احتياجات: ${c.name}`,
+    stockMoved:true,
+    receivedAt:new Date().toISOString()
+  };
+  db.transfers.unshift(transfer);
+
+  const plan={
+    id:'REQ-'+Date.now(),
+    ...c,
+    status:'تم التحويل إلى الإنتاج',
+    transferId:transfer.id,
+    user:current.name
+  };
+  db.production_requirement_plans.unshift(plan);
+
+  log('حساب وتنفيذ احتياجات الإنتاج',`${plan.id} — ${transfer.items.length} مواد`);
+  save();
+  renderProductionRequirementsHistory();
+  alert(`تم تحويل المواد فعلياً إلى ${c.to}. رقم التحويل ${transfer.id}`);
+}
+
+function clearProductionRequirements(){
+  currentRequirementsCalculation=null;
+  productionPlanRows.innerHTML='';
+  addProductionPlanRow();
+  prPlanName.value=prNote.value='';
+  renderProductionRequirementsResult();
+}
+
+function renderProductionRequirementsHistory(){
+  if(!productionRequirementsHistoryBody)return;
+  productionRequirementsHistoryBody.innerHTML=(db.production_requirement_plans||[]).map((x,i)=>`
+    <tr>
+      <td>${x.id}</td><td>${x.date}</td><td>${x.name}</td><td>${x.recipes.length}</td>
+      <td>${x.materials.length}</td><td><span class="badge ok">${x.status}</span></td>
+      <td>${x.user}</td>
+      <td class="no-print"><button class="btn btn-blue" onclick="viewRequirementPlan(${i})">التفاصيل</button></td>
+    </tr>`).join('');
+}
+
+function viewRequirementPlan(i){
+  const x=db.production_requirement_plans[i];
+  const recipes=x.recipes.map(r=>`<tr><td>${r.name}</td><td>${r.qty}</td><td>${r.unit}</td></tr>`).join('');
+  const materials=x.materials.map(m=>`<tr><td>${m.item}</td><td>${Number(m.qty).toFixed(3)}</td><td>${m.unit}</td></tr>`).join('');
+  const w=open('','_blank');
+  w.document.write(`<html dir="rtl"><meta charset="utf-8"><style>
+  body{font-family:Tahoma;padding:30px}h1,h2{text-align:center}table{width:100%;border-collapse:collapse;margin:15px 0}
+  th,td{border:1px solid #555;padding:10px}
+  </style><body><h1>مشاوي الدجاج</h1><h2>${x.name}</h2>
+  <p><b>التاريخ:</b> ${x.date} — <b>من:</b> ${x.from} — <b>إلى:</b> ${x.to}</p>
+  <h3>الوصفات</h3><table><thead><tr><th>الوصفة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${recipes}</tbody></table>
+  <h3>المواد المجمعة</h3><table><thead><tr><th>المادة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${materials}</tbody></table>
+  </body></html>`);
+  w.document.close();
+}
+
+function exportProductionRequirements(){
+  if(!requirePerm('production_requirements.export'))return;
+  if(!currentRequirementsCalculation)return alert('احسب الاحتياجات أولاً');
+  csv('production_requirements.csv',[
+    ['المادة','الكمية المطلوبة','الوحدة','المتوفر','النقص'],
+    ...currentRequirementsCalculation.materials.map(m=>[m.item,m.qty,m.unit,m.available,m.shortage])
+  ]);
+}
+
+function renderProcessSelectors(){
+  ctProcessProfile.innerHTML=db.process_profiles.map((x,i)=>`<option value="${i}">${x.name}</option>`).join('');
+  const eligible=db.products.filter(x=>x.active!==false);
+  ctInputProduct.innerHTML=eligible.map(x=>`<option value="${x.id}">${x.name} — ${x.unit}</option>`).join('');
+  ctOutputProduct.innerHTML=eligible.map(x=>`<option value="${x.id}">${x.name} — ${x.unit}</option>`).join('');
+
+  const marinated=db.products.find(x=>x.name==='Poulet mariné kg');
+  const hache=db.products.find(x=>x.name==='Poulet Haché cuit');
+  if(marinated)ctInputProduct.value=marinated.id;
+  if(hache)ctOutputProduct.value=hache.id;
+  loadProcessProfile();
+}
+
+function loadProcessProfile(){
+  const profile=db.process_profiles[Number(ctProcessProfile.value)]||db.process_profiles[0];
+  if(!profile)return;
+  ctRaw.placeholder=profile.rawLabel||'الكمية قبل الطبخ';
+  ctCooked.placeholder=profile.cookedLabel||'الكمية بعد الطبخ';
+  ctNet.placeholder=profile.netLabel||'الكمية النهائية';
+  ctCooked.style.display=profile.mode==='two_stage'?'none':'block';
+  const inputProduct=db.products.find(x=>x.id===ctInputProduct.value);
+  const balance=inputProduct?getProductBalance(inputProduct.id,'مخزن الإنتاج'):0;
+  ctProcessHelp.innerHTML=`العملية: <b>${profile.name}</b><br>${profile.rawLabel} → ${profile.cookedLabel} → ${profile.netLabel}<br>الرصيد الحالي في مخزن الإنتاج: <b>${balance.toFixed(3)} ${inputProduct?.unit||''}</b>${balance===0?'<br><span style="color:#991b1b">لا يوجد رصيد في مخزن الإنتاج. نفّذ تحويل المنتج من المخزن الرئيسي أولاً.</span>':''}`;
+  updateChickenPreview();
+  renderChickenTransforms();
+}
+
+function syncProcessProducts(){
+  renderChickenTransforms();
+  updateChickenPreview();
+}
+
+function chickenCalc(){
+  const raw=Number(ctRaw.value||0);
+  const cooked=Number(ctCooked.value||0);
+  const net=Number(ctNet.value||0);
+  const profile=db.process_profiles[Number(ctProcessProfile.value)]||db.process_profiles[0];
+  const effectiveCooked=profile?.mode==='two_stage'?net:cooked;
+  const cookLoss=Math.max(0,raw-effectiveCooked);
+  const trimWaste=Math.max(0,effectiveCooked-net);
+  const totalWaste=Math.max(0,raw-net);
+  const yieldPct=raw>0?(net/raw*100):0;
+  const cookLossPct=raw>0?(cookLoss/raw*100):0;
+  const trimWastePct=effectiveCooked>0?(trimWaste/effectiveCooked*100):0;
+  return {raw,cooked:effectiveCooked,net,cookLoss,trimWaste,totalWaste,yieldPct,cookLossPct,trimWastePct};
+}
+
+function updateChickenPreview(){
+  const input=db.products.find(x=>x.id===ctInputProduct.value);
+  const output=db.products.find(x=>x.id===ctOutputProduct.value);
+  const c=chickenCalc();
+  if(!c.raw&&!c.cooked&&!c.net){
+    ctPreview.textContent='أدخل كميات الدفعة لمعاينة الحساب.';
+    return;
+  }
+  ctPreview.innerHTML=`
+    المنتج الداخل: <b>${input?.name||''}</b> —
+    الفقد أثناء الطبخ: <b>${c.cookLoss.toFixed(3)} ${input?.unit||''}</b> —
+    الهدر بعد الطبخ: <b>${c.trimWaste.toFixed(3)} ${input?.unit||''}</b> —
+    الناتج النهائي: <b>${c.net.toFixed(3)} ${output?.unit||''}</b> —
+    المردودية: <b>${c.yieldPct.toFixed(1)}%</b>`;
+}
+
+function clearChickenForm(){
+  ctBatch.value=ctRaw.value=ctCooked.value=ctNet.value=ctNote.value='';
+  updateChickenPreview();
+}
+
+function openProcessProfileModal(){
+  ppName.value=ppRawLabel.value=ppCookedLabel.value=ppNetLabel.value='';
+  processProfileModal.classList.add('open');
+}
+
+function saveProcessProfile(){
+  if(!ppName.value.trim())return alert('أدخل اسم العملية');
+  db.process_profiles.push({
+    id:'PROC-'+Date.now(),
+    name:ppName.value.trim(),
+    mode:ppMode.value,
+    rawLabel:ppRawLabel.value.trim()||'الكمية قبل الطبخ',
+    cookedLabel:ppCookedLabel.value.trim()||'الكمية بعد الطبخ',
+    netLabel:ppNetLabel.value.trim()||'الكمية النهائية'
+  });
+  closeModal('processProfileModal');
+  log('إضافة نوع تحويل',ppName.value);
+  save();
+  renderProcessSelectors();
+}
+
+function saveChickenTransform(){
+  if(!requirePerm('chicken_transform.create'))return;
+
+  const input=db.products.find(x=>x.id===ctInputProduct.value);
+  const output=db.products.find(x=>x.id===ctOutputProduct.value);
+  const profile=db.process_profiles[Number(ctProcessProfile.value)];
+  const c=chickenCalc();
+
+  if(!input||!output)return alert('اختر المنتج الداخل والمنتج الناتج');
+  if(!ctBatch.value.trim())return alert('أدخل رقم الدفعة');
+  if(c.raw<=0||c.net<=0)return alert('أدخل الكمية قبل الطبخ والكمية النهائية');
+  if(profile.mode!=='two_stage' && c.cooked<=0)return alert('أدخل الكمية بعد الطبخ');
+  if(c.cooked>c.raw)return alert('الكمية بعد الطبخ لا يمكن أن تتجاوز الكمية قبل الطبخ');
+  if(c.net>c.cooked)return alert('الكمية النهائية لا يمكن أن تتجاوز الكمية بعد الطبخ');
+
+  const inputStock=ensureStockRow(input.id,'مخزن الإنتاج');
+  const outputStock=ensureStockRow(output.id,'مخزن البيع');
+  const available=Number(inputStock.stock||0);
+
+  if(available<c.raw){
+    return alert(`رصيد ${input.name} داخل مخزن الإنتاج غير كافٍ. المتوفر: ${available.toFixed(3)} ${input.unit}`);
+  }
+
+  inputStock.stock=available-c.raw;
+  outputStock.stock=Number(outputStock.stock||0)+c.net;
+
+  const record={
+    id:'CT-'+Date.now(),
+    batch:ctBatch.value.trim(),
+    date:ctDate.value,
+    profileId:profile.id,
+    profileName:profile.name,
+    inputProductId:input.id,
+    inputProductName:input.name,
+    inputUnit:input.unit,
+    outputProductId:output.id,
+    outputProductName:output.name,
+    outputUnit:output.unit,
+    raw:c.raw,
+    cooked:c.cooked,
+    net:c.net,
+    cookLoss:c.cookLoss,
+    trimWaste:c.trimWaste,
+    totalWaste:c.totalWaste,
+    yieldPct:c.yieldPct,
+    note:ctNote.value.trim(),
+    user:current.name,
+    status:'معتمد',
+    productionBalanceAfter:inputStock.stock,
+    salesBalanceAfter:outputStock.stock
+  };
+  db.chicken_transforms.unshift(record);
+
+  db.transfers.unshift({
+    id:'TR-'+Date.now(),
+    date:ctDate.value,
+    from:'مخزن الإنتاج',
+    to:'مخزن البيع',
+    items:[{item:output.name,qty:c.net}],
+    status:'تم الاستلام',
+    sender:current.name,
+    receiver:'مخزن البيع',
+    note:`ناتج دفعة ${record.batch} — ${profile.name}`,
+    balanceAlreadyApplied:true
+  });
+
+  log('طبخ وتحويل منتج',
+      `${input.name}: ${c.raw} ${input.unit} → ${output.name}: ${c.net} ${output.unit}`);
+
+  clearChickenForm();
+  save();
+}
+
+function renderChickenTransforms(){
+  if(!db.chicken_transforms)return;
+  const input=db.products.find(x=>x.id===ctInputProduct.value);
+  const output=db.products.find(x=>x.id===ctOutputProduct.value);
+
+  const inputBalance=input?getProductBalance(input.id,'مخزن الإنتاج'):0;
+  const outputBalance=output?getProductBalance(output.id,'مخزن البيع'):0;
+  const records=db.chicken_transforms.filter(x=>
+    (!input||x.inputProductId===input.id||x.inputProductName===input.name) &&
+    (!output||x.outputProductId===output.id||x.outputProductName===output.name)
+  );
+
+  const totalRaw=records.reduce((s,x)=>s+Number(x.raw||0),0);
+  const totalNet=records.reduce((s,x)=>s+Number(x.net||0),0);
+  const avg=totalRaw>0?(totalNet/totalRaw*100):0;
+
+  ctProductionBalance.textContent=input?`${inputBalance.toFixed(3)} ${input.unit}`:'0';
+  ctSalesBalance.textContent=output?`${outputBalance.toFixed(3)} ${output.unit}`:'0';
+  ctRawTotal.textContent=totalRaw.toFixed(3);
+  ctYieldAvg.textContent=avg.toFixed(1)+'%';
+
+  chickenTransformBody.innerHTML=db.chicken_transforms.map((x,i)=>`
+    <tr>
+      <td>${x.batch}</td><td>${x.date}</td><td>${x.profileName||''}</td>
+      <td>${x.inputProductName||'Poulet mariné kg'}</td>
+      <td>${Number(x.raw||0).toFixed(3)} ${x.inputUnit||'كغ'}</td>
+      <td>${Number(x.cooked||0).toFixed(3)} ${x.inputUnit||'كغ'}</td>
+      <td>${x.outputProductName||'Poulet Haché cuit'}</td>
+      <td>${Number(x.net||0).toFixed(3)} ${x.outputUnit||'كغ'}</td>
+      <td>${Number(x.totalWaste||0).toFixed(3)}</td>
+      <td><span class="badge ${Number(x.yieldPct)>=40?'ok':'warn'}">${Number(x.yieldPct||0).toFixed(1)}%</span></td>
+      <td>${Number(x.productionBalanceAfter||0).toFixed(3)}</td>
+      <td>${x.user}</td>
+      <td class="no-print"><button class="btn btn-soft" onclick="printChickenBatch(${i})">طباعة</button></td>
+    </tr>`).join('');
+}
+
+function printChickenBatch(i){
+  if(!requirePerm('chicken_transform.print'))return;
+  const x=db.chicken_transforms[i];
+  const w=open('','_blank');
+  w.document.write(`
+  <html dir="rtl"><meta charset="utf-8"><style>
+  body{font-family:Tahoma;padding:30px}h1,h2{text-align:center}
+  table{width:100%;border-collapse:collapse}th,td{border:1px solid #555;padding:11px}
+  .sign{display:grid;grid-template-columns:1fr 1fr;margin-top:60px}
+  </style><body>
+  <h1>مشاوي الدجاج</h1><h2>بطاقة طبخ وتحويل منتج</h2>
+  <table>
+  <tr><th>رقم الدفعة</th><td>${x.batch}</td><th>التاريخ</th><td>${x.date}</td></tr>
+  <tr><th>العملية</th><td colspan="3">${x.profileName||''}</td></tr>
+  <tr><th>المنتج الداخل</th><td>${x.inputProductName||''}</td><th>المنتج الناتج</th><td>${x.outputProductName||''}</td></tr>
+  <tr><th>قبل الطبخ</th><td>${x.raw} ${x.inputUnit||''}</td><th>بعد الطبخ</th><td>${x.cooked} ${x.inputUnit||''}</td></tr>
+  <tr><th>الكمية النهائية</th><td>${x.net} ${x.outputUnit||''}</td><th>الهدر الإجمالي</th><td>${Number(x.totalWaste||0).toFixed(3)}</td></tr>
+  <tr><th>المردودية</th><td>${Number(x.yieldPct||0).toFixed(1)}%</td><th>المستخدم</th><td>${x.user}</td></tr>
+  <tr><th>الرصيد المتبقي في الإنتاج</th><td>${Number(x.productionBalanceAfter||0).toFixed(3)} ${x.inputUnit||''}</td><th>الرصيد في البيع بعد الدفعة</th><td>${Number(x.salesBalanceAfter||0).toFixed(3)} ${x.outputUnit||''}</td></tr>
+  </table>
+  <p><b>ملاحظة:</b> ${x.note||''}</p>
+  <div class="sign"><div>توقيع مسؤول الإنتاج<br><br>................</div><div>توقيع مسؤول مخزن البيع<br><br>................</div></div>
+  <script>onload=()=>print()<\/script></body></html>`);
+  w.document.close();
+}
+
+function testCompositionStorage(){
+  try{
+    const t=JSON.stringify(db.product_compositions||[]);
+    JSON.parse(t);
+    return true;
+  }catch(e){
+    console.error('Composition storage test failed',e);
+    return false;
+  }
+}
+
+function renderAll(){renderDashboard();renderProducts();renderInventory();renderRecipes();renderRecipeStations();renderProduction();renderProductionRequirementsSetup();renderProcessSelectors();renderChickenTransforms();renderTransfers();renderFinance();renderUsers();renderAudit();renderPurchaseSetup()}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const invP=document.getElementById('invProduct');
+  if(invP)invP.addEventListener('change',()=>{
+    const p=db.products?.find(x=>x.id===invP.value);
+    if(p){invMin.value=p.min||0;invCost.value=p.cost||0}
+  });
+
+  ['ctRaw','ctCooked','ctNet'].forEach(id=>{
+    const e=document.getElementById(id);
+    if(e)e.addEventListener('input',updateChickenPreview);
+  });
+  initializeCloudApp();
+});
+</script>
+
+
+<div id="processProfileModal" class="modal"><div class="modal-box">
+  <h3>إضافة نوع طبخ أو تحويل</h3>
+  <div class="form-grid">
+    <input id="ppName" placeholder="اسم العملية">
+    <select id="ppMode">
+      <option value="three_stage">قبل الطبخ → بعد الطبخ → الناتج النهائي</option>
+      <option value="two_stage">قبل الطبخ → الناتج النهائي</option>
+      <option value="same_unit">طبخ بالعدد دون تغيير الوحدة</option>
+    </select>
+    <input id="ppRawLabel" placeholder="اسم خانة البداية">
+    <input id="ppCookedLabel" placeholder="اسم خانة بعد الطبخ">
+    <input id="ppNetLabel" placeholder="اسم خانة الناتج النهائي">
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveProcessProfile()">حفظ</button>
+    <button class="btn btn-soft" onclick="closeModal('processProfileModal')">إلغاء</button>
+  </div>
+</div></div>
+
+<div id="productDetailModal" class="modal"><div class="modal-box">
+  <div class="page-title">
+    <div>
+      <h2 id="pdTitle">تفاصيل المنتج</h2>
+      <small id="pdSubtitle"></small>
+    </div>
+    <div class="actions">
+      <button class="btn btn-soft" onclick="printProductDetail()">طباعة</button>
+      <button class="btn btn-soft" onclick="closeModal('productDetailModal')">إغلاق</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card kpi"><span>إجمالي المخزون</span><strong id="pdTotalStock">0</strong></div>
+    <div class="card kpi"><span>متوسط التكلفة</span><strong id="pdAvgCost">0 DH</strong></div>
+    <div class="card kpi"><span>سعر البيع</span><strong id="pdSalePrice">0 DH</strong></div>
+    <div class="card kpi"><span>الهامش التقديري</span><strong id="pdMargin">0%</strong></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="actions no-print">
+      <button class="btn btn-soft" onclick="showProductTab('info')">المعلومات</button>
+      <button class="btn btn-soft" onclick="showProductTab('stock')">المخزون</button>
+      <button class="btn btn-soft" onclick="showProductTab('production')">الإنتاج</button>
+      <button class="btn btn-soft" onclick="showProductTab('recipe')">الوصفة</button>
+      <button type="button" class="btn btn-soft" onclick="showProductTab('composition')">مكونات المنتج</button>
+      <button class="btn btn-soft" onclick="showProductTab('history')">السجل</button>
+      <button class="btn btn-soft" onclick="showProductTab('documents')">الملفات</button>
+    </div>
+
+    <div id="pdTabInfo" class="product-tab">
+      <div class="form-grid">
+        <input id="pdName" placeholder="اسم المنتج">
+        <select id="pdType">
+          <option value="مادة أولية">مادة أولية</option>
+          <option value="منتج نصف مصنع">منتج نصف مصنع</option>
+          <option value="منتج نهائي">منتج نهائي</option>
+          <option value="مواد النظافة">مواد النظافة</option>
+          <option value="مواد التغليف">مواد التغليف</option>
+        </select>
+        <input id="pdCategory" placeholder="الفئة">
+        <select id="pdUnit">
+          <option>كغ</option><option>لتر</option><option>وحدة</option><option>علبة</option><option>كرتون</option>
+        </select>
+        <input id="pdBarcode" placeholder="الباركود">
+        <input id="pdCost" type="number" step="0.01" placeholder="تكلفة الشراء">
+        <input id="pdSale" type="number" step="0.01" placeholder="سعر البيع">
+        <input id="pdMin" type="number" step="0.001" placeholder="الحد الأدنى">
+      </div>
+      <div class="actions no-print"><button class="btn btn-primary" onclick="saveProductDetail()">حفظ التعديلات</button></div>
+    </div>
+
+    <div id="pdTabStock" class="product-tab hidden">
+      <div class="table-wrap"><table><thead><tr><th>المخزن</th><th>الكمية</th><th>الوحدة</th><th>القيمة</th></tr></thead><tbody id="pdStockBody"></tbody></table></div>
+    </div>
+
+    <div id="pdTabProduction" class="product-tab hidden">
+      <div id="pdProductionFlow" class="notice"></div>
+      <div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الدفعة</th><th>قبل الطبخ</th><th>بعد الطبخ</th><th>الصافي</th><th>الهدر</th><th>المردودية</th></tr></thead><tbody id="pdProductionBody"></tbody></table></div>
+    </div>
+
+    <div id="pdTabRecipe" class="product-tab hidden">
+      <div class="notice">تُعرض هنا الوصفة المرتبطة بالمنتج إن وجدت.</div>
+      <div class="table-wrap"><table><thead><tr><th>المكون</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody id="pdRecipeBody"></tbody></table></div>
+    </div>
+
+    
+    <div id="pdTabComposition" class="product-tab hidden">
+      <div class="notice">
+        اربط هذا المنتج بمنتجات أخرى تدخل في تركيبه. مثال: Chicken Rice = أرز + Poulet Haché + صوص + سلطة.
+      </div>
+
+      <div class="form-grid no-print">
+        <input id="pdCompositionYield" type="number" step="0.001" min="0" placeholder="الكمية النهائية الناتجة">
+        <select id="pdCompositionUnit"></select>
+      </div>
+
+      <div id="pdCompositionRows"></div>
+
+      <div class="actions no-print" style="margin-top:12px">
+        <button type="button" class="btn btn-soft" onclick="addProductCompositionRow()">إضافة مكوّن</button>
+        <button type="button" class="btn btn-primary" onclick="saveProductComposition()">حفظ المكونات</button>
+        <button type="button" class="btn btn-danger" onclick="clearProductComposition()">حذف المكونات</button>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead><tr><th>المكوّن</th><th>الكمية</th><th>الوحدة</th><th>النسبة من المنتج</th></tr></thead>
+          <tbody id="pdCompositionSummaryBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+<div id="pdTabHistory" class="product-tab hidden">
+      <div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>العملية</th><th>الكمية/القيمة</th><th>المستخدم</th><th>التفاصيل</th></tr></thead><tbody id="pdHistoryBody"></tbody></table></div>
+    </div>
+
+    <div id="pdTabDocuments" class="product-tab hidden">
+      <div class="form-grid no-print">
+        <input id="pdDocTitle" placeholder="اسم الملف">
+        <input id="pdDocFile" type="file">
+        <button class="btn btn-primary" onclick="saveProductDocument()">رفع الملف</button>
+      </div>
+      <div id="pdDocumentsList"></div>
+    </div>
+  </div>
+</div></div>
+
+</body></html>
