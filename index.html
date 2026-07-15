@@ -37,6 +37,15 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
 @media(max-width:900px){.app{grid-template-columns:1fr}aside{position:fixed;right:-270px;z-index:40;width:250px;transition:.25s}.app.menu-open aside{right:0}.mobile-menu{display:inline-flex}.content{padding:14px}.topbar{padding:0 14px}}
 @media print{aside,.topbar,.no-print{display:none!important}.app{display:block}.content{padding:0}.page{display:none!important}.page.printing{display:block!important}.card{box-shadow:none;border:0}body{background:#fff}}
 </style>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8b1e1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Machawi ERP">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+
 </head>
 <body>
 <div id="login" class="login">
@@ -437,6 +446,14 @@ table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;bor
     </section>
 
     <section id="settings" class="page">
+      <div class="card" style="margin-bottom:14px">
+        <h3>تثبيت التطبيق</h3>
+        <div class="notice">يمكن تثبيت Machawi Dajaj ERP على الهاتف أو الحاسوب وفتحه كتطبيق مستقل.</div>
+        <div class="actions">
+          <button id="installPwaBtn" class="btn btn-primary" style="display:none">تثبيت التطبيق</button>
+        </div>
+      </div>
+
       <div class="card" style="margin-bottom:14px">
         <h3>المزامنة السحابية</h3>
         <div class="notice">تتم المزامنة تلقائياً مع Supabase بين جميع الأجهزة.</div>
@@ -1217,7 +1234,48 @@ function printProductDetail(){
   <p><b>الكود:</b> ${p.id} — <b>النوع:</b> ${p.type} — <b>الوحدة:</b> ${p.unit}</p>
   <p><b>سعر الشراء:</b> ${money(p.cost)} — <b>سعر البيع:</b> ${money(p.salePrice)}</p>
   <table><thead><tr><th>المخزن</th><th>الكمية</th><th>الوحدة</th><th>القيمة</th></tr></thead><tbody>${rows}</tbody></table>
-  <script>onload=()=>print()<\/script></body></html>`);
+  <script>onload=()=>print()<\/script>
+<script>
+let deferredPwaPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredPwaPrompt = event;
+  const btn = document.getElementById('installPwaBtn');
+  if (btn) btn.style.display = 'inline-flex';
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPwaPrompt = null;
+  const btn = document.getElementById('installPwaBtn');
+  if (btn) btn.style.display = 'none';
+});
+
+document.addEventListener('click', async (event) => {
+  if (event.target?.id !== 'installPwaBtn') return;
+  if (!deferredPwaPrompt) {
+    alert('افتح قائمة Chrome ثم اختر تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.');
+    return;
+  }
+  deferredPwaPrompt.prompt();
+  await deferredPwaPrompt.userChoice;
+  deferredPwaPrompt = null;
+  event.target.style.display = 'none';
+});
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      await navigator.serviceWorker.register('./service-worker.js');
+      console.log('Machawi ERP service worker registered');
+    } catch (error) {
+      console.error('Service worker registration failed', error);
+    }
+  });
+}
+</script>
+
+</body></html>`);
   w.document.close();
 }
 
