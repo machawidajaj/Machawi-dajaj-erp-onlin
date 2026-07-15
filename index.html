@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Machawi Dajaj ERP Cloud V3.5</title>
+<title>Machawi Dajaj ERP Cloud V3.6</title>
 
 <style>
 :root{
@@ -527,7 +527,7 @@ table{
   <div id="iconRail" class="icon-rail"></div>
   <div class="nav-panel">
     <div class="brand-box">
-      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.5</small></div>
+      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V3.6</small></div>
     </div>
     <button id="closeSideMenuBtn" class="btn btn-soft close-side-menu" type="button" onclick="closeSideMenu()">إرجاع القائمة</button>
     <div class="nav-heading"><strong id="navGroupTitle">الرئيسية</strong><span>القائمة</span></div>
@@ -1321,7 +1321,7 @@ async function loadDbFromCloud(){
   setCloudStatus('جاري المزامنة...','warn');
   try{
     const response=await fetch(
-      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at&t=${Date.now()}`,
+      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at`,
       {
         headers:cloudHeaders({
           'Cache-Control':'no-cache',
@@ -1399,7 +1399,7 @@ async function pollCloudChanges(){
   if(document.getElementById('permModal')?.classList.contains('open'))return;
   try{
     const response=await fetch(
-      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at&t=${Date.now()}`,
+      `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at`,
       {
         headers:cloudHeaders({
           'Cache-Control':'no-cache',
@@ -2969,7 +2969,7 @@ async function savePermissionsToCloudVerified(userId, expectedPermissions, expec
   }
 
   const verifyResponse=await fetch(
-    `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at&t=${Date.now()}`,
+    `${SUPABASE_URL}/rest/v1/machawi_app_state?id=eq.${encodeURIComponent(CLOUD_STATE_ID)}&select=data,updated_at`,
     {
       method:'GET',
       headers:cloudHeaders({
