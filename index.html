@@ -2315,7 +2315,7 @@ function saveProductDetail(){
 }
 
 function renderProductProduction(p){
-  const isChicken=p.name==='Poulet mariné kg'||p.name==='Poulet Haché cuit';
+  const isChicken=p.productionPath==='chicken'||p.name==='Poulet mariné kg'||p.name==='Poulet Haché cuit';
   const records=isChicken?(db.chicken_transforms||[]):[];
 
   pdProductionFlow.innerHTML=isChicken?`
@@ -2352,6 +2352,9 @@ function renderProductComposition(p){
   pdCompositionUnit.innerHTML=['كغ','غ','لتر','مل','وحدة','علبة','كرتون']
     .map(u=>`<option ${u===(comp?.unit||p.unit)?'selected':''}>${u}</option>`).join('');
   pdCompositionYield.value=comp?.yieldQty||1;
+  const pathSelect=document.getElementById('pdProductionPathInline');
+  if(pathSelect)pathSelect.value=comp?.productionPath||p.productionPath||'preparation';
+  if(typeof renderInlineProductionMethod==='function')renderInlineProductionMethod();
   pdCompositionRows.innerHTML='';
 
   if(comp && comp.items?.length){
@@ -2469,6 +2472,7 @@ function saveProductComposition(){
     productName:p.name,
     yieldQty,
     unit:unitSelect.value,
+    productionPath:(document.getElementById('pdProductionPathInline')?.value||'preparation'),
     items,
     updatedAt:new Date().toISOString(),
     updatedBy:current.name
@@ -2476,6 +2480,12 @@ function saveProductComposition(){
 
   db.product_compositions=db.product_compositions.filter(x=>x.productId!==p.id);
   db.product_compositions.push(record);
+  p.isComposed=true;
+  p.purchaseLinked=false;
+  p.salesLinked=true;
+  p.productionOrderLinked=true;
+  p.productionPath=record.productionPath;
+  p.productionCenter=record.productionPath==='chicken'?'chicken':'other';
 
   // تركيب المنتج مستقل عن كتاب الوصفات، ويستخدم فقط في حساب الإنتاج والمخزون.
 
@@ -3765,127 +3775,41 @@ async function savePermissionsToCloudVerified(userId, expectedPermissions, expec
 
 async function savePermissions(){
   if(!requirePerm('users.permissions'))return;
-
   const user=db.users?.[editingUser];
-  if(!user){
-    alert('المستخدم غير موجود');
-    return;
-  }
-
+  if(!user)return alert('المستخدم غير موجود');
   const saveButton=document.querySelector('#permModal button[onclick="savePermissions()"]');
   const originalText=saveButton?.textContent||'حفظ الصلاحيات';
-
-  if(saveButton){
-    saveButton.disabled=true;
-    saveButton.textContent='جاري الحفظ والتحقق...';
-  }
-
+  if(saveButton){saveButton.disabled=true;saveButton.textContent='جاري الحفظ...';}
   try{
-    const permissions=Array.from(
-      document.querySelectorAll('#permissionsBox input[type="checkbox"]:checked:not(.recipe-perm-checkbox)')
-    ).map(input=>input.value).filter(Boolean);
-
+    const permissions=Array.from(document.querySelectorAll('#permissionsBox input[type="checkbox"]:checked:not(.recipe-perm-checkbox)')).map(input=>input.value).filter(Boolean);
     const recipePermissions={};
     document.querySelectorAll('#permissionsBox .recipe-perm-checkbox:checked').forEach(input=>{
       const recipeId=String(input.dataset.recipeId||'');
       if(!recipeId)return;
-      if(!recipePermissions[recipeId])recipePermissions[recipeId]=[];
-      if(input.value)recipePermissions[recipeId].push(input.value);
+      (recipePermissions[recipeId]||(recipePermissions[recipeId]=[])).push(input.value);
     });
-
-    const previousPermissions=[...(user.permissions||[])];
-    const previousRecipePermissions=JSON.parse(JSON.stringify(db.recipe_user_permissions?.[user.id]||{}));
-
     user.permissions=[...new Set(permissions)];
     if(!db.recipe_user_permissions)db.recipe_user_permissions={};
     db.recipe_user_permissions[user.id]=recipePermissions;
-
-    try{
-      localStorage.setItem('machawiERP',JSON.stringify(db));
-      window.lastLocalWriteAt=Date.now();
-    }catch(localError){
-      console.warn(localError);
-    }
-
-    setCloudStatus('جاري حفظ الصلاحيات بالسحابة...','warn');
-
-    try{
-      await savePermissionsToCloudVerified(
-        user.id,
-        user.permissions,
-        recipePermissions
-      );
-    }catch(cloudError){
-      user.permissions=previousPermissions;
-      db.recipe_user_permissions[user.id]=previousRecipePermissions;
-
-      try{
-        localStorage.setItem('machawiERP',JSON.stringify(db));
-      }catch(e){}
-
-      setCloudStatus('فشل حفظ الصلاحيات','bad');
-      throw cloudError;
-    }
-
-    if(Array.isArray(db.audit)){
-      db.audit.unshift({
-        id:'LOG-'+Date.now(),
-        at:new Date().toISOString(),
-        user:current?.name||'النظام',
-        action:'تعديل صلاحيات',
-        details:`${user.name} — ${user.permissions.length} صلاحية`
-      });
-    }
-
-    try{
-      localStorage.setItem('machawiERP',JSON.stringify(db));
-      window.lastLocalWriteAt=Date.now();
-    }catch(e){}
-
-    const modal=document.getElementById('permModal');
-    if(modal)modal.classList.remove('open');
-
-    try{
-      if(typeof renderUsers==='function')renderUsers();
-    }catch(e){}
-
-    setCloudStatus('تم حفظ الصلاحيات والتأكد منها','ok');
-    if(typeof showActionMessage==='function'){
-      showActionMessage(`تم حفظ صلاحيات ${user.name} بنجاح`);
-    }else{
-      alert(`تم حفظ صلاحيات ${user.name} بنجاح`);
-    }
-  }catch(error){
-    console.error('Verified permission save failed',error);
-    alert(`لم يتم حفظ الصلاحيات في Supabase:\n${error?.message||'خطأ غير معروف'}`);
-  }finally{
-    if(saveButton){
-      saveButton.disabled=false;
-      saveButton.textContent=originalText;
-    }
-  }
-}
-async function retryPermissionsCloudSave(){
-  try{
+    if(Array.isArray(db.audit))db.audit.unshift({id:'LOG-'+Date.now(),at:new Date().toISOString(),user:current?.name||'النظام',action:'تعديل صلاحيات',details:user.name+' — '+user.permissions.length+' صلاحية'});
     localStorage.setItem('machawiERP',JSON.stringify(db));
     window.lastLocalWriteAt=Date.now();
-  }catch(error){
-    console.warn(error);
-  }
-
-  setCloudStatus('جاري إعادة المزامنة...','warn');
-  try{
-    await saveDbToCloud(true);
-    setCloudStatus('تمت المزامنة','ok');
-    const modal=document.getElementById('permModal');
-    if(modal)modal.classList.remove('open');
-    if(typeof showActionMessage==='function')showActionMessage('تمت مزامنة الصلاحيات مع السحابة');
-  }catch(error){
-    console.error(error);
-    setCloudStatus('فشلت المزامنة','bad');
-    alert(`تعذر الاتصال بـ Supabase: ${error?.message||'تحقق من الإنترنت وإعدادات المشروع'}`);
-  }
+    if(current&&String(current.id)===String(user.id)){
+      current={id:user.id,name:user.name,role:user.role};
+      sessionStorage.setItem('machawiCurrent',JSON.stringify(current));
+    }
+    closeModal('permModal');
+    renderUsers();buildNavigation();renderAll();
+    let cloudOk=false;
+    try{
+      if(navigator.onLine){await savePermissionsToCloudVerified(user.id,user.permissions,recipePermissions);cloudOk=true;}
+    }catch(cloudError){console.warn('Permission cloud sync deferred',cloudError);}
+    setCloudStatus(cloudOk?'تم حفظ الصلاحيات محلياً وسحابياً':'تم حفظ الصلاحيات محلياً — المزامنة السحابية مؤجلة',cloudOk?'ok':'warn');
+    alert(cloudOk?'تم حفظ الصلاحيات بنجاح.':'تم حفظ الصلاحيات على هذا الجهاز. سجّل خروج المستخدم ثم ادخل من جديد.');
+  }catch(error){console.error(error);alert('تعذر حفظ الصلاحيات: '+(error?.message||error));}
+  finally{if(saveButton){saveButton.disabled=false;saveButton.textContent=originalText;}}
 }
+
 function toggleUser(i){if(!requirePerm('users.edit'))return;if(db.users[i].username==='admin')return alert('لا يمكن إيقاف المدير الافتراضي');db.users[i].active=!db.users[i].active;log('تغيير حالة مستخدم',db.users[i].name);save()}
 function deleteUser(i){if(!requirePerm('users.delete'))return;if(db.users[i].username==='admin')return alert('لا يمكن حذف المدير الافتراضي');if(confirm('حذف المستخدم؟')){log('حذف مستخدم',db.users[i].name);db.users.splice(i,1);save()}}
 function renderAudit(){auditBody.innerHTML=db.audit.map(x=>`<tr><td>${x.date}</td><td>${x.user}</td><td>${x.action}</td><td>${x.details}</td></tr>`).join('')}
@@ -6470,7 +6394,15 @@ function downloadProductionReport(){
       <div class="form-grid no-print">
         <input id="pdCompositionYield" type="number" step="0.001" min="0" placeholder="الكمية النهائية الناتجة">
         <select id="pdCompositionUnit"></select>
+        <div>
+          <label>مسار إنتاج المنتج المركب</label>
+          <select id="pdProductionPathInline" onchange="renderInlineProductionMethod()">
+            <option value="preparation">قسم التحضير</option>
+            <option value="chicken">تحويل وإنتاج الدجاج</option>
+          </select>
+        </div>
       </div>
+      <div id="pdProductionMethodInline" class="notice" style="margin:12px 0"></div>
 
       <div id="pdCompositionRows"></div>
 
@@ -6778,4 +6710,30 @@ normalizeProductRouting();injectRouteModal();document.title='Machawi Dajaj ERP C
 })();
 
 </script>
+
+<script>
+(function(){
+'use strict';
+window.renderInlineProductionMethod=function(){
+ const el=document.getElementById('pdProductionMethodInline');
+ const select=document.getElementById('pdProductionPathInline');
+ if(!el||!select)return;
+ if(select.value==='chicken'){
+  el.innerHTML='<b>طريقة العمل: تحويل وإنتاج الدجاج</b><br><br>1) وزن الكمية قبل الطهي.<br>2) وزن الكمية بعد الطهي.<br>3) وزن Poulet Haché النهائي.<br><br><b>الحساب الآلي:</b><br>هدر الطهي = قبل الطهي − بعد الطهي<br>هدر الفرم والتنقية = بعد الطهي − الوزن النهائي<br>إجمالي الهدر = قبل الطهي − الوزن النهائي<br>المردودية = (الوزن النهائي ÷ الوزن قبل الطهي) × 100';
+ }else{
+  el.innerHTML='<b>طريقة العمل: قسم التحضير</b><br><br>يعتمد النظام على المكونات والكميات المكتوبة في تركيب المنتج، ويحسب تلقائياً المطلوب والمتوفر والنقص عند إنشاء طلب الإنتاج.';
+ }
+};
+const oldOpen=window.openProductDetail;
+if(oldOpen)window.openProductDetail=function(i){const r=oldOpen(i);setTimeout(window.renderInlineProductionMethod,0);return r;};
+const oldHandle=window.handleProductionOrderAction;
+if(oldHandle)window.handleProductionOrderAction=function(id,action){
+ const map={accept:'production_orders.accept',prepare:'production_orders.prepare',transfer:'production_orders.transfer',cancel:'production_orders.cancel'};
+ const perm=map[action];if(perm&&!can(perm))return alert('ليست لديك صلاحية لهذه العملية');return oldHandle(id,action);
+};
+document.title='Machawi Dajaj ERP Cloud V5.8.3';
+})();
+</script>
+
+<script src="v5_8_5_final_fix.js"></script>
 </body></html>
