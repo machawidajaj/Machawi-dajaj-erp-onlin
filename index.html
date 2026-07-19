@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Machawi Dajaj ERP Cloud V5.6.8</title>
+<title>Machawi Dajaj ERP Cloud V5.8.0</title>
 
 <style>
 :root{
@@ -2717,6 +2717,7 @@ function printProductDetail(){
   <p><b>سعر الشراء:</b> ${money(p.cost)} — <b>سعر البيع:</b> ${money(p.salePrice)}</p>
   <table><thead><tr><th>المخزن</th><th>الكمية</th><th>الوحدة</th><th>القيمة</th></tr></thead><tbody>${rows}</tbody></table>
   <script>onload=()=>print()<\/script>
+
 </body></html>`);
   w.document.close();
 }
@@ -3479,6 +3480,7 @@ function viewTransfer(i){
     ${x.note?`<p><b>ملاحظة:</b> ${x.note}</p>`:''}
     
 
+
 </body></html>`);
   w.document.close();
 }
@@ -3551,7 +3553,8 @@ function printTransfer(i){
     <table><thead><tr><th>المادة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${rows}</tbody></table>
     ${x.note?`<p><b>ملاحظة:</b> ${x.note}</p>`:''}
     <div class="sign"><div>توقيع المرسل<br><br>................</div><div>توقيع المستلم<br><br>................</div></div>
-    <script>onload=()=>print()<\/script></body></html>`);
+    <script>onload=()=>print()<\/script>
+</body></html>`);
   w.document.close();
 }
 
@@ -3655,6 +3658,7 @@ function viewPurchase(i){
   <p><b>المورد:</b> ${x.supplier} — <b>التاريخ:</b> ${x.date} — <b>المخزن:</b> ${x.location}</p>
   <table><thead><tr><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>سعر الوحدة</th><th>المجموع</th></tr></thead><tbody>${rows}</tbody></table>
   <h3>الإجمالي: ${money(x.amount)}</h3>
+
 
 </body></html>`);
   w.document.close();
@@ -4619,7 +4623,8 @@ function viewRequirementPlan(i){
   <p><b>التاريخ:</b> ${x.date} — <b>من:</b> ${x.from} — <b>إلى:</b> ${x.to}</p>
   <h3>الوصفات</h3><table><thead><tr><th>الوصفة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${recipes}</tbody></table>
   <h3>المواد المجمعة</h3><table><thead><tr><th>المادة</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody>${materials}</tbody></table>
-  </body></html>`);
+  
+</body></html>`);
   w.document.close();
 }
 
@@ -5036,7 +5041,8 @@ function printChickenBatch(i){
   </table>
   <p><b>ملاحظة:</b> ${x.note||''}</p>
   <div class="sign"><div>توقيع مسؤول الإنتاج<br><br>................</div><div>توقيع مسؤول مخزن البيع<br><br>................</div></div>
-  <script>onload=()=>print()<\/script></body></html>`);
+  <script>onload=()=>print()<\/script>
+</body></html>`);
   w.document.close();
 }
 
@@ -6508,9 +6514,9 @@ function ensureOrders(){
 }
 function orderProducts(){
  ensureOrders();
- var ids=new Set((db.product_compositions||[]).map(function(c){return String(c.productId)}));
- var list=(db.products||[]).filter(function(p){return p.active!==false&&(ids.has(String(p.id))||p.isComposed===true||p.type==='finished')});
- if(!list.length)list=(db.products||[]).filter(function(p){return p.active!==false});
+ var list=(db.products||[]).filter(function(p){
+   return p.active!==false && p.productionOrderLinked===true && (p.productionPath==='preparation'||p.productionPath==='chicken');
+ });
  return list.sort(function(a,b){return String(a.name||'').localeCompare(String(b.name||''),'ar')});
 }
 window.openProductionRequestModal=function(){
@@ -6663,5 +6669,113 @@ var old=window.renderAll;window.renderAll=function(){old();renderProductionOrder
  var priorSaveComp=window.saveProductComposition;window.saveProductComposition=function(){priorSaveComp();setTimeout(function(){renderPreparationCenter();renderSalesOrderTracking()},0)};
  ensureWorkflow();
 })();
+</script>
+<script>
+(function(){
+'use strict';
+const V58_PERMISSION_CATALOG=[
+ {group:'لوحة التحكم',items:[['dashboard.view','مشاهدة لوحة التحكم']]},
+ {group:'المنتجات',items:[['products.view','مشاهدة المنتجات'],['products.add','إضافة منتج'],['products.edit','تعديل المنتج والتركيب'],['products.route','تحديد مسار المنتج'],['products.delete','حذف منتج'],['products.print','طباعة المنتجات'],['products.export','تصدير المنتجات']]},
+ {group:'المخزون',items:[['inventory.view','مشاهدة المخزون'],['inventory.add','إضافة مادة للمخزون'],['inventory.edit','تعديل الكميات'],['inventory.delete','حذف مادة'],['inventory.count','إجراء الجرد'],['inventory.approve_count','اعتماد الجرد'],['inventory.print','طباعة المخزون'],['inventory.export','تصدير المخزون']]},
+ {group:'المشتريات',items:[['purchases.view','مشاهدة المشتريات'],['purchases.add','إضافة شراء'],['purchases.approve','اعتماد الشراء'],['purchases.receive','استلام المشتريات'],['purchases.export','تصدير المشتريات']]},
+ {group:'قسم التحضير',items:[['preparation.view','مشاهدة قسم التحضير'],['preparation.calculate','حساب احتياجات الوصفة'],['preparation.start','بدء التحضير'],['preparation.ready','اعتماد المنتج جاهزاً'],['preparation.transfer','تحويل الجاهز للبيع'],['preparation.print','طباعة سجل التحضير']]},
+ {group:'تحويل وإنتاج الدجاج',items:[['chicken_transform.view','مشاهدة قسم تحويل وإنتاج الدجاج'],['chicken_transform.create','تسجيل دفعة التحويل'],['chicken_transform.transfer','تحويل الناتج إلى البيع'],['chicken_transform.cancel','إلغاء دفعة'],['chicken_transform.print','طباعة سجل التحويل']]},
+ {group:'طلبيات الإنتاج',items:[['production_orders.view','مشاهدة الطلبيات'],['production_orders.create','إنشاء طلب إنتاج'],['production_orders.accept','قبول الطلب'],['production_orders.prepare','إرساله للإنتاج'],['production_orders.transfer','تحويل الجاهز للبيع'],['production_orders.cancel','إلغاء الطلب'],['production_orders.print','طباعة الطلبيات']]},
+ {group:'المبيعات',items:[['sales.view','مشاهدة المبيعات والمنتجات الجاهزة'],['sales.add','إضافة مبيعات'],['sales.request_production','طلب إنتاج'],['sales.receive_production','استلام تحويل الإنتاج'],['sales.edit','تعديل المبيعات'],['sales.close','إغلاق اليوم'],['sales.export','تصدير المبيعات']]},
+ {group:'التحويلات',items:[['transfers.view','مشاهدة التحويلات'],['transfers.create','إنشاء تحويل'],['transfers.approve','اعتماد التحويل'],['transfers.receive','تأكيد الاستلام'],['transfers.cancel','إلغاء التحويل'],['transfers.print','طباعة التحويلات']]},
+ {group:'المالية والمصاريف',items:[['expenses.view','مشاهدة المصاريف'],['expenses.add','إضافة مصروف'],['expenses.approve','اعتماد المصروف'],['expenses.export','تصدير المصاريف'],['reports.view','مشاهدة التقارير'],['reports.print','طباعة التقارير'],['reports.export','تصدير التقارير']]},
+ {group:'الجودة',items:[['quality.view','مشاهدة الجودة'],['quality.add','إضافة فحص جودة'],['quality.approve','اعتماد الجودة']]},
+ {group:'الموارد البشرية',items:[['hr.view','مشاهدة الموارد البشرية'],['hr.manage','إدارة ملفات الموظفين']]},
+ {group:'المستخدمون والأدوار',items:[['users.view','مشاهدة المستخدمين'],['users.add','إضافة مستخدم'],['users.edit','تعديل مستخدم'],['users.delete','حذف مستخدم'],['users.permissions','إدارة الأدوار والصلاحيات']]},
+ {group:'النظام',items:[['settings.view','مشاهدة الإعدادات'],['settings.backup','نسخة احتياطية'],['settings.restore','استعادة نسخة'],['audit.view','مشاهدة سجل النشاط']]}
+];
+const V58_ROLES={
+ admin:'المدير العام',restaurant_manager:'مدير المطعم',deputy_manager:'نائب المدير',production_manager:'مسؤول الإنتاج',preparation_manager:'مسؤول التحضير',chicken_manager:'مسؤول تحويل وإنتاج الدجاج',orders_manager:'مسؤول الطلبيات',sales_manager:'مسؤول المبيعات',stock:'مسؤول المخزون',purchases_manager:'مسؤول المشتريات',quality_manager:'مسؤول الجودة',hr_manager:'مسؤول الموارد البشرية',accounting:'المحاسب',manager:'مدير',production:'مسؤول الإنتاج',custom:'مخصص'
+};
+function isComposedProduct(p){return !!(db.product_compositions||[]).find(c=>String(c.productId)===String(p.id));}
+function normalizeProductRouting(){
+ if(!db||!Array.isArray(db.products))return;
+ db.permissions_catalog=JSON.parse(JSON.stringify(V58_PERMISSION_CATALOG));
+ Object.assign(roleNames,V58_ROLES);
+ db.products.forEach(p=>{
+   const composed=isComposedProduct(p);
+   p.isComposed=composed;
+   if(composed){
+     p.purchaseLinked=false;p.salesLinked=p.salesLinked!==false;
+     if(!p.productionPath)p.productionPath='preparation';
+     p.productionOrderLinked=p.productionOrderLinked!==false;
+   }else{
+     if(typeof p.purchaseLinked!=='boolean')p.purchaseLinked=true;
+     if(typeof p.salesLinked!=='boolean')p.salesLinked=false;
+     if(typeof p.productionOrderLinked!=='boolean')p.productionOrderLinked=false;
+     if(!p.productionPath)p.productionPath='none';
+   }
+   if(p.productionPath==='chicken')p.productionCenter='chicken';
+   if(p.productionPath==='preparation' && p.productionCenter==='chicken')p.productionCenter='other';
+ });
+ const roleSelect=document.getElementById('userRole');
+ if(roleSelect)roleSelect.innerHTML=Object.entries(V58_ROLES).filter(([k])=>!['admin'].includes(k)).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+}
+function routeLabel(p){
+ const parts=[];
+ if(p.purchaseLinked)parts.push('المشتريات');
+ if(p.productionPath==='preparation')parts.push('قسم التحضير');
+ if(p.productionPath==='chicken')parts.push('تحويل وإنتاج الدجاج');
+ if(p.productionOrderLinked)parts.push('طلبات الإنتاج');
+ if(p.salesLinked)parts.push('المبيعات');
+ return parts.length?parts.join(' + '):'غير محدد';
+}
+function injectRouteModal(){
+ if(document.getElementById('productRouteModal'))return;
+ document.body.insertAdjacentHTML('beforeend',`<div id="productRouteModal" class="modal"><div class="modal-box" style="max-width:760px"><div class="page-title"><div><h2>تحديد مسار المنتج</h2><small id="routeProductName"></small></div><button class="btn btn-soft" onclick="closeModal('productRouteModal')">إغلاق</button></div><div class="card"><div class="notice" id="routeProductRule"></div><div class="form-grid" style="margin-top:12px"><label class="perm-item"><input id="routePurchase" type="checkbox"> ربط بالمشتريات</label><label class="perm-item"><input id="routeSales" type="checkbox"> ربط بالمبيعات</label><label class="perm-item"><input id="routeOrders" type="checkbox"> إظهاره في طلبات الإنتاج</label><div><label>قسم الإنتاج</label><select id="routeProductionPath"><option value="none">لا يحتاج إنتاج</option><option value="preparation">قسم التحضير</option><option value="chicken">تحويل وإنتاج الدجاج</option></select></div></div><div id="routeOperationHelp" class="notice" style="margin-top:12px"></div><div class="actions" style="margin-top:14px"><button class="btn btn-primary" onclick="saveProductRoute()">حفظ المسار</button></div></div></div></div>`);
+ document.getElementById('routeProductionPath').addEventListener('change',renderRouteHelp);
+}
+let routeProductIndex=-1;
+window.openProductRoute=function(i){
+ if(typeof requirePerm==='function'&&!requirePerm('products.route'))return;
+ normalizeProductRouting();injectRouteModal();routeProductIndex=i;const p=db.products[i];if(!p)return;
+ routeProductName.textContent=p.name;routePurchase.checked=!!p.purchaseLinked;routeSales.checked=!!p.salesLinked;routeOrders.checked=!!p.productionOrderLinked;routeProductionPath.value=p.productionPath||'none';
+ routeProductRule.textContent=isComposedProduct(p)?'هذا منتج مركب: يرتبط بالمبيعات، واختر له قسم الإنتاج وطريقة العمل.':'هذا منتج غير مركب: يرتبط بالمشتريات تلقائياً، ويمكن بيعه مباشرة مثل مشروب كوكا.';
+ routePurchase.disabled=isComposedProduct(p);renderRouteHelp();openModal('productRouteModal');
+};
+window.renderRouteHelp=function(){const v=routeProductionPath.value;routeOperationHelp.innerHTML=v==='chicken'?'<b>عملية الدجاج:</b> الوزن قبل الطهي ← الوزن بعد الطهي ← وزن Poulet Haché النهائي، مع حساب الهدر والمردودية تلقائياً.':v==='preparation'?'<b>عملية التحضير:</b> تعتمد على تركيب المنتج؛ عند إدخال الكمية يحسب النظام المطلوب والمتوفر والنقص من كل مكوّن.':'لا توجد عملية إنتاج لهذا المنتج؛ مناسب للمنتجات الجاهزة مثل كوكا.';};
+window.saveProductRoute=function(){
+ const p=db.products[routeProductIndex];if(!p)return;const composed=isComposedProduct(p),path=routeProductionPath.value;
+ if(path!=='none'&&!composed)return alert('يجب حفظ تركيب المنتج أولاً قبل ربطه بقسم الإنتاج.');
+ p.isComposed=composed;p.purchaseLinked=composed?false:routePurchase.checked;p.salesLinked=routeSales.checked;p.productionOrderLinked=routeOrders.checked;p.productionPath=path;
+ if(composed){p.salesLinked=true;if(path==='none')return alert('المنتج المركب يجب ربطه بقسم التحضير أو قسم تحويل وإنتاج الدجاج.');}
+ if(path==='chicken'){p.productionCenter='chicken';ensureChickenTransformModule();if(!db.process_profiles.some(x=>String(x.productId)===String(p.id))){db.process_profiles.push({id:'PROC-'+Date.now(),productId:p.id,centerId:'chicken',name:p.name+' — تحويل ثلاثي',mode:'three_stage',rawLabel:'الوزن قبل الطهي',cookedLabel:'الوزن بعد الطهي',netLabel:'وزن Poulet Haché النهائي'});}}
+ if(path==='preparation')p.productionCenter='other';
+ log('تحديد مسار المنتج',p.name+' — '+routeLabel(p));save();closeModal('productRouteModal');renderProducts();if(typeof renderPreparationCenter==='function')renderPreparationCenter();if(typeof renderProcessSelectors==='function')renderProcessSelectors();
+};
+const oldRenderProducts=window.renderProducts;
+window.renderProducts=function(){normalizeProductRouting();productsCount.textContent=db.products.length;rawProductsCount.textContent=db.products.filter(x=>x.type==='مادة أولية').length;semiProductsCount.textContent=db.products.filter(x=>x.type==='منتج نصف مصنع').length;finishedProductsCount.textContent=db.products.filter(x=>x.type==='منتج نهائي').length;
+ const head=document.querySelector('#products table thead tr');if(head&&!head.querySelector('[data-v58-route]')){const th=document.createElement('th');th.dataset.v58Route='1';th.textContent='المسار';head.insertBefore(th,head.lastElementChild);}
+ productsBody.innerHTML=db.products.map((x,i)=>`<tr><td>${x.id}</td><td>${x.name}</td><td>${x.type}</td><td>${x.category||''}</td><td>${x.unit}</td><td>${money(x.cost)}</td><td>${money(x.salePrice)}</td><td>${x.min}</td><td>${x.barcode||''}</td><td><span class="badge ${x.productionPath==='chicken'?'bad':x.productionPath==='preparation'?'warn':'ok'}">${routeLabel(x)}</span></td><td class="no-print"><button class="btn btn-blue" onclick="openProductDetail(${i})">فتح التفاصيل</button><button class="btn btn-primary" onclick="openProductComposition(${i})">تركيب المنتج</button><button class="btn btn-soft" onclick="openProductRoute(${i})">تحديد المسار</button><button class="btn btn-danger" onclick="deleteProduct(${i})">حذف</button></td></tr>`).join('');
+};
+const oldAddProduct=window.addProduct;
+window.addProduct=function(){const before=db.products.length;oldAddProduct();if(db.products.length>before){const p=db.products[db.products.length-1];p.isComposed=false;p.purchaseLinked=true;p.salesLinked=false;p.productionOrderLinked=false;p.productionPath='none';save();renderProducts();}};
+const oldSaveComposition=window.saveProductComposition;
+window.saveProductComposition=function(){const idx=currentProductIndex;oldSaveComposition();const p=db.products[idx];if(p&&isComposedProduct(p)){p.isComposed=true;p.purchaseLinked=false;p.salesLinked=true;p.productionOrderLinked=true;if(!p.productionPath||p.productionPath==='none')p.productionPath='preparation';save();setTimeout(()=>openProductRoute(idx),50);}};
+const oldClearComposition=window.clearProductComposition;
+window.clearProductComposition=function(){const idx=currentProductIndex;oldClearComposition();const p=db.products[idx];if(p&&!isComposedProduct(p)){p.isComposed=false;p.purchaseLinked=true;p.productionPath='none';p.productionOrderLinked=false;save();renderProducts();}};
+window.addPurchaseItemRow=function(productId='',qty='',price=''){
+ const allowed=db.products.filter(x=>x.active!==false&&x.purchaseLinked!==false&&!isComposedProduct(x));const row=document.createElement('div');row.className='purchase-item-row';row.innerHTML=`<select class="pur-product">${allowed.map(x=>`<option value="${x.id}" ${x.id===productId?'selected':''}>${x.name} — ${x.unit}</option>`).join('')}</select><input class="pur-qty" type="number" min="0" step="0.001" value="${qty}" placeholder="الكمية"><input class="pur-price" type="number" min="0" step="0.01" value="${price}" placeholder="سعر الوحدة"><div class="pur-line-total">0.00 DH</div><button class="btn btn-danger" onclick="this.parentElement.remove();updatePurchaseTotal()">حذف</button>`;purchaseItems.appendChild(row);row.querySelectorAll('input,select').forEach(e=>e.addEventListener('input',updatePurchaseTotal));const p=db.products.find(x=>x.id===row.querySelector('.pur-product').value);if(p&&!price)row.querySelector('.pur-price').value=p.cost||0;row.querySelector('.pur-product').addEventListener('change',e=>{const pr=db.products.find(x=>x.id===e.target.value);row.querySelector('.pur-price').value=pr?.cost||0;updatePurchaseTotal();});updatePurchaseTotal();if(!allowed.length)alert('لا توجد منتجات غير مركبة مرتبطة بالمشتريات.');
+};
+const oldOrderProducts=window.orderProducts;
+window.orderProducts=function(){normalizeProductRouting();return db.products.filter(p=>p.active!==false&&p.productionOrderLinked===true&&p.productionPath!=='none').sort((a,b)=>String(a.name).localeCompare(String(b.name),'ar'));};
+const oldRenderPreparation=window.renderPreparationCenter;
+if(oldRenderPreparation)window.renderPreparationCenter=function(){normalizeProductRouting();oldRenderPreparation();const select=document.getElementById('prepProductSelect');if(select){const allowed=new Set(db.products.filter(p=>p.productionPath==='preparation'&&isComposedProduct(p)).map(p=>String(p.id)));[...select.options].forEach(o=>{if(o.value&&!allowed.has(String(o.value)))o.remove();});}const grid=document.getElementById('preparationProductsGrid');if(grid){grid.querySelectorAll('.prep-product-card').forEach(card=>{const name=(card.querySelector('strong')||{}).textContent;const p=db.products.find(x=>x.name===name);if(p&&p.productionPath!=='preparation')card.remove();});}};
+const oldRenderProcess=window.renderProcessSelectors;
+if(oldRenderProcess)window.renderProcessSelectors=function(){db.products.forEach(p=>{if(p.productionPath==='chicken')p.productionCenter='chicken';});oldRenderProcess();};
+const oldRenderOrders=window.renderProductionOrders;
+if(oldRenderOrders)window.renderProductionOrders=function(){normalizeProductRouting();oldRenderOrders();};
+const oldEditPermissions=window.editPermissions;
+window.editPermissions=function(i){normalizeProductRouting();oldEditPermissions(i);};
+const oldRenderAll=window.renderAll;
+window.renderAll=function(){normalizeProductRouting();oldRenderAll();};
+normalizeProductRouting();injectRouteModal();document.title='Machawi Dajaj ERP Cloud V5.8.0';
+})();
+
 </script>
 </body></html>
