@@ -1,0 +1,8 @@
+Machawi ERP Cloud V5.6.2 - Login Stability Repair
+- Repaired login using explicit DOM references instead of browser-created global variables.
+- Normalizes users loaded from local storage or Supabase.
+- Restores the default administrator account if cloud data has no valid administrator.
+- Supports Enter to submit login.
+- Removes stale Service Worker/cache entries that could keep an older broken version.
+- Keeps Production to Sales functionality from V5.6.1.
+Default recovery login: admin / 1234

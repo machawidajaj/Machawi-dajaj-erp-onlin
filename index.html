@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Machawi Dajaj ERP Cloud V5.4</title>
+<title>Machawi Dajaj ERP Cloud V5.6.8</title>
 
-<style>${universalPrintStyles()}
+<style>
 :root{
  --brand:#981f20;--brand-dark:#6f1112;--brand-soft:#fff0ef;
  --gold:#f2b705;--gold-soft:#fff7d6;--bg:#f7f7f9;--card:#fff;
@@ -663,6 +663,27 @@ table{
 
 .machawi-ui-logo{width:58px;height:58px;object-fit:contain;background:transparent;display:block;flex:0 0 auto}
 @media(max-width:620px){.machawi-ui-logo{width:46px;height:46px}}
+
+.production-transfer-cell{min-width:165px}.sales-ready-qty{font-size:18px;font-weight:900;color:var(--brand)}
+.transfer-progress{height:7px;background:#eee;border-radius:999px;overflow:hidden;margin-top:6px}.transfer-progress i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),#f2b705)}
+.production-sales-modal .modal-box{max-width:620px}.production-sales-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}.production-sales-summary>div{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fffaf7}.production-sales-summary span{display:block;color:var(--muted);font-size:12px}.production-sales-summary strong{font-size:20px;color:var(--brand)}
+@media(max-width:700px){.production-sales-summary{grid-template-columns:1fr}}
+
+/* V5.6.8: category production pages */
+#production.show .production-category-tabs{display:none!important}
+#production.show .production-station-tabs{display:none!important}
+
+.production-range-filter{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:end}.production-range-filter label{display:block;margin:0 0 6px;font-weight:700}.production-range-filter .production-search-box{grid-column:span 2}
+.sales-ready-heading input{width:min(100%,320px)}.sales-category-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.sales-ready-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}.sales-product-card{overflow:hidden;border:1px solid var(--border);border-radius:20px;background:#fff;display:flex;flex-direction:column;min-height:330px}.sales-product-image{aspect-ratio:4/3;background:#faf6f3;overflow:hidden}.sales-product-image img{width:100%;height:100%;object-fit:cover;display:block}.sales-product-content{padding:14px;display:flex;flex-direction:column;gap:11px;flex:1}.sales-product-content h4{margin:0;color:var(--brand);font-size:20px}.sales-product-qty{display:flex;align-items:baseline;gap:7px}.sales-product-qty strong{font-size:30px;color:var(--brand)}.sales-product-qty span{color:var(--muted);font-weight:700}.sales-product-content dl{margin:0;display:grid;gap:7px}.sales-product-content dl div{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #f0e9e5;padding-top:7px}.sales-product-content dt{color:var(--muted)}.sales-product-content dd{margin:0;font-weight:700;text-align:left}.sales-product-content .badge{align-self:flex-start}.sales-ready-empty{grid-column:1/-1;text-align:center;border:1px dashed var(--border);border-radius:18px;padding:34px;display:flex;flex-direction:column;gap:8px;color:var(--muted)}.sales-ready-empty strong{color:var(--text);font-size:18px}.product-image-editor{grid-column:1/-1;display:flex;align-items:center;gap:14px;border:1px solid var(--border);border-radius:16px;padding:12px}.product-image-editor img{width:120px;height:90px;border-radius:12px;object-fit:cover;background:#faf6f3}.product-image-editor>div{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.product-image-editor label{font-weight:700;width:100%}
+.product-new-image-field{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid var(--border);border-radius:16px;padding:12px}.product-new-image-field label{font-weight:800}.product-new-image-field img{width:120px;height:90px;border-radius:12px;object-fit:cover;background:#faf6f3;border:1px solid var(--border)}.product-new-image-field img[src=""]{display:none}
+@media(max-width:700px){.product-new-image-field{grid-template-columns:1fr}.product-new-image-field img{width:100%;height:180px}}
+@media(max-width:700px){.production-range-filter{grid-template-columns:1fr 1fr}.production-range-filter .production-search-box{grid-column:1/-1}.sales-ready-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sales-product-card{min-height:280px;border-radius:16px}.sales-product-content{padding:10px;gap:8px}.sales-product-content h4{font-size:16px}.sales-product-qty strong{font-size:23px}.sales-product-content dl div{display:block}.sales-product-content dd{text-align:right;font-size:12px;margin-top:2px}.sales-product-image{aspect-ratio:1/0.82}.sales-ready-heading{display:block}.sales-ready-heading input{margin-top:10px;max-width:none!important}.product-image-editor{display:block}.product-image-editor img{width:100%;height:180px;margin-bottom:10px}}
+
+
+.new-orders-attention{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fff1f1;border:2px solid #a7191f;border-right:8px solid #a7191f;border-radius:18px;padding:14px 16px;margin-bottom:14px;animation:orderPulse 1s infinite alternate}.new-orders-attention strong{color:#a7191f;font-size:19px}.new-orders-attention span{flex:1;color:#5f4b4b}.new-orders-attention.hidden{display:none}.new-order-modal .modal-box{border-top:8px solid #f4c400;max-width:620px}.new-order-flash{background:#a7191f;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:23px;font-weight:900;margin-bottom:16px;animation:orderPulse 1s infinite alternate}.new-order-popup-product{display:flex;align-items:center;gap:14px;margin-bottom:16px}.new-order-popup-product img{width:100px;height:100px;border-radius:18px;object-fit:cover;border:1px solid var(--line)}.new-order-popup-product h2{margin:0 0 5px;color:#95171c}.new-order-popup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}.new-order-popup-grid>div{border:1px solid var(--line);border-radius:14px;padding:12px}.new-order-popup-grid small{display:block;color:var(--muted);margin-bottom:5px}.new-order-popup-grid strong{font-size:18px}.order-nav-badge{display:inline-flex;min-width:25px;height:25px;padding:0 7px;align-items:center;justify-content:center;border-radius:999px;background:#d71920;color:#fff;font-size:13px;font-weight:900;margin-inline-start:8px;animation:orderPulse .9s infinite alternate}@keyframes orderPulse{from{box-shadow:0 0 0 0 rgba(167,25,31,.12)}to{box-shadow:0 0 0 8px rgba(167,25,31,.03)}}
+@media(max-width:600px){.new-order-popup-grid{grid-template-columns:1fr}.new-order-popup-product img{width:82px;height:82px}}
+
+.sales-order-tracking-grid,.preparation-products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.order-track-card,.prep-product-card{border:1px solid var(--border);border-radius:18px;padding:14px;background:#fff}.order-track-head,.prep-product-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.order-track-head img,.prep-product-head img{width:58px;height:58px;object-fit:cover;border-radius:14px}.track-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:12px}.track-step{font-size:11px;text-align:center;padding:7px 3px;border-radius:10px;background:#f3f0ef;color:#777}.track-step.done{background:#fff2c2;color:#7d5700;font-weight:700}.track-step.current{background:var(--primary);color:#fff;font-weight:800}.prep-stock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.prep-stock-grid div{background:#faf7f5;border-radius:12px;padding:9px}.prep-stock-grid small{display:block;color:var(--muted)}.preparation-requirements{margin-top:12px}.requirement-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;padding:9px;border-bottom:1px solid var(--border)}.requirement-row.short{background:#fff0f0;color:#991b1b}.order-ready-info{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.order-ready-info div{padding:9px;border-radius:12px;background:#faf7f5}.order-ready-info small{display:block;color:var(--muted)}@media(max-width:640px){.track-steps{grid-template-columns:1fr}.requirement-row{grid-template-columns:1fr 1fr}.sales-order-tracking-grid,.preparation-products-grid{grid-template-columns:1fr}}
 </style>
 
 
@@ -674,7 +695,9 @@ table{
 <meta name="apple-mobile-web-app-title" content="Machawi ERP">
 <link rel="apple-touch-icon" href="icon-192.png">
 
-</head>
+<style>
+.production-orders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.production-order-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:16px;position:relative;overflow:hidden}.production-order-card.urgent{border-inline-start:6px solid #991f23}.production-order-card.new{box-shadow:0 0 0 3px rgba(245,183,0,.20)}.production-order-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.production-order-product{display:flex;gap:12px;align-items:center}.production-order-product img{width:72px;height:72px;border-radius:14px;object-fit:cover;background:#f7f1ee}.production-order-product h3{margin:0 0 5px;color:#8b1e1e}.production-order-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}.production-order-meta div{background:#faf7f5;border-radius:12px;padding:10px}.production-order-meta small{display:block;color:var(--muted);margin-bottom:4px}.production-order-actions{display:flex;flex-wrap:wrap;gap:8px}@media(max-width:620px){.production-orders-grid{grid-template-columns:1fr}.production-order-meta{grid-template-columns:1fr 1fr}}
+</style></head>
 <body>
 <div id="login" class="login">
   <div class="login-card">
@@ -692,7 +715,7 @@ table{
   <div id="iconRail" class="icon-rail"></div>
   <div class="nav-panel">
     <div class="brand-box">
-      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V5.4</small></div>
+      <div class="logo">مشاوي الدجاج<small>Machawi ERP Cloud V5.7.0</small></div>
     </div>
     <button id="closeSideMenuBtn" class="btn btn-soft close-side-menu" type="button" onclick="closeSideMenu()">إرجاع القائمة</button>
     <div class="nav-heading"><strong id="navGroupTitle">الرئيسية</strong><span>القائمة</span></div>
@@ -799,10 +822,16 @@ table{
           <input id="productCost" type="number" step="0.01" min="0" placeholder="سعر الشراء">
           <input id="productSalePrice" type="number" step="0.01" min="0" placeholder="سعر البيع اختياري">
           <input id="productMin" type="number" step="0.001" min="0" placeholder="الحد الأدنى">
+          <div class="product-new-image-field">
+            <label for="productImageFile">صورة المنتج</label>
+            <input id="productImageFile" type="file" accept="image/*" onchange="prepareNewProductImage(this)">
+            <img id="productImagePreview" alt="معاينة صورة المنتج" src="">
+            <button type="button" class="btn btn-soft" onclick="clearNewProductImage()">إزالة الصورة</button>
+          </div>
           <button class="btn btn-primary" onclick="addProduct()">إضافة المنتج</button>
         </div>
         <div class="notice">
-          بعد إضافة المنتج سيظهر تلقائياً في قوائم الاختيار داخل المخزون والمشتريات والتحويلات والوصفات.
+          بعد إضافة المنتج يمكنك فتح «تركيب المنتج» لتكوينه من عدة منتجات. التركيب مرتبط بالإنتاج والمخزون، بينما كتاب الوصفات مستقل تماماً.
         </div>
       </div>
 
@@ -866,12 +895,13 @@ table{
     </section>
 
     <section id="recipes" class="page">
-      <div class="page-title"><h2>الوصفات</h2><div class="actions no-print"><button class="btn btn-primary" onclick="openRecipe()">إضافة وصفة</button><button class="btn btn-soft" onclick="printRecipes()">طباعة الوصفات</button></div></div>
+      <div class="page-title"><div><h2>الوصفات</h2><div style="color:var(--muted);margin-top:5px">مرجع مستقل لكتابة طرق التحضير، غير مرتبط بالمخزون أو الإنتاج أو المبيعات</div></div><div class="actions no-print"><button class="btn btn-primary" onclick="openRecipe()">إضافة وصفة</button><button class="btn btn-soft" onclick="printRecipes()">طباعة الوصفات</button></div></div>
+      <div class="notice" style="margin-bottom:14px">هذا القسم مخصص للتوثيق والتكوين فقط. إضافة أو تعديل وصفة هنا لا تخصم من المخزون ولا تنشئ عملية إنتاج.</div>
       <div id="recipesGrid" class="grid"></div>
     </section>
 
     
-<section id="recipe_stations" class="page">
+<section id="recipe_stations" class="page" data-legacy-hidden="true">
   <div class="page-title"><h2>بوسطات التحضير وصلاحيات الوصفات</h2><button class="btn btn-soft no-print" onclick="printPage('recipe_stations')">طباعة</button></div>
   <div class="grid">
     <div class="card kpi"><span>عدد الوصفات</span><strong id="rsRecipeCount">0</strong></div>
@@ -895,7 +925,7 @@ table{
     <div class="table-wrap"><table><thead><tr><th>المحطة</th><th>الوصف</th><th>عدد الوصفات</th><th class="no-print">إجراء</th></tr></thead><tbody id="stationsListBody"></tbody></table></div>
   </div>
 </section>
-<section id="production" class="page">
+<section id="production" class="page" data-legacy-hidden="true">
 <div class="page-title"><div><h2>مركز الإنتاج</h2><div style="color:var(--muted);margin-top:5px">السلطات، الصوصات، الأرز، العصائر، الفريت والدجاج</div></div><div class="actions no-print"><button class="btn btn-primary" onclick="toggleCreateProductionType()">+ إضافة نوع إنتاج</button><button class="btn btn-soft" onclick="downloadProductionReport()">تحميل التقرير CSV</button><button class="btn btn-blue" onclick="printPage('production')">طباعة</button></div></div>
 <div id="createProductionTypePanel" class="card production-create-panel hidden"><h3>إنشاء نوع إنتاج جديد</h3><div class="form-grid">
 <input id="newProductionName" placeholder="اسم الإنتاج"><div class="inline-management-control"><select id="newProductionCategory"><option value="salad">سلطة</option><option value="sauce">صوص</option><option value="rice">أرز</option><option value="juice">عصير</option><option value="chicken">دجاج</option><option value="fries">فريت</option><option value="other">تحضير آخر</option></select><button type="button" class="btn btn-soft" data-permission-button="production_types.add_category" onclick="openQuickCategoryModal()">إضافة تخصص</button></div>
@@ -910,20 +940,10 @@ table{
 <div class="datetime-action"><input id="prodEndedAt" type="datetime-local"><button type="button" class="btn btn-soft" onclick="setPreparationEndNow()">الآن</button></div>
 </div><button class="btn btn-primary" onclick="calculateProduction()">حساب المواد</button></div><div id="prodCalc"></div></div>
 <div class="card" style="margin-top:14px">
-<div class="page-title" style="margin-bottom:10px"><div><h3 style="margin:0">سجل الإنتاج الموحد</h3><small id="productionReportStamp" style="color:var(--muted)"></small></div><select id="productionLogFilter" onchange="renderProduction()" style="width:auto"><option value="all">الجميع</option><option value="salad">السلطات</option><option value="sauce">الصوصات</option><option value="rice">الأرز</option><option value="juice">العصائر</option><option value="chicken">الدجاج</option><option value="fries">الفريت</option><option value="other">أخرى</option></select></div><div class="history-filter no-print">
-  <select id="historyPeriodMode" onchange="renderProduction()">
-    <option value="all">كل الفترات</option>
-    <option value="day">يوم محدد</option>
-    <option value="week">أسبوع محدد</option>
-    <option value="month">شهر محدد</option>
-    <option value="year">سنة محددة</option>
-  </select>
-  <input id="historyDate" type="date" onchange="renderProduction()">
-  <input id="historyMonth" type="month" onchange="renderProduction()">
-  <input id="historyYear" type="number" min="2020" max="2100" placeholder="السنة" onchange="renderProduction()">
-  <input id="historyWeek" type="number" min="1" max="53" placeholder="رقم الأسبوع" onchange="renderProduction()">
-  <input id="historyFromTime" type="time" title="من الساعة" onchange="renderProduction()">
-  <input id="historyToTime" type="time" title="إلى الساعة" onchange="renderProduction()">
+<div class="page-title" style="margin-bottom:10px"><div><h3 style="margin:0">سجل الإنتاج الموحد</h3><small id="productionReportStamp" style="color:var(--muted)"></small></div><select id="productionLogFilter" onchange="renderProduction()" style="width:auto"><option value="all">الجميع</option><option value="salad">السلطات</option><option value="sauce">الصوصات</option><option value="rice">الأرز</option><option value="juice">العصائر</option><option value="chicken">الدجاج</option><option value="fries">الفريت</option><option value="other">أخرى</option></select></div><div class="history-filter production-range-filter no-print">
+  <div><label for="historyFromDate">من تاريخ</label><input id="historyFromDate" type="date" onchange="renderProduction()"></div>
+  <div><label for="historyToDate">إلى تاريخ</label><input id="historyToDate" type="date" onchange="renderProduction()"></div>
+  <div class="production-search-box"><label for="productionHistorySearch">بحث</label><input id="productionHistorySearch" placeholder="اسم المنتج، رقم العملية، المستخدم أو الحالة" oninput="renderProduction()"></div>
   <button type="button" class="btn btn-soft" onclick="clearProductionDateFilters()">مسح الفلاتر</button>
 </div>
 <div class="table-wrap"><table><thead><tr><th>الرقم</th><th>تاريخ ووقت البداية</th><th>تاريخ ووقت النهاية</th><th>الإنتاج</th><th>الفئة</th><th>الكمية</th><th>الهدر</th><th>المدة</th><th>المستخدم</th><th>الحالة</th></tr></thead><tbody id="productionBody"></tbody></table></div></div>
@@ -1110,12 +1130,91 @@ table{
     </section>
 
     <section id="sales" class="page">
-      <div class="page-title"><h2>المبيعات</h2><button class="btn btn-blue no-print" onclick="exportSimple('sales','sales.csv')">تصدير</button></div>
-      <div class="card no-print"><div class="form-grid"><input id="saleDate" type="date"><input id="saleAmount" type="number" step="0.01" placeholder="المبلغ"><input id="saleChannel" placeholder="القناة: كاشير/توصيل"><input id="saleNote" placeholder="ملاحظة"><button class="btn btn-primary" onclick="addSale()">إضافة مبيعات</button></div></div>
+      <div class="page-title">
+        <div><h2>محطة المبيعات</h2><div style="color:var(--muted);margin-top:5px">متابعة المنتجات المحضرة والمحولة من المطبخ إلى محطة البيع</div></div>
+        <div class="actions no-print"><button id="openProductionRequestBtn" type="button" class="btn btn-primary" onclick="openProductionRequestModal();return false">طلب من الإنتاج</button><button class="btn btn-blue" onclick="printPage('sales')">طباعة</button><button class="btn btn-soft" onclick="exportProductionSalesTransfers()">تصدير التحويلات</button></div>
+      </div>
+      <div class="kpi-grid" style="margin-bottom:14px">
+        <div class="card kpi"><span>منتجات جاهزة للبيع</span><strong id="salesReadyProductsKpi">0</strong><small>عدد المنتجات ذات الرصيد</small></div>
+        <div class="card kpi"><span>إجمالي الكميات المحولة</span><strong id="salesTransferredQtyKpi">0</strong><small>حسب وحدات المنتجات</small></div>
+        <div class="card kpi"><span>تحويلات اليوم</span><strong id="salesTransfersTodayKpi">0</strong><small>من الإنتاج إلى المبيعات</small></div>
+        <div class="card kpi"><span>آخر تحديث</span><strong id="salesLastTransferKpi" style="font-size:16px">-</strong><small>آخر تحويل مسجل</small></div>
+      </div>
+      <div class="card">
+        <div class="page-title sales-ready-heading" style="margin-bottom:10px"><div><h3 style="margin:0">المنتجات الجاهزة للبيع</h3><small style="color:var(--muted)">تتحدث تلقائياً عند تحويل الإنتاج</small></div><input id="salesReadySearch" class="no-print" placeholder="البحث عن منتج..." oninput="renderProductionSales()"></div>
+        <div id="salesReadyCategoryFilters" class="sales-category-filters no-print">
+          <button type="button" class="btn btn-primary active" data-sales-cat="all" onclick="setSalesReadyCategory('all',this)">الكل</button>
+          <button type="button" class="btn btn-soft" data-sales-cat="salad" onclick="setSalesReadyCategory('salad',this)">السلطات</button>
+          <button type="button" class="btn btn-soft" data-sales-cat="sauce" onclick="setSalesReadyCategory('sauce',this)">الصوصات</button>
+          <button type="button" class="btn btn-soft" data-sales-cat="juice" onclick="setSalesReadyCategory('juice',this)">العصائر</button>
+          <button type="button" class="btn btn-soft" data-sales-cat="rice" onclick="setSalesReadyCategory('rice',this)">الأرز</button>
+          <button type="button" class="btn btn-soft" data-sales-cat="chicken" onclick="setSalesReadyCategory('chicken',this)">الدجاج</button>
+        </div>
+        <div id="salesReadyCards" class="sales-ready-grid"></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="page-title" style="margin-bottom:10px"><div><h3 style="margin:0">تتبع طلبات الإنتاج</h3><small style="color:var(--muted)">متابعة الطلب من الإرسال حتى التحويل إلى البيع</small></div><button type="button" class="btn btn-soft no-print" onclick="renderSalesOrderTracking()">تحديث</button></div>
+        <div id="salesOrderTrackingGrid" class="sales-order-tracking-grid"></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>سجل تحويلات الإنتاج إلى المبيعات</h3>
+        <div class="table-wrap"><table><thead><tr><th>رقم التحويل</th><th>التاريخ والوقت</th><th>رقم الإنتاج</th><th>المنتج</th><th>الكمية</th><th>من</th><th>إلى</th><th>المستخدم</th><th>ملاحظات</th></tr></thead><tbody id="productionSalesTransfersBody"></tbody></table></div>
+      </div>
+      <details class="card no-print" style="margin-top:14px">
+        <summary style="cursor:pointer;font-weight:800">تسجيل المبيعات المالية اليومية</summary>
+        <div class="form-grid" style="margin-top:12px"><input id="saleDate" type="date"><input id="saleAmount" type="number" step="0.01" placeholder="المبلغ"><input id="saleChannel" placeholder="القناة: كاشير/توصيل"><input id="saleNote" placeholder="ملاحظة"><button class="btn btn-primary" onclick="addSale()">إضافة مبيعات</button></div>
+      </details>
       <div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>الرقم</th><th>التاريخ</th><th>المبلغ</th><th>القناة</th><th>الملاحظة</th><th>المستخدم</th></tr></thead><tbody id="salesBody"></tbody></table></div>
     </section>
 
     
+    <section id="preparation" class="page">
+      <div class="page-title">
+        <div><h2>قسم التحضير</h2><div style="color:var(--muted);margin-top:5px">المنتجات المركبة، حساب المكونات، الرصيد الجاهز والطلبات قيد التحضير</div></div>
+        <div class="actions no-print"><button type="button" class="btn btn-soft" onclick="renderPreparationCenter()">تحديث</button></div>
+      </div>
+      <div class="kpi-grid" style="margin-bottom:14px">
+        <div class="card kpi"><span>منتجات مركبة</span><strong id="prepProductsKpi">0</strong><small>جاهزة للتحضير</small></div>
+        <div class="card kpi"><span>طلبات تحتاج تحضير</span><strong id="prepOrdersKpi">0</strong><small>مقبولة أو قيد التحضير</small></div>
+        <div class="card kpi"><span>دفعات جاهزة</span><strong id="prepReadyKpi">0</strong><small>في مخزن الإنتاج</small></div>
+      </div>
+      <div class="card no-print">
+        <h3>حساب وتحضير منتج</h3>
+        <div class="form-grid">
+          <select id="prepProductSelect" onchange="calculatePreparationRequirements()"></select>
+          <input id="prepTargetQty" type="number" min="0" step="0.001" placeholder="الكمية المطلوب تحضيرها" oninput="calculatePreparationRequirements()">
+          <select id="prepLinkedOrder"></select>
+          <input id="prepNote" placeholder="ملاحظة التحضير">
+        </div>
+        <div id="prepRequirementsBox" class="preparation-requirements"></div>
+        <div class="actions" style="margin-top:12px"><button type="button" class="btn btn-primary" onclick="approvePreparationBatch()">اعتماد وبدء التحضير</button></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="page-title" style="margin-bottom:8px"><h3 style="margin:0">الرصيد الجاهز والمنتجات المركبة</h3></div>
+        <div id="preparationProductsGrid" class="preparation-products-grid"></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>دفعات التحضير</h3>
+        <div class="table-wrap"><table><thead><tr><th>الدفعة</th><th>المنتج</th><th>الكمية</th><th>التاريخ</th><th>الطلب المرتبط</th><th>الحالة</th></tr></thead><tbody id="preparationBatchesBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="production_orders" class="page">
+      <div class="page-title">
+        <div><h2>قسم الطلبيات</h2><div style="color:var(--muted);margin-top:5px">طلبات محطة المبيعات الموجهة إلى فريق الإنتاج</div></div>
+        <div class="actions no-print"><button id="enableOrderSoundBtn" type="button" class="btn btn-primary" onclick="enableProductionOrderSound()">تفعيل الرنة</button><button type="button" class="btn btn-soft" onclick="openOrderAlarmSettings()">اختيار الرنة</button><button type="button" class="btn btn-soft" onclick="renderProductionOrders()">تحديث</button></div>
+      </div>
+      <div id="newOrdersAttentionBanner" class="new-orders-attention hidden"><strong>يوجد طلب جديد من المبيعات</strong><span id="newOrdersAttentionText">افتح الطلبات الجديدة واضغط تم الاطلاع.</span><button type="button" class="btn btn-primary" onclick="focusNewestProductionOrder()">عرض الطلب الجديد</button></div>
+      <div class="kpi-grid" style="margin-bottom:14px">
+        <div class="card kpi"><span>طلبات جديدة</span><strong id="ordersNewKpi">0</strong><small>تحتاج الاطلاع</small></div>
+        <div class="card kpi"><span>قيد التحضير</span><strong id="ordersPreparingKpi">0</strong><small>طلبات مقبولة</small></div>
+        <div class="card kpi"><span>جاهزة</span><strong id="ordersReadyKpi">0</strong><small>في انتظار التحويل</small></div>
+        <div class="card kpi"><span>إجمالي اليوم</span><strong id="ordersTodayKpi">0</strong><small>كل طلبات اليوم</small></div>
+      </div>
+      <div class="card no-print" style="margin-bottom:14px"><div class="form-grid"><input id="productionOrderSearch" placeholder="بحث باسم المنتج أو رقم الطلب..." oninput="renderProductionOrders()"><select id="productionOrderStatusFilter" onchange="renderProductionOrders()"><option value="all">كل الحالات</option><option value="new">طلب جديد</option><option value="accepted">تم قبول الطلب</option><option value="preparing">قيد التحضير</option><option value="ready">جاهز</option><option value="transferred">تم التحويل للبيع</option><option value="cancelled">ملغى</option></select></div></div>
+      <div id="productionOrdersGrid" class="production-orders-grid"></div>
+    </section>
+
     <section id="purchases" class="page">
       <div class="page-title">
         <h2>المشتريات</h2>
@@ -1423,7 +1522,10 @@ table{
 </div>
 
 <div id="recipeModal" class="modal"><div class="modal-box">
-  <h3 id="recipeModalTitle">وصفة جديدة</h3><div class="form-grid"><input id="recName" placeholder="اسم الوصفة"><input id="recYield" type="number" step="0.1" placeholder="المردودية"><select id="recStation"></select><select id="recUnit"><option>كغ</option><option>لتر</option><option>وحدة</option></select></div>
+  <h3 id="recipeModalTitle">وصفة جديدة</h3>
+  <div class="notice">وصفة توثيقية مستقلة: اكتب المكونات وطريقة التحضير بحرية، دون أي ارتباط بالمخزون.</div>
+  <div class="form-grid"><input id="recName" placeholder="اسم الوصفة"><input id="recYield" type="number" step="0.1" placeholder="المردودية"><select id="recStation" style="display:none"><option value=""></option></select><select id="recUnit"><option>كغ</option><option>لتر</option><option>وحدة</option><option>حصة</option></select></div>
+  <textarea id="recMethod" rows="4" placeholder="طريقة التحضير والخطوات والملاحظات" style="width:100%;margin-top:10px"></textarea>
   <div id="recipeItems"></div><div class="actions"><button class="btn btn-soft" onclick="addRecipeRow()">إضافة مكون</button><button id="recipeSaveButton" class="btn btn-primary" onclick="saveRecipe()">حفظ الوصفة</button><button class="btn btn-soft" onclick="closeModal('recipeModal')">إلغاء</button></div>
 </div></div>
 
@@ -1432,6 +1534,55 @@ table{
   <div id="permissionSaveHint" class="notice" style="margin-bottom:10px">اضغط حفظ الصلاحيات، وسيتم الحفظ محليًا ثم مزامنته مع السحابة.</div><div class="actions"><button class="btn btn-primary" onclick="savePermissions()">حفظ الصلاحيات</button><button class="btn btn-soft" onclick="retryPermissionsCloudSave()">إعادة المزامنة</button><button class="btn btn-soft" onclick="closeModal('permModal')">إلغاء</button></div>
 </div></div>
 
+
+<div id="productionRequestModal" class="modal"><div class="modal-box">
+  <div class="page-title"><div><h3 style="margin:0">طلب من الإنتاج</h3><small style="color:var(--muted)">إرسال طلب جديد من محطة المبيعات</small></div><button class="btn btn-soft" onclick="closeModal('productionRequestModal')">إغلاق</button></div>
+  <div class="form-grid">
+    <select id="productionRequestProduct"><option value="">اختر المنتج</option></select>
+    <input id="productionRequestQty" type="number" min="0.001" step="0.001" placeholder="الكمية المطلوبة">
+    <select id="productionRequestPriority"><option value="normal">عادي</option><option value="urgent">مستعجل</option></select>
+    <textarea id="productionRequestNote" placeholder="ملاحظة (اختياري)" style="min-height:90px"></textarea>
+  </div>
+  <div class="notice" style="margin-top:12px">سيظهر الطلب في قسم الطلبيات فور إرساله.</div>
+  <div class="actions" style="margin-top:14px"><button class="btn btn-primary" onclick="submitProductionRequest()">إرسال الطلب</button><button class="btn btn-soft" onclick="closeModal('productionRequestModal')">إلغاء</button></div>
+</div></div>
+
+
+<div id="orderAlarmSettingsModal" class="modal"><div class="modal-box">
+  <div class="page-title"><div><h3 style="margin:0">إعدادات رنة الطلبيات</h3><small style="color:var(--muted)">اختر نغمة واضحة للمطبخ واختبرها قبل الحفظ</small></div><button type="button" class="btn btn-soft" onclick="closeModal('orderAlarmSettingsModal')">إغلاق</button></div>
+  <div class="form-grid">
+    <div><label>نوع الرنة</label><select id="orderAlarmTone"><option value="kitchen">جرس المطبخ القوي</option><option value="siren">صفارة إنذار</option><option value="bell">جرس كلاسيكي</option><option value="digital">رنة رقمية</option><option value="triple">ثلاث رنات سريعة</option><option value="urgent">إنذار الطلب المستعجل</option></select></div>
+    <div><label>مستوى الصوت <strong id="orderAlarmVolumeValue">90%</strong></label><input id="orderAlarmVolume" type="range" min="10" max="100" step="5" value="90" oninput="document.getElementById('orderAlarmVolumeValue').textContent=this.value+'%'" style="width:100%"></div>
+    <div><label>تكرار الرنة</label><select id="orderAlarmRepeat"><option value="yes">تتكرر حتى الاطلاع</option><option value="no">مرة واحدة فقط</option></select></div>
+  </div>
+  <div class="notice">قد يطلب المتصفح الضغط مرة واحدة على زر التفعيل للسماح بالصوت.</div>
+  <div class="actions" style="margin-top:14px"><button type="button" class="btn btn-soft" onclick="previewProductionOrderSound()">اختبار الرنة</button><button type="button" class="btn btn-primary" onclick="saveOrderAlarmSettings()">حفظ وتفعيل</button></div>
+</div></div>
+
+<div id="newProductionOrderModal" class="modal new-order-modal"><div class="modal-box">
+  <div class="new-order-flash">طلب جديد من المبيعات</div>
+  <div class="new-order-popup-product"><img id="newOrderPopupImage" alt="صورة المنتج"><div><h2 id="newOrderPopupProduct">-</h2><div id="newOrderPopupNumber" class="muted">-</div></div></div>
+  <div class="new-order-popup-grid"><div><small>الكمية</small><strong id="newOrderPopupQty">0</strong></div><div><small>الأولوية</small><strong id="newOrderPopupPriority">عادي</strong></div><div><small>وقت الطلب</small><strong id="newOrderPopupTime">-</strong></div><div><small>الطالب</small><strong id="newOrderPopupBy">-</strong></div></div>
+  <div id="newOrderPopupNote" class="notice hidden"></div>
+  <div class="actions"><button id="newOrderAcceptBtn" type="button" class="btn btn-primary">تم الاطلاع وقبول الطلب</button><button id="newOrderViewBtn" type="button" class="btn btn-soft">فتح قسم الطلبيات</button></div>
+</div></div>
+
+<div id="productionToSalesModal" class="modal production-sales-modal"><div class="modal-box">
+  <div class="page-title"><div><h3 style="margin:0">تحويل الإنتاج إلى المبيعات</h3><small id="ptsProductionRef" style="color:var(--muted)"></small></div><button class="btn btn-soft" onclick="closeModal('productionToSalesModal')">إغلاق</button></div>
+  <input type="hidden" id="ptsProductionId">
+  <div class="production-sales-summary">
+    <div><span>المنتج</span><strong id="ptsProductName">-</strong></div>
+    <div><span>الكمية المنتجة</span><strong id="ptsProducedQty">0</strong></div>
+    <div><span>المتبقي للتحويل</span><strong id="ptsRemainingQty">0</strong></div>
+  </div>
+  <div class="form-grid">
+    <div><label>الكمية المراد تحويلها</label><input id="ptsQty" type="number" min="0.001" step="0.001"></div>
+    <div><label>محطة البيع</label><input id="ptsSalesStation" value="محطة البيع الرئيسية"></div>
+    <div style="grid-column:1/-1"><label>ملاحظات</label><input id="ptsNote" placeholder="مثال: تحويل للوردية المسائية"></div>
+  </div>
+  <div class="notice" style="margin-top:12px">بعد التأكيد ستظهر الكمية فوراً في صفحة المبيعات، وسيتم تسجيل المستخدم والتاريخ والوقت.</div>
+  <div class="actions" style="margin-top:14px"><button class="btn btn-primary" onclick="confirmProductionToSales()">تأكيد التحويل</button><button class="btn btn-soft" onclick="closeModal('productionToSalesModal')">إلغاء</button></div>
+</div></div>
 <script>
 const seed={"company": {"name": "مشاوي الدجاج", "branch": "العيون", "currency": "DH"}, "locations": ["المخزن الرئيسي", "مخزن الإنتاج", "مخزن البيع", "مخزن النظافة"], "permissions_catalog": [{"group": "لوحة التحكم", "items": [["dashboard.view", "مشاهدة لوحة التحكم"]]}, {"group": "المخزون", "items": [["inventory.view", "مشاهدة المخزون"], ["inventory.add", "إضافة مادة"], ["inventory.edit", "تعديل الكميات"], ["inventory.delete", "حذف مادة"], ["inventory.count", "إجراء الجرد"], ["inventory.approve_count", "اعتماد الجرد"], ["inventory.print", "طباعة المخزون"], ["inventory.export", "تصدير المخزون"]]}, {"group": "الوصفات", "items": [["recipes.view", "مشاهدة الوصفات"], ["recipes.add", "إضافة وصفة"], ["recipes.edit", "تعديل وصفة"], ["recipes.delete", "حذف وصفة"], ["recipes.print", "طباعة الوصفات"]]}, {"group": "الإنتاج", "items": [["production.view", "مشاهدة الإنتاج"], ["production.create", "إنشاء أمر إنتاج"], ["production.approve", "اعتماد الإنتاج"], ["production.cancel", "إلغاء الإنتاج"], ["production.waste", "تسجيل الهدر"], ["production.print", "طباعة الإنتاج"]]}, {"group": "التحويلات", "items": [["transfers.view", "مشاهدة التحويلات"], ["transfers.create", "إنشاء تحويل"], ["transfers.approve", "اعتماد التحويل"], ["transfers.receive", "تأكيد الاستلام"], ["transfers.cancel", "إلغاء التحويل"], ["transfers.print", "طباعة التحويل"]]}, {"group": "المبيعات", "items": [["sales.view", "مشاهدة المبيعات"], ["sales.add", "إضافة مبيعات"], ["sales.edit", "تعديل المبيعات"], ["sales.close", "إغلاق اليوم"], ["sales.export", "تصدير المبيعات"]]}, {"group": "المشتريات", "items": [["purchases.view", "مشاهدة المشتريات"], ["purchases.add", "إضافة شراء"], ["purchases.approve", "اعتماد الشراء"], ["purchases.receive", "استلام المشتريات"], ["purchases.export", "تصدير المشتريات"]]}, {"group": "المصاريف", "items": [["expenses.view", "مشاهدة المصاريف"], ["expenses.add", "إضافة مصروف"], ["expenses.approve", "اعتماد المصروف"], ["expenses.export", "تصدير المصاريف"]]}, {"group": "التقارير", "items": [["reports.view", "مشاهدة التقارير"], ["reports.print", "الطباعة"], ["reports.export", "تصدير Excel/CSV"]]}, {"group": "الملفات", "items": [["files.view", "مشاهدة الملفات"], ["files.upload", "رفع ملف"], ["files.download", "تحميل ملف"], ["files.delete", "حذف ملف"]]}, {"group": "المستخدمون", "items": [["users.view", "مشاهدة المستخدمين"], ["users.add", "إضافة مستخدم"], ["users.edit", "تعديل مستخدم"], ["users.delete", "حذف مستخدم"], ["users.permissions", "إدارة الصلاحيات"]]}, {"group": "النظام", "items": [["settings.view", "مشاهدة الإعدادات"], ["settings.backup", "نسخة احتياطية"], ["settings.restore", "استعادة نسخة"], ["audit.view", "مشاهدة سجل النشاط"]]}], "users": [{"id": 1, "name": "المدير العام", "username": "admin", "password": "1234", "role": "admin", "active": true, "permissions": ["*"]}, {"id": 2, "name": "مسؤول المخزون", "username": "stock", "password": "1234", "role": "stock", "active": true, "permissions": ["dashboard.view", "inventory.view", "inventory.add", "inventory.edit", "inventory.count", "inventory.print", "inventory.export", "transfers.view", "transfers.create", "transfers.approve", "transfers.receive", "transfers.print", "files.view", "files.upload", "files.download"]}, {"id": 3, "name": "مسؤول الإنتاج", "username": "production", "password": "1234", "role": "production", "active": true, "permissions": ["dashboard.view", "inventory.view", "recipes.view", "recipes.add", "recipes.edit", "recipes.print", "production.view", "production.create", "production.approve", "production.waste", "production.print", "transfers.view", "files.view", "files.download"]}, {"id": 4, "name": "المحاسب", "username": "accounting", "password": "1234", "role": "accounting", "active": true, "permissions": ["dashboard.view", "inventory.view", "sales.view", "sales.export", "purchases.view", "purchases.add", "purchases.export", "expenses.view", "expenses.add", "expenses.export", "reports.view", "reports.print", "reports.export", "files.view", "files.upload", "files.download"]}], "inventory": [{"id": "MAT-001", "name": "أرز خام", "category": "مواد أولية", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 50, "min": 10, "cost": 12}, {"id": "MAT-002", "name": "جزر", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 20, "min": 5, "cost": 6}, {"id": "MAT-003", "name": "طماطم", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 20, "min": 5, "cost": 7}, {"id": "MAT-004", "name": "خيار", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 15, "min": 4, "cost": 6}, {"id": "MAT-005", "name": "بصل", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 20, "min": 5, "cost": 5}, {"id": "MAT-006", "name": "فلفل", "category": "خضر", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 10, "min": 3, "cost": 10}, {"id": "MAT-007", "name": "زيت زيتون", "category": "زيوت", "unit": "لتر", "location": "المخزن الرئيسي", "stock": 12, "min": 3, "cost": 70}, {"id": "MAT-008", "name": "خل أبيض", "category": "توابل", "unit": "لتر", "location": "المخزن الرئيسي", "stock": 10, "min": 2, "cost": 8}, {"id": "MAT-009", "name": "ملح", "category": "توابل", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 5, "min": 1, "cost": 3}, {"id": "MAT-010", "name": "كمون", "category": "توابل", "unit": "كغ", "location": "المخزن الرئيسي", "stock": 2, "min": 0.5, "cost": 50}], "recipes": [{"id": "REC-001", "name": "سلطة مغربية", "yield": 5, "unit": "كغ", "items": [{"ingredient": "طماطم", "qty": 1.5}, {"ingredient": "خيار", "qty": 1.4}, {"ingredient": "بصل", "qty": 0.75}, {"ingredient": "فلفل", "qty": 1.25}, {"ingredient": "زيت زيتون", "qty": 0.13}, {"ingredient": "ملح", "qty": 0.07}, {"ingredient": "كمون", "qty": 0.03}, {"ingredient": "خل أبيض", "qty": 0.072}]}, {"id": "REC-002", "name": "سلطة الأرز", "yield": 8, "unit": "كغ", "items": [{"ingredient": "أرز خام", "qty": 3}, {"ingredient": "جزر", "qty": 2}, {"ingredient": "زيت زيتون", "qty": 0.26}, {"ingredient": "ملح", "qty": 0.05}]}, {"id": "REC-003", "name": "أرز الكبسة", "yield": 5, "unit": "كغ", "items": [{"ingredient": "أرز خام", "qty": 5}, {"ingredient": "زيت زيتون", "qty": 0.8}, {"ingredient": "ملح", "qty": 0.017}]}], "production": [], "transfers": [], "sales": [], "purchases": [], "expenses": [], "files": [], "audit": []};
 
@@ -1559,8 +1710,7 @@ const navGroups=[
  {id:'home',label:'الرئيسية',items:[['dashboard','لوحة التحكم','dashboard.view']]},
  {id:'catalog',label:'المنتجات',items:[
   ['products','المنتجات','products.view'],
-  ['recipes','الوصفات والتركيبات','recipes.view'],
-  ['recipe_stations','بوسطات التحضير','recipe_stations.view']
+  ['recipes','الوصفات','recipes.view']
  ]},
  {id:'stock',label:'المخزون',items:[
   ['inventory','المخزون','inventory.view'],
@@ -1568,8 +1718,9 @@ const navGroups=[
   ['transfers','التحويلات','transfers.view']
  ]},
  {id:'production',label:'الإنتاج',items:[
-  ['production','مركز الإنتاج','production.view'],
-  ['chicken_transform','تحويل وإنتاج الدجاج','chicken_transform.view']
+  ['chicken_transform','تحويل وإنتاج الدجاج','chicken_transform.view'],
+  ['production_orders','الطلبيات','production.view'],
+  ['preparation','قسم التحضير','production.view']
  ]},
  {id:'sales',label:'المبيعات',items:[['sales','المبيعات','sales.view']]},
  {id:'purchases',label:'المشتريات',items:[['purchases','المشتريات','purchases.view']]},
@@ -1577,10 +1728,8 @@ const navGroups=[
  {id:'reports',label:'التقارير',items:[['reports','التقارير','reports.view']]},
  {id:'admin',label:'الإدارة',items:[
   ['users','المستخدمون','users.view'],
-  ['transform_admin','إدارة مراكز الإنتاج','transform_centers.manage'],
   ['audit','سجل النشاط','audit.view'],
-  ['transform_admin','إدارة مراكز الإنتاج','transform_centers.manage','','','الإدارة'],
-['system_customization','قاموس النظام والمحطات','system_customization.manage','','','الإدارة'],
+  ['system_customization','قاموس النظام والمحطات','system_customization.manage','','','الإدارة'],
   ['settings','الإعدادات','settings.view']
  ]}
 ];
@@ -1789,7 +1938,7 @@ function renderActiveGroup(){
  group.items.forEach(([id,label,perm])=>{
   const button=document.createElement('button');
   button.type='button';
-  button.innerHTML=`<span>${label}</span>`;
+  button.innerHTML=`<span>${label}</span>${id==='production_orders'?'<b id="productionOrdersNavBadge" class="order-nav-badge hidden">0</b>':''}`;
   button.onclick=()=>showPage(id,button,group);
   if(id===currentVisible)button.classList.add('active');
   if(!firstButton)firstButton=button;
@@ -1813,9 +1962,24 @@ function closeSideMenu(){
   document.body.classList.remove('menu-is-open');
 }
 function showPage(id,button,group){
- document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));document.getElementById(id)?.classList.add('show');
+ const productionAliases={
+   production_salads:{category:'salad',title:'إنتاج السلطات'},
+   production_sauces:{category:'sauce',title:'إنتاج الصوصات'},
+   production_juices:{category:'juice',title:'إنتاج العصائر'},
+   production_rice:{category:'rice',title:'إنتاج أرز الكبسة'}
+ };
+ const alias=productionAliases[id];
+ const targetId=alias?'production':id;
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));document.getElementById(targetId)?.classList.add('show');
  document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('active'));if(button)button.classList.add('active');
  const info=pages.find(x=>x[0]===id);activePageTitle.textContent=info?.[1]||'';activePageGroup.textContent=group?.label||info?.[6]||'';
+ if(alias){
+   activeProductionCategory=alias.category;
+   const title=document.querySelector('#production .page-title h2');if(title)title.textContent=alias.title;
+   const subtitle=document.querySelector('#production .page-title h2 + div');if(subtitle)subtitle.textContent='المنتجات المرتبطة من قسم المنتجات عبر تركيب المنتج';
+   const logFilter=document.getElementById('productionLogFilter');if(logFilter)logFilter.value=alias.category;
+   setTimeout(()=>{renderProductionTypeGrid();renderProduction();},0);
+ }
  closeSideMenu()
 }
 function setDates(){const d=new Date().toISOString().slice(0,10);['prodDate','trDate','saleDate','purDate','expDate','ctDate','prDate'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=d});if(document.getElementById('ctStartedAt')&&!ctStartedAt.value)ctStartedAt.value=localDateTimeValue();todayLabel.textContent=new Date().toLocaleDateString('ar-MA',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
@@ -1979,6 +2143,7 @@ function renderProducts(){
       <td>${money(x.cost)}</td><td>${money(x.salePrice)}</td><td>${x.min}</td><td>${x.barcode||''}</td>
       <td class="no-print">
         <button class="btn btn-blue" onclick="openProductDetail(${i})">فتح التفاصيل</button>
+        <button class="btn btn-primary" onclick="openProductComposition(${i})">تركيب المنتج</button>
         <button class="btn btn-danger" onclick="deleteProduct(${i})">حذف</button>
       </td>
     </tr>`).join('');
@@ -1986,6 +2151,7 @@ function renderProducts(){
 
 
 let currentProductIndex=null;
+let pendingProductImage=null;
 
 function openProductDetail(i){
   currentProductIndex=i;
@@ -2001,10 +2167,18 @@ function openProductDetail(i){
   pdCost.value=Number(p.cost||0);
   pdSale.value=Number(p.salePrice||0);
   pdMin.value=Number(p.min||0);
+  const preview=document.getElementById('pdImagePreview');if(preview){preview.src=p.image||makeProductPlaceholder(p.name);preview.dataset.fallback=makeProductPlaceholder(p.name)}
+  const file=document.getElementById('pdImageFile');if(file)file.value='';
+  pendingProductImage=p.image||null;
 
   renderProductDetail();
   showProductTab('info');
   productDetailModal.classList.add('open');
+}
+
+function openProductComposition(i){
+  openProductDetail(i);
+  showProductTab('composition');
 }
 
 function showProductTab(name){
@@ -2043,42 +2217,101 @@ function renderProductDetail(){
   `).join(''):'<tr><td colspan="4">لا يوجد مخزون لهذا المنتج</td></tr>';
 
   renderProductProduction(p);
-  renderProductRecipe(p);
   renderProductComposition(p);
   renderProductHistory(p);
   renderProductDocuments(p);
 }
 
+function makeProductPlaceholder(name){
+ const initial=String(name||'م').trim().slice(0,2)||'م';
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320"><rect width="100%" height="100%" fill="#fff5ef"/><circle cx="240" cy="125" r="70" fill="#f5c400" opacity=".28"/><text x="240" y="150" text-anchor="middle" font-family="Tahoma,Arial" font-size="64" font-weight="700" fill="#9b1c1f">${initial.replace(/[&<>"]/g,'')}</text><text x="240" y="245" text-anchor="middle" font-family="Tahoma,Arial" font-size="28" fill="#6d6262">مشاوي الدجاج</text></svg>`;
+ return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+}
+function compressProductImage(file){
+ return new Promise((resolve,reject)=>{
+  const reader=new FileReader();
+  reader.onerror=()=>reject(new Error('تعذر قراءة الصورة'));
+  reader.onload=e=>{
+   const img=new Image();
+   img.onerror=()=>reject(new Error('ملف الصورة غير صالح'));
+   img.onload=()=>{
+    const max=900, scale=Math.min(1,max/Math.max(img.width,img.height));
+    const canvas=document.createElement('canvas');
+    canvas.width=Math.max(1,Math.round(img.width*scale));
+    canvas.height=Math.max(1,Math.round(img.height*scale));
+    const ctx=canvas.getContext('2d');
+    ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    resolve(canvas.toDataURL('image/jpeg',0.78));
+   };
+   img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+ });
+}
+async function previewAndStoreProductImage(input){
+ if(currentProductIndex==null||!input.files||!input.files[0])return;
+ const file=input.files[0];
+ if(!file.type.startsWith('image/')){input.value='';return alert('اختر ملف صورة صالحاً');}
+ if(file.size>8*1024*1024){input.value='';return alert('حجم الصورة كبير. اختر صورة أقل من 8 MB');}
+ try{
+  pendingProductImage=await compressProductImage(file);
+  const preview=document.getElementById('pdImagePreview');
+  if(preview)preview.src=pendingProductImage;
+ }catch(error){
+  console.error(error);input.value='';alert(error.message||'تعذر تجهيز الصورة');
+ }
+}
+function removeCurrentProductImage(){
+ if(currentProductIndex==null)return;
+ pendingProductImage=null;
+ const p=db.products[currentProductIndex];
+ const preview=document.getElementById('pdImagePreview');
+ if(preview)preview.src=makeProductPlaceholder(p?.name||'منتج');
+ const file=document.getElementById('pdImageFile');if(file)file.value='';
+}
 function saveProductDetail(){
   if(!requirePerm('products.edit'))return;
+  if(currentProductIndex===null || !db.products[currentProductIndex])return alert('تعذر تحديد المنتج المراد تعديله');
   const p=db.products[currentProductIndex];
+  const nameEl=document.getElementById('pdName');
+  const newName=(nameEl?.value||'').trim();
+  if(!newName)return alert('اسم المنتج مطلوب');
   const oldName=p.name;
-  p.name=pdName.value.trim();
-  p.type=pdType.value;
-  p.category=pdCategory.value.trim();
-  p.unit=pdUnit.value;
-  p.barcode=pdBarcode.value.trim();
-  p.cost=Number(pdCost.value||0);
-  p.salePrice=Number(pdSale.value||0);
-  p.min=Number(pdMin.value||0);
+  const backup=JSON.parse(JSON.stringify(p));
+  try{
+   p.name=newName;
+   p.type=document.getElementById('pdType')?.value||p.type;
+   p.category=(document.getElementById('pdCategory')?.value||'').trim();
+   p.unit=document.getElementById('pdUnit')?.value||p.unit;
+   p.barcode=(document.getElementById('pdBarcode')?.value||'').trim();
+   p.cost=Number(document.getElementById('pdCost')?.value||0);
+   p.salePrice=Number(document.getElementById('pdSale')?.value||0);
+   p.min=Number(document.getElementById('pdMin')?.value||0);
+   if(pendingProductImage)p.image=pendingProductImage;else delete p.image;
 
-  db.inventory.forEach(x=>{
+   db.inventory.forEach(x=>{
     if(x.productId===p.id || x.name===oldName){
-      x.productId=p.id;
-      x.name=p.name;
-      x.category=p.category||p.type;
-      x.unit=p.unit;
+      x.productId=p.id;x.name=p.name;x.category=p.category||p.type;x.unit=p.unit;
       if(!x.min)x.min=p.min;
     }
-  });
+   });
+   (db.recipes||[]).forEach(r=>(r.items||[]).forEach(it=>{if(it.ingredient===oldName)it.ingredient=p.name;}));
+   (db.product_compositions||[]).forEach(c=>(c.items||[]).forEach(it=>{if(it.productName===oldName)it.productName=p.name;}));
 
-  db.recipes.forEach(r=>r.items.forEach(it=>{
-    if(it.ingredient===oldName)it.ingredient=p.name;
-  }));
-
-  log('تعديل منتج',p.name);
-  save();
-  renderProductDetail();
+   log('تعديل منتج',p.name);
+   save();
+   pendingProductImage=p.image||null;
+   renderProducts();
+   renderProductDetail();
+   if(typeof renderSalesReadyProducts==='function')renderSalesReadyProducts();
+   alert('تم حفظ التعديلات بنجاح');
+  }catch(error){
+   console.error('Product update error',error);
+   db.products[currentProductIndex]=backup;
+   if(error && (error.name==='QuotaExceededError'||String(error.message||'').includes('quota'))){
+    alert('تعذر الحفظ لأن مساحة التخزين ممتلئة. اختر صورة أصغر ثم حاول مجدداً.');
+   }else alert('تعذر حفظ التعديلات: '+(error?.message||'خطأ غير معروف'));
+  }
 }
 
 function renderProductProduction(p){
@@ -2244,48 +2477,20 @@ function saveProductComposition(){
   db.product_compositions=db.product_compositions.filter(x=>x.productId!==p.id);
   db.product_compositions.push(record);
 
-  // Sync composition with recipes / production requirements
-  const recipeItems=items.map(it=>{
-    const pr=db.products.find(x=>x.id===it.productId);
-    const normalized=normalizeCompositionQty(it.qty,it.unit);
-    return {
-      ingredient:pr?.name||'',
-      productId:it.productId,
-      qty:normalized.qty,
-      sourceQty:it.qty,
-      sourceUnit:it.unit,
-      normalizedUnit:normalized.unit
-    };
-  }).filter(x=>x.ingredient);
-
-  let recipe=db.recipes.find(r=>r.productId===p.id || r.name===p.name);
-  if(recipe){
-    recipe.productId=p.id;
-    recipe.name=p.name;
-    recipe.yield=yieldQty;
-    recipe.unit=unitSelect.value;
-    recipe.items=recipeItems;
-  }else{
-    db.recipes.push({
-      id:'REC-'+Date.now(),
-      productId:p.id,
-      name:p.name,
-      yield:yieldQty,
-      unit:unitSelect.value,
-      items:recipeItems
-    });
-  }
+  // تركيب المنتج مستقل عن كتاب الوصفات، ويستخدم فقط في حساب الإنتاج والمخزون.
 
   log('حفظ مكونات منتج',`${p.name} — ${items.length} مكونات`);
-  scheduleCloudSave();
+  ensureUnifiedProductionModule();
+  save();
 
   renderProducts();
-  renderRecipes();
+  renderProductionTypeGrid();
+  renderProduction();
   renderProductComposition(p);
-  renderProductRecipe(p);
   renderProductHistory(p);
+  if(typeof renderProductionSales==='function')renderProductionSales();
 
-  alert('تم حفظ مكونات المنتج بنجاح');
+  alert('تم حفظ مكونات المنتج بنجاح وسيظهر المنتج مباشرة في المبيعات');
 }
 
 function clearProductComposition(){
@@ -2293,11 +2498,9 @@ function clearProductComposition(){
   const p=db.products[currentProductIndex];
   if(!confirm('حذف تركيب هذا المنتج؟'))return;
   db.product_compositions=db.product_compositions.filter(x=>x.productId!==p.id);
-  db.recipes=db.recipes.filter(r=>r.name!==p.name);
   log('حذف تركيب منتج',p.name);
   save();
   renderProductComposition(p);
-  renderProductRecipe(p);
 }
 
 function renderProductCompositionSummary(p){
@@ -2513,9 +2716,31 @@ function printProductDetail(){
   <p><b>الكود:</b> ${p.id} — <b>النوع:</b> ${p.type} — <b>الوحدة:</b> ${p.unit}</p>
   <p><b>سعر الشراء:</b> ${money(p.cost)} — <b>سعر البيع:</b> ${money(p.salePrice)}</p>
   <table><thead><tr><th>المخزن</th><th>الكمية</th><th>الوحدة</th><th>القيمة</th></tr></thead><tbody>${rows}</tbody></table>
-  <script>onload=()=>print()<\/script></body></html>`);
+  <script>onload=()=>print()<\/script>
+</body></html>`);
   w.document.close();
 }
+
+let pendingNewProductImage='';
+function prepareNewProductImage(input){
+  const file=input&&input.files&&input.files[0];
+  if(!file)return;
+  if(!String(file.type||'').startsWith('image/')){input.value='';return alert('اختر ملف صورة صالحاً');}
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const img=new Image();
+    img.onload=function(){
+      const max=900,scale=Math.min(1,max/Math.max(img.width,img.height)),w=Math.max(1,Math.round(img.width*scale)),h=Math.max(1,Math.round(img.height*scale));
+      const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      pendingNewProductImage=canvas.toDataURL('image/jpeg',0.82);
+      const preview=document.getElementById('productImagePreview');if(preview)preview.src=pendingNewProductImage;
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function clearNewProductImage(){pendingNewProductImage='';const f=document.getElementById('productImageFile');if(f)f.value='';const p=document.getElementById('productImagePreview');if(p)p.src='';}
 
 function addProduct(){
   if(!requirePerm('products.add'))return;
@@ -2533,11 +2758,13 @@ function addProduct(){
     cost:Number(productCost.value||0),
     salePrice:Number(productSalePrice.value||0),
     min:Number(productMin.value||0),
+    image:pendingNewProductImage||'',
     active:true
   };
   db.products.push(product);
   log('إضافة منتج',product.name);
   productName.value=productCategory.value=productBarcode.value=productCost.value=productSalePrice.value=productMin.value='';
+  clearNewProductImage();
   save();
 }
 
@@ -2749,7 +2976,6 @@ function renderRecipes(){
       <div class="recipe-card-header">
         <div>
           <h3>${r.name}</h3>
-          <p>المحطة: <b>${typeof getRecipeStationName==='function'?getRecipeStationName(r.stationId):'غير محدد'}</b></p>
           <p>المردودية: <b>${r.yield} ${r.unit}</b></p>
         </div>
       </div>
@@ -2762,6 +2988,7 @@ function renderRecipes(){
             :'<tr><td colspan="2">لم تتم إضافة المكونات</td></tr>'}
         </tbody>
       </table>
+      ${r.method?`<div class="notice" style="margin-top:10px;white-space:pre-wrap"><b>طريقة التحضير:</b><br>${r.method}</div>`:''}
 
       <div class="actions no-print recipe-actions" style="margin-top:10px">
         ${can('recipes.edit')||user?.permissions.includes('*')
@@ -2773,16 +3000,6 @@ function renderRecipes(){
       </div>
     </div>`).join('')
     :'<div class="notice">لا توجد وصفات مسجلة.</div>';
-
-  // Production dropdown remains available only inside the production section.
-  const allowed=db.recipes.map((r,i)=>({r,i})).filter(({r})=>
-    r.active!==false && canCurrentUserProduce(r)
-  );
-  if(document.getElementById('prodRecipe')){
-    prodRecipe.innerHTML=allowed.length
-      ?allowed.map(({r,i})=>`<option value="${i}">${r.name}</option>`).join('')
-      :'<option value="">لا توجد أنواع إنتاج مسموح بها</option>';
-  }
 
   if(document.getElementById('recStation') && db.recipe_stations){
     recStation.innerHTML='<option value="">اختر المحطة</option>'+
@@ -2799,6 +3016,7 @@ function openRecipe(){
   recName.value='';
   recYield.value='';
   recUnit.value='كغ';
+  if(document.getElementById('recMethod'))recMethod.value='';
   if(document.getElementById('recStation'))recStation.value='';
   recipeItems.innerHTML='';
   addRecipeRow();
@@ -2816,6 +3034,7 @@ function editRecipe(index){
   recName.value=recipe.name||'';
   recYield.value=Number(recipe.yield||0);
   recUnit.value=recipe.unit||'كغ';
+  if(document.getElementById('recMethod'))recMethod.value=recipe.method||'';
 
   if(document.getElementById('recStation')){
     recStation.innerHTML='<option value="">اختر المحطة</option>'+
@@ -2834,15 +3053,9 @@ function editRecipe(index){
 function addRecipeRow(item=null){
   const d=document.createElement('div');
   d.className='recipe-row';
-
-  const ingredientNames=[...new Set(
-    (db.inventory||[]).map(x=>x.name).filter(Boolean)
-  )];
-
+  const ingredientValue=String(item?.ingredient||'').replace(/"/g,'&quot;');
   d.innerHTML=`
-    <select>
-      ${ingredientNames.map(name=>`<option ${item?.ingredient===name?'selected':''}>${name}</option>`).join('')}
-    </select>
+    <input type="text" placeholder="اسم المكون أو وصفه" value="${ingredientValue}">
     <input type="number" min="0" step="0.001" placeholder="الكمية" value="${item?.qty??''}">
     <button type="button" class="btn btn-danger" onclick="this.parentElement.remove()">حذف</button>
   `;
@@ -2880,7 +3093,8 @@ function saveRecipe(){
       name,
       yield:yieldQty,
       unit:recUnit.value,
-      stationId:recStation.value,
+      stationId:'',
+      method:(document.getElementById('recMethod')?.value||'').trim(),
       items,
       updatedAt:new Date().toISOString(),
       updatedBy:current?.name||'النظام'
@@ -2892,7 +3106,8 @@ function saveRecipe(){
       name,
       yield:yieldQty,
       unit:recUnit.value,
-      stationId:recStation.value,
+      stationId:'',
+      method:(document.getElementById('recMethod')?.value||'').trim(),
       active:true,
       accessCode:String(Date.now()).slice(-4),
       assignedUserId:null,
@@ -3346,7 +3561,7 @@ function addPurchaseItemRow(productId='',qty='',price=''){
   row.className='purchase-item-row';
   row.innerHTML=`
     <select class="pur-product">
-      ${db.products.filter(x=>x.active!==false).map(x=>`<option value="${x.id}" ${x.id===productId?'selected':''}>${x.name} — ${x.unit}</option>`).join('')}
+      ${db.products.filter(x=>x.active!==false && !(db.product_compositions||[]).some(c=>String(c.productId)===String(x.id))).map(x=>`<option value="${x.id}" ${x.id===productId?'selected':''}>${x.name} — ${x.unit}</option>`).join('')}
     </select>
     <input class="pur-qty" type="number" min="0" step="0.001" value="${qty}" placeholder="الكمية">
     <input class="pur-price" type="number" min="0" step="0.01" value="${price}" placeholder="سعر الوحدة">
@@ -3674,17 +3889,47 @@ function csv(name,rows){const t='\uFEFF'+rows.map(r=>r.map(v=>`"${String(v??'').
 function exportInventory(){if(!requirePerm('inventory.export')&&!requirePerm('reports.export'))return;csv('inventory.csv',[['الكود','المادة','الفئة','الموقع','الوحدة','المخزون','الحد الأدنى','التكلفة'],...db.inventory.map(x=>[x.id,x.name,x.category,x.location,x.unit,x.stock,x.min,x.cost])])}
 function exportSimple(key,name){if(!requirePerm(key+'.export')&&!requirePerm('reports.export'))return;const rows=db[key];if(!rows.length)return alert('لا توجد بيانات');csv(name,[Object.keys(rows[0]),...rows.map(x=>Object.values(x))])}
 
-function openBrandedPrintWindow(title,contentHtml){
+function makePrintDocumentNumber(prefix='DOC'){
+  const d=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  return `${prefix}-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+}
+
+function choosePrintSize(onChoose,preferred='A4'){
+  const old=document.getElementById('machawiPrintSizeModal');
+  if(old)old.remove();
+  const modal=document.createElement('div');
+  modal.id='machawiPrintSizeModal';
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;display:grid;place-items:center;padding:18px;direction:rtl';
+  modal.innerHTML=`
+    <div style="width:min(430px,100%);background:#fff;border-radius:18px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.28);font-family:Tahoma,Arial">
+      <div style="display:flex;align-items:center;gap:12px;border-bottom:3px solid #991f23;padding-bottom:13px;margin-bottom:18px">
+        <img src="${UNIVERSAL_PRINT_LOGO}" style="width:78px;height:66px;object-fit:contain" alt="الشعار">
+        <div><h3 style="margin:0;color:#991f23">اختيار حجم الطباعة</h3><small style="color:#666">القالب الرسمي لمشاوي الدجاج</small></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <button type="button" data-size="A4" style="border:2px solid ${preferred==='A4'?'#991f23':'#ddd'};background:#fff;border-radius:14px;padding:20px 10px;cursor:pointer;font-weight:800;color:#222">A4<br><small style="font-weight:400;color:#666">تقارير إدارية</small></button>
+        <button type="button" data-size="A5" style="border:2px solid ${preferred==='A5'?'#991f23':'#ddd'};background:#fff;border-radius:14px;padding:20px 10px;cursor:pointer;font-weight:800;color:#222">A5<br><small style="font-weight:400;color:#666">وصفات وتشغيل</small></button>
+      </div>
+      <button type="button" data-cancel style="width:100%;margin-top:12px;border:1px solid #ddd;background:#f7f7f7;border-radius:10px;padding:10px;cursor:pointer">إلغاء</button>
+    </div>`;
+  modal.querySelectorAll('[data-size]').forEach(btn=>btn.onclick=()=>{const size=btn.dataset.size;modal.remove();onChoose(size)});
+  modal.querySelector('[data-cancel]').onclick=()=>modal.remove();
+  modal.onclick=e=>{if(e.target===modal)modal.remove()};
+  document.body.appendChild(modal);
+}
+
+function openBrandedPrintWindow(title,contentHtml,size='A4',options={}){
   const printWindow=window.open('','_blank');
-  if(!printWindow){
-    alert('اسمح للنوافذ المنبثقة حتى تتم الطباعة');
-    return;
-  }
+  if(!printWindow){alert('اسمح للنوافذ المنبثقة حتى تتم الطباعة');return;}
 
   const generatedAt=typeof formatDateTime==='function'
     ?formatDateTime(typeof localIsoTimestamp==='function'?localIsoTimestamp():new Date().toISOString())
     :new Date().toLocaleString('ar-MA');
   const printedBy=current?.name||'النظام';
+  const documentNo=options.documentNo||makePrintDocumentNumber(options.prefix||'DOC');
+  const branch=options.branch||'الفرع الرئيسي';
+  const isA5=size==='A5';
 
   printWindow.document.open();
   printWindow.document.write(`<!doctype html>
@@ -3694,72 +3939,63 @@ function openBrandedPrintWindow(title,contentHtml){
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title}</title>
 <style>
-  *{box-sizing:border-box}
-  body{font-family:Arial,Tahoma,sans-serif;color:#222;background:#fff;margin:0;padding:12mm;direction:rtl}
-  .print-header{display:grid;grid-template-columns:minmax(115px,145px) 1fr;align-items:center;gap:16px;border-bottom:3px solid #991f23;padding-bottom:12px;margin-bottom:18px}
-  .print-brand{display:flex;align-items:center;gap:12px}
-  .print-brand img{width:110px;height:auto;max-height:115px;object-fit:contain;border-radius:0;background:transparent;padding:0}
-  .print-company{font-size:23px;font-weight:800;color:#991f23}
-  .print-sub{font-size:12px;color:#666;margin-top:3px}
-  .print-meta{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#666}
-  .print-meta strong{font-size:18px;color:#222}
-  h1,h2,h3{color:#991f23}
-  .card{border:1px solid #ddd;border-radius:12px;padding:14px;margin-bottom:14px;break-inside:avoid}
-  table{width:100%;border-collapse:collapse;margin-top:10px}
-  th,td{border:1px solid #ddd;padding:8px;text-align:right}
-  th{background:#f7f1ed}
-  .grid{display:block}
-  .no-print,.actions,button,input,select,textarea{display:none!important}
-  .page-title{margin-bottom:16px}
-  @page{size:auto;margin:10mm}
-  @media print and (max-width:148mm){
-    .print-header{grid-template-columns:100px 1fr;gap:10px}
-    .print-brand img{width:92px;max-height:98px}
-    .print-company{font-size:18px}
-    .print-meta strong{font-size:16px}
-    .print-meta{font-size:10px}
-  }
-  @media print{body{padding:0}.print-header{break-inside:avoid}}
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{margin:0;padding:0;background:#fff;color:#202124;direction:rtl}
+  body{font-family:Tahoma,Arial,sans-serif;font-size:${isA5?'10.5px':'12px'};padding:${isA5?'8mm':'10mm'} ${isA5?'7mm':'10mm'} ${isA5?'16mm':'18mm'}}
+  .print-shell{min-height:100%;position:relative}
+  .print-header{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-bottom:${isA5?'2px':'3px'} solid #991f23;padding-bottom:${isA5?'8px':'12px'};margin-bottom:${isA5?'11px':'17px'};break-inside:avoid;page-break-inside:avoid}
+  .print-brand img{width:${isA5?'82px':'118px'};height:${isA5?'70px':'98px'};object-fit:contain;display:block;margin:0 auto}
+  .print-title{font-size:${isA5?'18px':'25px'};font-weight:900;color:#991f23;margin-top:${isA5?'6px':'9px'}}
+  .identity-line{height:${isA5?'4px':'6px'};display:grid;grid-template-columns:4fr 1fr;margin:-${isA5?'11px':'17px'} 0 ${isA5?'10px':'15px'}}
+  .identity-line span:first-child{background:#991f23}.identity-line span:last-child{background:#f5bf18}
+  h1,h2,h3,h4{color:#991f23;margin-top:0}h2{font-size:${isA5?'16px':'20px'}}h3{font-size:${isA5?'14px':'17px'}}
+  .card{border:1px solid #d9d9d9;border-radius:${isA5?'8px':'12px'};padding:${isA5?'9px':'13px'};margin-bottom:${isA5?'9px':'13px'};break-inside:avoid;page-break-inside:avoid;background:#fff}
+  .stats,.kpi-grid{display:grid!important;grid-template-columns:repeat(${isA5?'2':'4'},minmax(0,1fr))!important;gap:${isA5?'6px':'9px'}!important;margin-bottom:10px}
+  .stat,.kpi,.summary-card{border:1px solid #e3d4ce!important;border-top:3px solid #991f23!important;border-radius:8px!important;padding:${isA5?'7px':'10px'}!important;background:#fffaf7!important}
+  table{width:100%;border-collapse:collapse;margin-top:7px;font-size:${isA5?'9px':'11px'}}
+  thead{display:table-header-group}tfoot{display:table-footer-group}
+  tr{break-inside:avoid;page-break-inside:avoid}
+  th,td{border:1px solid #d5d5d5;padding:${isA5?'5px 4px':'7px 6px'};text-align:right;vertical-align:middle}
+  th{background:#991f23!important;color:#fff!important;font-weight:800}
+  tbody tr:nth-child(even) td{background:#fbf7f5!important}
+  .grid{display:block!important}.page-title{margin-bottom:12px}.page-title h1,.page-title h2,.page-title h3{margin:0}
+  .no-print,.actions,button,input,select,textarea,.modal,.topbar,aside{display:none!important}
+  img{max-width:100%}
+  .print-footer{position:fixed;right:${isA5?'7mm':'10mm'};left:${isA5?'7mm':'10mm'};bottom:${isA5?'5mm':'6mm'};border-top:1px solid #991f23;padding-top:5px;display:flex;justify-content:flex-start;font-size:${isA5?'9px':'10px'};font-weight:800;color:#991f23;background:#fff;direction:ltr}
+  .sheet-serial{letter-spacing:1px}
+  @page{size:${size} portrait;margin:${isA5?'7mm 7mm 15mm':'10mm 10mm 17mm'}}
+  @media print{body{padding:0}.print-header{break-inside:avoid}.print-shell{min-height:auto}}
 </style>
 </head>
 <body>
+<div class="print-shell">
 <header class="print-header">
-  <div class="print-brand">
-    <img src="${UNIVERSAL_PRINT_LOGO}" alt="شعار مشاوي الدجاج">
-    <div class="print-brand-caption"><div class="print-sub">Machawi Dajaj ERP</div></div>
-  </div>
-  <div class="print-meta">
-    <strong>${title}</strong>
-    <span>تاريخ ووقت الطباعة: ${generatedAt}</span>
-    <span>طبع بواسطة: ${printedBy}</span>
-  </div>
+  <div class="print-brand"><img src="${UNIVERSAL_PRINT_LOGO}" alt="شعار مشاوي الدجاج"></div>
+  <div class="print-title">${title}</div>
 </header>
+<div class="identity-line"><span></span><span></span></div>
 <main>${contentHtml}</main>
+<footer class="print-footer"><span class="sheet-serial">${options.sheetSerial||'0001'}</span></footer>
+</div>
 </body>
 </html>`);
   printWindow.document.close();
 
-  const launchPrint=()=>{
-    printWindow.focus();
-    printWindow.print();
-  };
-
+  const launchPrint=()=>{printWindow.focus();printWindow.print()};
   const logo=printWindow.document.querySelector('.print-brand img');
-  if(logo&&!logo.complete){
-    logo.onload=()=>setTimeout(launchPrint,250);
-    logo.onerror=()=>setTimeout(launchPrint,250);
-  }else{
-    setTimeout(launchPrint,350);
-  }
+  if(logo&&!logo.complete){logo.onload=()=>setTimeout(launchPrint,250);logo.onerror=()=>setTimeout(launchPrint,250)}
+  else setTimeout(launchPrint,350);
 }
 
-function printPage(id){
-  const page=document.getElementById(id);
-  if(!page)return;
-  const clone=page.cloneNode(true);
-  clone.querySelectorAll('.no-print,.print-only,script').forEach(el=>el.remove());
-  const title=page.querySelector('h1,h2,h3')?.textContent?.trim()||'تقرير مشاوي الدجاج';
-  openBrandedPrintWindow(title,clone.innerHTML);
+function printPage(id,size){
+  const page=document.getElementById(id);if(!page)return;
+  const execute=selectedSize=>{
+    const clone=page.cloneNode(true);
+    clone.querySelectorAll('.no-print,.print-only,script').forEach(el=>el.remove());
+    const title=page.querySelector('h1,h2,h3')?.textContent?.trim()||'تقرير مشاوي الدجاج';
+    openBrandedPrintWindow(title,clone.innerHTML,selectedSize||'A4');
+  };
+  if(size)execute(size);else choosePrintSize(execute,'A4');
 }
 
 function buildRecipePrintHtml(recipe){
@@ -3781,20 +4017,31 @@ function printSingleRecipe(index){
   if(!requirePerm('recipes.print'))return;
   const recipe=db.recipes[index];
   if(!recipe)return;
-  openBrandedPrintWindow(`وصفة: ${recipe.name}`,buildRecipePrintHtml(recipe));
+  choosePrintSize(size=>openBrandedPrintWindow(`وصفة: ${recipe.name}`,buildRecipePrintHtml(recipe),size,{prefix:'REC'}),'A5');
 }
 
 function printRecipes(){
   if(!requirePerm('recipes.print'))return;
   const recipes=db.recipes.filter(recipe=>recipe.active!==false);
   if(!recipes.length)return alert('لا توجد وصفات للطباعة');
-  openBrandedPrintWindow('دليل الوصفات',recipes.map(buildRecipePrintHtml).join(''));
+  choosePrintSize(size=>openBrandedPrintWindow('كتاب الوصفات',recipes.map(buildRecipePrintHtml).join(''),size,{prefix:'REC'}),'A5');
 }
 
 function backup(){if(!requirePerm('settings.backup'))return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='machawi_erp_backup.json';a.click()}
 function restore(e){if(!requirePerm('settings.restore'))return;const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();alert('تمت الاستعادة')}catch{alert('ملف غير صالح')}};r.readAsText(f)}
 function resetDB(){if(!requirePerm('settings.restore'))return;if(confirm('سيتم حذف جميع البيانات الحالية')){db=JSON.parse(JSON.stringify(seed));save()}}
-function closeModal(id){document.getElementById(id).classList.remove('open')}
+window.openModal=function(id){
+  const el=document.getElementById(id);
+  if(!el){console.error('Modal not found:',id);return false}
+  el.classList.add('open');
+  return true;
+};
+window.closeModal=function(id){
+  const el=document.getElementById(id);
+  if(el)el.classList.remove('open');
+};
+var openModal=window.openModal;
+var closeModal=window.closeModal;
 
 
 function ensureChickenTransformModule(){
@@ -4576,6 +4823,14 @@ function saveChickenTransform(){
     salesBalanceAfter:outputStock.stock
   };
   db.chicken_transforms.unshift(record);
+  if(!Array.isArray(db.production_sales_transfers))db.production_sales_transfers=[];
+  if(!Array.isArray(db.sales_ready_stock))db.sales_ready_stock=[];
+  const chickenTransfer={id:'PTS-CT-'+Date.now(),date:String(endedAt).slice(0,10),createdAt:endedAt,productionId:record.id,batch:record.batch,productId:output.id,productName:output.name,qty:c.net,unit:output.unit||'',from:'إنتاج الدجاج',to:'محطة البيع الرئيسية',user:current.name,note:`ناتج دفعة ${record.batch} — ${profile.name}`};
+  db.production_sales_transfers.unshift(chickenTransfer);
+  const chickenKey=normalizeProductionName(output.name||'')+'__'+(output.unit||'');
+  let chickenReady=db.sales_ready_stock.find(x=>x.key===chickenKey);
+  if(!chickenReady){chickenReady={key:chickenKey,productName:output.name,unit:output.unit||'',qty:0,lastBatch:record.batch,lastTransferAt:endedAt,lastProductionId:record.id};db.sales_ready_stock.push(chickenReady)}
+  chickenReady.qty=Number(chickenReady.qty||0)+c.net;chickenReady.lastBatch=record.batch;chickenReady.lastTransferAt=endedAt;chickenReady.lastProductionId=record.id;
 
   db.transfers.unshift({
     id:'TR-'+Date.now(),createdAt:endedAt,completedAt:endedAt,
@@ -4796,7 +5051,7 @@ function testCompositionStorage(){
   }
 }
 
-function renderAll(){ensureSystemDictionary();renderDashboard();renderProducts();renderInventory();renderRecipes();renderRecipeStations();renderProduction();renderProductionRequirementsSetup();renderProcessSelectors();renderChickenTransforms();renderTransfers();renderFinance();renderUsers();renderTransformAdmin();renderSystemCustomization();renderAudit();renderPurchaseSetup()}
+function renderAll(){ensureSystemDictionary();renderDashboard();renderProducts();renderInventory();renderRecipes();renderRecipeStations();renderProduction();renderProductionRequirementsSetup();renderProcessSelectors();renderChickenTransforms();renderTransfers();renderFinance();renderUsers();renderTransformAdmin();renderSystemCustomization();renderAudit();if(typeof renderPurchaseSetup==='function')renderPurchaseSetup()}
 
 document.addEventListener('DOMContentLoaded',()=>{setTimeout(applyOfficialLogoEverywhere,200);
   ensureSystemDictionary();
@@ -4912,7 +5167,7 @@ function ensureDynamicProductionStations(){
     db.system_labels={
       post_label:'بوسط',posts_label:'بوسطات',center_label:'مركز',centers_label:'مراكز',
       production_center_title:'مركز الإنتاج',production_types_title:'أنواع الإنتاج',
-      recipes_title:'الوصفات',stations_title:'المحطات',add_station_title:'إضافة محطة',
+      recipes_title:'كتاب الوصفات',stations_title:'المحطات',add_station_title:'إضافة محطة',
       system_customization_title:'إعدادات أسماء النظام والمحطات'
     };
   }
@@ -4976,33 +5231,41 @@ function availableProductionTypesForCurrentUser(){
 function ensureUnifiedProductionModule(){
  ensureDynamicProductionStations();
  if(!db.production_types)db.production_types=[];
+ if(!Array.isArray(db.product_compositions))db.product_compositions=[];
  const defaults=[{id:'PT-CUIT',name:'Poulet cuit',category:'chicken',unit:'كغ',active:true},{id:'PT-HACHE',name:'Poulet haché',category:'chicken',unit:'كغ',active:true}];
  defaults.forEach(i=>{if(!db.production_types.some(x=>normalizeProductionName(x.name)===normalizeProductionName(i.name)))db.production_types.push(i)});
- (db.recipes||[]).forEach((r,index)=>{if(!db.production_types.some(x=>x.recipeIndex===index||normalizeProductionName(x.name)===normalizeProductionName(r.name)))db.production_types.push({id:'PT-R-'+index,name:r.name,category:classifyDashboardProduction(r.name,''),unit:r.unit||'كغ',recipeIndex:index,dailyTarget:getProductionTarget(r.name,r.unit||''),active:true})})
-  let productionTypeGroup=db.permissions_catalog.find(g=>g.group==='إدارة أنواع الإنتاج');
-  if(!productionTypeGroup){
-    productionTypeGroup={group:'إدارة أنواع الإنتاج',items:[
-      ['production_types.manage','تعديل أنواع الإنتاج'],
-      ['production_types.delete','حذف أنواع الإنتاج'],
-      ['production_types.add_category','إضافة تخصص إنتاج'],
-      ['production_types.add_product','إضافة منتج من نموذج الإنتاج'],
-      ['production_types.link_products','ربط عدة منتجات بنوع الإنتاج'],
-      ['production_types.add_station','إنشاء محطة إنتاج'],
-      ['production_types.manage_stations','إدارة محطات الإنتاج']
-    ]};
-    db.permissions_catalog.push(productionTypeGroup);
-  }
-
-
+ // كل منتج لديه تركيب يصبح متاحاً تلقائياً داخل قسم الإنتاج المناسب.
+ db.product_compositions.forEach((comp,index)=>{
+   const product=(db.products||[]).find(p=>String(p.id)===String(comp.productId));
+   if(!product||product.active===false)return;
+   const category=classifyDashboardProduction(product.name||'',product.category||'');
+   let type=db.production_types.find(x=>String(x.productId||'')===String(product.id)||normalizeProductionName(x.name)===normalizeProductionName(product.name));
+   if(!type){
+     type={id:'PT-COMP-'+String(product.id),name:product.name,category,unit:comp.unit||product.unit||'كغ',productId:product.id,compositionId:comp.id,active:true,createdAt:new Date().toISOString()};
+     db.production_types.push(type);
+   }else{
+     type.name=product.name;type.category=category;type.unit=comp.unit||product.unit||type.unit||'كغ';type.productId=product.id;type.compositionId=comp.id;type.active=true;
+   }
+ });
+ let productionTypeGroup=db.permissions_catalog.find(g=>g.group==='إدارة أنواع الإنتاج');
+ if(!productionTypeGroup){
+   productionTypeGroup={group:'إدارة أنواع الإنتاج',items:[
+     ['production_types.manage','تعديل أنواع الإنتاج'],
+     ['production_types.delete','حذف أنواع الإنتاج'],
+     ['production_types.add_category','إضافة تخصص إنتاج'],
+     ['production_types.add_product','إضافة منتج من نموذج الإنتاج'],
+     ['production_types.link_products','ربط عدة منتجات بنوع الإنتاج'],
+     ['production_types.add_station','إنشاء محطة إنتاج'],
+     ['production_types.manage_stations','إدارة محطات الإنتاج']
+   ]};
+   db.permissions_catalog.push(productionTypeGroup);
+ }
  db.production_types.forEach(type=>{
    if(!type.stationId){
-     const legacyStation=(type.stationIndex!==''&&type.stationIndex!==undefined)
-       ?db.recipe_stations[Number(type.stationIndex)]
-       :null;
+     const legacyStation=(type.stationIndex!==''&&type.stationIndex!==undefined)?db.recipe_stations[Number(type.stationIndex)]:null;
      type.stationId=legacyStation?.id||inferStationForProductionType(type);
    }
  });
-
 }
 function productionCategoryIcon(c){return {salad:'salad',sauce:'flask-conical',rice:'cooking-pot',juice:'cup-soda',chicken:'drumstick',fries:'utensils',other:'factory'}[c]||'factory'}
 
@@ -5475,7 +5738,7 @@ function exportSystemDictionary(){
 const DEFAULT_SYSTEM_LABELS={
   post_label:'بوسط',posts_label:'بوسطات',center_label:'مركز',centers_label:'مراكز',
   production_center_title:'مركز الإنتاج',production_types_title:'أنواع الإنتاج',
-  recipes_title:'الوصفات',stations_title:'المحطات',add_station_title:'إضافة محطة',
+  recipes_title:'كتاب الوصفات',stations_title:'المحطات',add_station_title:'إضافة محطة',
   system_customization_title:'إعدادات أسماء النظام والمحطات'
 };
 
@@ -5810,33 +6073,35 @@ function showProductionTypeHistory(id){
   productionTypeHistoryModal.classList.add('open');
 }
 
-function selectProductionType(id){ensureUnifiedProductionModule();const t=db.production_types.find(x=>x.id===id);if(!t)return;if(!canAccessProductionStation(getProductionTypeStationId(t)))return alert('ليست لديك صلاحية هذه المحطة');const value=Number.isInteger(t.recipeIndex)?String(t.recipeIndex):`AUTO-${t.id}`;if(!Array.from(prodRecipe.options).some(o=>o.value===value)){const o=document.createElement('option');o.value=value;o.textContent=t.name;prodRecipe.appendChild(o)}prodRecipe.value=value;selectedProductionTitle.textContent=`تسجيل إنتاج: ${t.name}`;window.currentSelectedProductionTypeId=t.id;prodQty.focus()}
+function selectProductionType(id){ensureUnifiedProductionModule();const t=db.production_types.find(x=>x.id===id);if(!t)return;if(!canAccessProductionStation(getProductionTypeStationId(t)))return alert('ليست لديك صلاحية هذه المحطة');const value=`AUTO-${t.id}`;if(!Array.from(prodRecipe.options).some(o=>o.value===value)){const o=document.createElement('option');o.value=value;o.textContent=t.name;prodRecipe.appendChild(o)}prodRecipe.value=value;selectedProductionTitle.textContent=`تسجيل إنتاج: ${t.name}`;window.currentSelectedProductionTypeId=t.id;prodQty.focus()}
 function clearProductionDateFilters(){
- ['historyDate','historyMonth','historyYear','historyWeek','historyFromTime','historyToTime'].forEach(id=>{
-   const el=document.getElementById(id);if(el)el.value=''
- });
- const mode=document.getElementById('historyPeriodMode');if(mode)mode.value='all';
- renderProduction()
+ ['historyFromDate','historyToDate','productionHistorySearch'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+ renderProduction();
 }
 function renderProduction(){
  ensureUnifiedProductionModule();
  renderProductionTypeGrid();
 
- const allowed=db.recipes.map((r,i)=>({r,i})).filter(x=>{
-   if(!canCurrentUserProduce(x.r))return false;
-   const type=db.production_types.find(t=>t.recipeIndex===x.i||normalizeProductionName(t.name)===normalizeProductionName(x.r.name));
-   return !type||canAccessProductionStation(getProductionTypeStationId(type));
- });
+ const compositions=(db.product_compositions||[]).map(c=>{
+   const product=(db.products||[]).find(p=>p.id===c.productId);
+   return {c,product};
+ }).filter(x=>x.product&&x.product.active!==false);
  prodRecipe.innerHTML=
-   allowed.map(x=>`<option value="${x.i}">${x.r.name}</option>`).join('')+
-   db.production_types.filter(t=>!Number.isInteger(t.recipeIndex))
-     .map(t=>`<option value="AUTO-${t.id}">${t.name}</option>`).join('');
+   compositions.map(x=>`<option value="COMP-${x.c.productId}">${x.product.name}</option>`).join('')+
+   db.production_types.map(t=>`<option value="AUTO-${t.id}">${t.name}</option>`).join('');
+ if(!prodRecipe.innerHTML)prodRecipe.innerHTML='<option value="">لا توجد منتجات مركبة أو أنواع إنتاج</option>';
 
  const categoryFilter=document.getElementById('productionLogFilter')?.value||'all';
+ const fromDate=(document.getElementById('historyFromDate')?.value||'').trim();
+ const toDate=(document.getElementById('historyToDate')?.value||'').trim();
+ const search=(document.getElementById('productionHistorySearch')?.value||'').trim().toLowerCase();
  const rows=(db.production||[]).filter(x=>{
    const category=classifyDashboardProduction(x.recipe||'',x.recipeId||'');
+   const operationDate=String(getOperationTimestamp(x)||x.date||'').slice(0,10);
+   const searchable=[x.id,x.recipe,x.user,x.status,x.batchNumber,productionCategoryLabel(category)].join(' ').toLowerCase();
    return (categoryFilter==='all'||category===categoryFilter) &&
-          operationMatchesDateFilter(x,'history')
+          (!fromDate||operationDate>=fromDate) && (!toDate||operationDate<=toDate) &&
+          (!search||searchable.includes(search));
  }).sort((a,b)=>String(getOperationTimestamp(b)||'').localeCompare(String(getOperationTimestamp(a)||'')));
 
  const stamp=document.getElementById('productionReportStamp');
@@ -5882,10 +6147,24 @@ function calculateProduction(){
  if(!prodStartedAt.value)prodStartedAt.value=localDateTimeValue();
  if(!prodEndedAt.value)prodEndedAt.value=localDateTimeValue();
  ensureUnifiedProductionModule();const selected=prodRecipe.value;let r=null,recipeIndex=-1;
- if(selected.startsWith('AUTO-')){const t=db.production_types.find(x=>x.id===selected.slice(5));if(t)r={name:t.name,unit:t.unit,yield:1,items:[],isVirtualProductionType:true}}
- else{recipeIndex=Number(selected);r=db.recipes[recipeIndex]}
- const q=Number(prodQty.value||0);if(!r)return alert('اختر نوع الإنتاج');if(!r.isVirtualProductionType&&!canCurrentUserProduce(r))return alert('ليست لديك صلاحية إنتاج '+r.name);if(!Number.isFinite(q)||q<=0)return alert('أدخل كمية صحيحة');
- const factor=r.isVirtualProductionType?1:q/Number(r.yield||1);let allAvailable=true;const rows=(r.items||[]).map(it=>{const {product,row}=getProductionIngredientStock(it.ingredient),need=Number(it.qty||0)*factor,available=Number(row?.stock||0);if(available<need)allAvailable=false;return {it,product,row,need,available}});
+ if(selected.startsWith('AUTO-')){
+   const t=db.production_types.find(x=>x.id===selected.slice(5));
+   if(t){
+     const product=(db.products||[]).find(p=>String(p.id)===String(t.productId||''))||(db.products||[]).find(p=>normalizeProductionName(p.name)===normalizeProductionName(t.name));
+     const comp=(db.product_compositions||[]).find(c=>String(c.productId)===String(product?.id||t.productId||''));
+     if(comp&&product){
+       r={name:product.name,unit:comp.unit||product.unit||t.unit||'كغ',yield:Number(comp.yieldQty||1),productId:product.id,isComposition:true,productionTypeId:t.id,items:(comp.items||[]).map(it=>{const pr=(db.products||[]).find(p=>String(p.id)===String(it.productId));const n=normalizeCompositionQty(Number(it.qty||0),it.unit||pr?.unit||'');return {ingredient:pr?.name||'',productId:it.productId,qty:n.qty,unit:n.unit};})};
+     }else{
+       r={name:t.name,unit:t.unit,yield:1,items:[],isVirtualProductionType:true,productId:t.productId||'',productionTypeId:t.id};
+     }
+   }
+ }
+ else if(selected.startsWith('COMP-')){
+   const productId=selected.slice(5),comp=(db.product_compositions||[]).find(c=>String(c.productId)===String(productId)),product=(db.products||[]).find(p=>String(p.id)===String(productId));
+   if(comp&&product){r={name:product.name,unit:comp.unit||product.unit,yield:Number(comp.yieldQty||1),productId:product.id,isComposition:true,items:(comp.items||[]).map(it=>{const pr=(db.products||[]).find(p=>String(p.id)===String(it.productId));const n=normalizeCompositionQty(Number(it.qty||0),it.unit||pr?.unit||'');return {ingredient:pr?.name||'',productId:it.productId,qty:n.qty,unit:n.unit};})};}
+ }
+ const q=Number(prodQty.value||0);if(!r)return alert('اختر منتجاً مركباً أو نوع إنتاج');if(!can('production.create')&&!current?.permissions?.includes('*'))return alert('ليست لديك صلاحية تسجيل الإنتاج');if(!Number.isFinite(q)||q<=0)return alert('أدخل كمية صحيحة');
+ const factor=r.isVirtualProductionType?1:q/Number(r.yield||1);let allAvailable=true;const rows=(r.items||[]).map(it=>{let product=(db.products||[]).find(p=>String(p.id)===String(it.productId||''));let row=null;if(product){row=(db.inventory||[]).find(x=>String(x.productId)===String(product.id)&&x.location==='مخزن الإنتاج')||(db.inventory||[]).find(x=>String(x.productId)===String(product.id)&&x.location==='المخزن الرئيسي')}if(!row){const found=getProductionIngredientStock(it.ingredient);product=product||found.product;row=found.row}const need=Number(it.qty||0)*factor,available=Number(row?.stock||0);if(available<need)allAvailable=false;return {it,product,row,need,available}});
  prodCalc.innerHTML=`<div class="notice"><b>${r.name}</b> — ${q} ${r.unit}</div>${rows.length?`<div class="table-wrap"><table><thead><tr><th>المادة</th><th>المطلوب</th><th>المتوفر</th><th>الحالة</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x.product?.name||x.it.ingredient}</td><td>${x.need.toFixed(3)}</td><td>${x.available.toFixed(3)}</td><td><span class="badge ${x.available>=x.need?'ok':'bad'}">${x.available>=x.need?'متوفر':'ناقص'}</span></td></tr>`).join('')}</tbody></table></div>`:'<div class="notice">سيتم تسجيل الإنتاج مباشرة بدون خصم مكونات.</div>'}<div class="actions" style="margin-top:10px"><button class="btn btn-primary" ${allAvailable?'':'disabled'} onclick="approveUnifiedProduction()">اعتماد الإنتاج</button></div>`;window.currentProduction={r,q,rows,recipeIndex}
 }
 function approveUnifiedProduction(){
@@ -5897,6 +6176,11 @@ function approveUnifiedProduction(){
 
  rows.forEach(x=>{if(x.row)x.row.stock=Number(x.row.stock||0)-x.need});
  const duration=durationBetween(startedAt,endedAt);
+ const outputProduct=(db.products||[]).find(x=>String(x.id)===String(r.productId||''))||(db.products||[]).find(x=>normalizeProductionName(x.name)===normalizeProductionName(r.name));
+ if(outputProduct){
+   const productionStock=ensureInventoryRowForLocation(outputProduct,'مخزن الإنتاج');
+   productionStock.stock=Number(productionStock.stock||0)+Math.max(0,Number(q||0)-Number(prodWaste.value||0));
+ }
 
  db.production.unshift({
    id:'PROD-'+Date.now(),
@@ -5907,8 +6191,9 @@ function approveUnifiedProduction(){
    completedAt:endedAt,
    durationMinutes:duration.minutes,
    recipe:r.name,
-   recipeId:recipeIndex>=0?String(recipeIndex):'',
-   productionTypeId:window.currentSelectedProductionTypeId||'',
+   recipeId:'',
+   productId:r.productId||'',
+   productionTypeId:r.productionTypeId||window.currentSelectedProductionTypeId||'',
    qty:q,
    waste:Number(prodWaste.value||0),
    unit:r.unit,
@@ -5953,6 +6238,72 @@ function downloadProductionReport(){
 
 
 
+
+
+(function(){
+  function ensureProductionSalesFlow(){
+    if(!Array.isArray(db.production_sales_transfers))db.production_sales_transfers=[];
+    if(!Array.isArray(db.sales_ready_stock))db.sales_ready_stock=[];
+    (db.production||[]).forEach(function(p){if(p.transferredQty==null)p.transferredQty=(db.production_sales_transfers||[]).filter(function(t){return t.productionId===p.id}).reduce(function(a,t){return a+Number(t.qty||0)},0)});
+  }
+  window.ensureProductionSalesFlow=ensureProductionSalesFlow;
+  window.openProductionToSales=function(productionId){
+    ensureProductionSalesFlow();var p=(db.production||[]).find(function(x){return x.id===productionId});if(!p)return alert('عملية الإنتاج غير موجودة');
+    var produced=Math.max(0,Number(p.qty||0)-Number(p.waste||0)),remaining=Math.max(0,produced-Number(p.transferredQty||0));if(remaining<=0)return alert('تم تحويل كامل الكمية المتاحة إلى المبيعات');
+    document.getElementById('ptsProductionId').value=p.id;document.getElementById('ptsProductionRef').textContent='رقم الإنتاج: '+p.id;document.getElementById('ptsProductName').textContent=p.recipe||'-';document.getElementById('ptsProducedQty').textContent=produced.toFixed(3)+' '+(p.unit||'');document.getElementById('ptsRemainingQty').textContent=remaining.toFixed(3)+' '+(p.unit||'');
+    var q=document.getElementById('ptsQty');q.max=remaining;q.value=remaining.toFixed(3);document.getElementById('ptsNote').value='';document.getElementById('productionToSalesModal').classList.add('open');
+  };
+  window.confirmProductionToSales=function(){
+    ensureProductionSalesFlow();var pid=document.getElementById('ptsProductionId').value,p=(db.production||[]).find(function(x){return x.id===pid});if(!p)return alert('عملية الإنتاج غير موجودة');
+    var produced=Math.max(0,Number(p.qty||0)-Number(p.waste||0)),remaining=Math.max(0,produced-Number(p.transferredQty||0)),qty=Number(document.getElementById('ptsQty').value||0);if(!Number.isFinite(qty)||qty<=0)return alert('أدخل كمية صحيحة');if(qty>remaining+0.000001)return alert('الكمية أكبر من المتبقي المتاح للتحويل');
+    var now=localIsoTimestamp(),station=document.getElementById('ptsSalesStation').value.trim()||'محطة البيع الرئيسية',note=document.getElementById('ptsNote').value.trim(),batch=p.batchNumber||p.id;
+    var product=(db.products||[]).find(function(x){return String(x.id)===String(p.productId||'')})||(db.products||[]).find(function(x){return normalizeProductionName(x.name)===normalizeProductionName(p.recipe||'')});
+    if(product){
+      var source=ensureInventoryRowForLocation(product,'مخزن الإنتاج'),destination=ensureInventoryRowForLocation(product,'مخزن البيع');
+      var sourceAvailable=Number(source.stock||0);
+      source.stock=Math.max(0,sourceAvailable-qty);destination.stock=Number(destination.stock||0)+qty;
+    }
+    var transfer={id:'PTS-'+Date.now(),date:String(now).slice(0,10),createdAt:now,productionId:p.id,batch:batch,productId:product?product.id:(p.productId||''),productName:p.recipe,qty:qty,unit:p.unit||'',from:'الإنتاج',to:station,user:(current&&current.name)||'مستخدم',note:note};
+    db.production_sales_transfers.unshift(transfer);p.transferredQty=Number(p.transferredQty||0)+qty;p.salesTransferStatus=p.transferredQty>=produced-0.000001?'تم التحويل بالكامل':'تم التحويل جزئياً';
+    var key=normalizeProductionName(p.recipe||'')+'__'+(p.unit||''),stock=db.sales_ready_stock.find(function(x){return x.key===key});if(!stock){stock={key:key,productId:product?product.id:(p.productId||''),productName:p.recipe,unit:p.unit||'',qty:0,lastBatch:batch,lastTransferAt:now,lastProductionId:p.id};db.sales_ready_stock.push(stock)}
+    stock.qty=Number(stock.qty||0)+qty;stock.lastBatch=batch;stock.lastTransferAt=now;stock.lastProductionId=p.id;log('تحويل إنتاج إلى المبيعات',p.recipe+' — '+qty+' '+(p.unit||'')+' — '+p.id);closeModal('productionToSalesModal');save();if(typeof showActionMessage==='function')showActionMessage('تم تحويل المنتج إلى المبيعات بنجاح');
+  };
+  window.salesReadyCategory=window.salesReadyCategory||'all';
+  window.setSalesReadyCategory=function(category,button){window.salesReadyCategory=category;document.querySelectorAll('[data-sales-cat]').forEach(function(b){b.classList.toggle('active',b===button);b.classList.toggle('btn-primary',b===button);b.classList.toggle('btn-soft',b!==button)});renderProductionSales()};
+  window.renderProductionSales=function(){
+    ensureProductionSalesFlow();
+    var search=((document.getElementById('salesReadySearch')||{}).value||'').trim().toLowerCase(),category=window.salesReadyCategory||'all';
+    var stockByProduct={};
+    (db.sales_ready_stock||[]).forEach(function(x){
+      var key=String(x.productId||'')||normalizeProductionName(x.productName||'');
+      stockByProduct[key]=x;
+    });
+    var composed=(db.product_compositions||[]).map(function(c){
+      var product=(db.products||[]).find(function(p){return String(p.id)===String(c.productId)});
+      if(!product||product.active===false)return null;
+      var existing=stockByProduct[String(product.id)]||stockByProduct[normalizeProductionName(product.name)]||{};
+      return Object.assign({key:normalizeProductionName(product.name)+'__'+(product.unit||''),productId:product.id,productName:product.name,unit:product.unit||c.unit||'',qty:0,lastBatch:'-',lastTransferAt:'',lastProductionId:''},existing,{product:product,category:classifyDashboardProduction(product.name,product.id)});
+    }).filter(Boolean);
+    var composedIds=new Set(composed.map(function(x){return String(x.productId)}));
+    var transferredOnly=(db.sales_ready_stock||[]).filter(function(x){return !composedIds.has(String(x.productId||''))}).map(function(x){
+      var product=(db.products||[]).find(function(p){return String(p.id)===String(x.productId||'')})||(db.products||[]).find(function(p){return normalizeProductionName(p.name)===normalizeProductionName(x.productName||'')});
+      return Object.assign({},x,{product:product,category:classifyDashboardProduction(x.productName||'',product&&product.id||'')});
+    });
+    var stocks=composed.concat(transferredOnly).filter(function(x){return (!search||String(x.productName||'').toLowerCase().includes(search))&&(category==='all'||x.category===category)}).sort(function(a,b){
+      var aq=Number(a.qty||0)>0?1:0,bq=Number(b.qty||0)>0?1:0;if(aq!==bq)return bq-aq;return String(b.lastTransferAt||'').localeCompare(String(a.lastTransferAt||''))||String(a.productName||'').localeCompare(String(b.productName||''),'ar');
+    });
+    var cards=document.getElementById('salesReadyCards');if(cards)cards.innerHTML=stocks.length?stocks.map(function(x){
+      var image=x.product&&x.product.image?x.product.image:makeProductPlaceholder(x.productName),qty=Number(x.qty||0),status=qty<=0?'غير متوفر':(qty<=Math.max(1,Number(x.product&&x.product.min||0))?'كمية منخفضة':'جاهز للبيع'),badge=status==='جاهز للبيع'?'ok':(status==='غير متوفر'?'danger':'warn');
+      return '<article class="sales-product-card"><div class="sales-product-image"><img src="'+image+'" alt="'+String(x.productName||'منتج').replace(/"/g,'&quot;')+'"></div><div class="sales-product-content"><h4>'+x.productName+'</h4><div class="sales-product-qty"><strong>'+qty.toFixed(3)+'</strong><span>'+(x.unit||'-')+'</span></div><dl><div><dt>آخر دفعة</dt><dd>'+(x.lastBatch||'-')+'</dd></div><div><dt>وقت الوصول</dt><dd>'+formatDateTime(x.lastTransferAt)+'</dd></div></dl><span class="badge '+badge+'">'+status+'</span></div></article>';
+    }).join(''):'<div class="sales-ready-empty"><strong>لا توجد منتجات مركبة حالياً.</strong><span>احفظ تركيب المنتج من قسم المنتجات ليظهر هنا تلقائياً.</span></div>';
+    var transfers=(db.production_sales_transfers||[]).slice().sort(function(a,b){return String(b.createdAt||'').localeCompare(String(a.createdAt||''))}),tb=document.getElementById('productionSalesTransfersBody');if(tb)tb.innerHTML=transfers.length?transfers.map(function(t){return '<tr><td>'+t.id+'</td><td>'+formatDateTime(t.createdAt)+'</td><td>'+t.productionId+'</td><td><b>'+t.productName+'</b></td><td>'+Number(t.qty||0).toFixed(3)+' '+(t.unit||'')+'</td><td>'+t.from+'</td><td>'+t.to+'</td><td>'+(t.user||'-')+'</td><td>'+(t.note||'-')+'</td></tr>'}).join(''):'<tr><td colspan="9">لا توجد تحويلات من الإنتاج إلى المبيعات.</td></tr>';
+    var today=localDateKey(new Date()),ready=document.getElementById('salesReadyProductsKpi'),total=document.getElementById('salesTransferredQtyKpi'),todayK=document.getElementById('salesTransfersTodayKpi'),last=document.getElementById('salesLastTransferKpi');if(ready)ready.textContent=stocks.filter(function(x){return Number(x.qty||0)>0}).length;if(total)total.textContent=stocks.reduce(function(a,x){return a+Number(x.qty||0)},0).toFixed(3);if(todayK)todayK.textContent=transfers.filter(function(x){return String(x.date||'')===today}).length;if(last)last.textContent=transfers[0]?formatDateTime(transfers[0].createdAt):'-';
+  };
+  window.exportProductionSalesTransfers=function(){ensureProductionSalesFlow();var rows=db.production_sales_transfers||[];if(!rows.length)return alert('لا توجد تحويلات للتصدير');var data=[['رقم التحويل','التاريخ والوقت','رقم الإنتاج','المنتج','الكمية','الوحدة','من','إلى','المستخدم','ملاحظات']].concat(rows.map(function(x){return[x.id,x.createdAt,x.productionId,x.productName,x.qty,x.unit,x.from,x.to,x.user,x.note]}));csv('تحويلات_الإنتاج_إلى_المبيعات.csv',data)};
+  var oldRenderProduction=window.renderProduction;window.renderProduction=function(){ensureProductionSalesFlow();oldRenderProduction();var table=document.getElementById('productionBody')&&document.getElementById('productionBody').closest('table');if(!table)return;var hr=table.querySelector('thead tr');if(hr&&!hr.querySelector('.production-sales-action-head')){var th=document.createElement('th');th.className='no-print production-sales-action-head';th.textContent='إلى المبيعات';hr.appendChild(th)}document.querySelectorAll('#productionBody tr').forEach(function(tr){if(tr.children.length<2||tr.querySelector('.production-transfer-cell'))return;var id=(tr.children[0]&&tr.children[0].textContent||'').trim(),p=(db.production||[]).find(function(x){return x.id===id});if(!p)return;var produced=Math.max(0,Number(p.qty||0)-Number(p.waste||0)),moved=Number(p.transferredQty||0),remaining=Math.max(0,produced-moved),pct=produced?Math.min(100,moved/produced*100):0,td=document.createElement('td');td.className='no-print production-transfer-cell';td.innerHTML=remaining>0?'<button class="btn btn-primary" onclick="openProductionToSales(\''+p.id+'\')">تحويل للبيع</button><div class="transfer-progress"><i style="width:'+pct+'%"></i></div><small>'+moved.toFixed(3)+' / '+produced.toFixed(3)+'</small>':'<span class="badge ok">تم التحويل بالكامل</span>';tr.appendChild(td)})};
+  var oldRenderFinance=window.renderFinance;window.renderFinance=function(){oldRenderFinance();renderProductionSales()};var oldRenderAll=window.renderAll;window.renderAll=function(){oldRenderAll();renderProductionSales()};var oldApprove=window.approveUnifiedProduction;window.approveUnifiedProduction=function(){oldApprove();var p=(db.production||[])[0];if(p&&p.transferredQty==null){p.transferredQty=0;p.salesTransferStatus='لم يحول';if(typeof scheduleCloudSave==='function')scheduleCloudSave()}};
+  ensureProductionSalesFlow();
+})();
 </script>
 
 <div id="processProfileModal" class="modal"><div class="modal-box">
@@ -6062,7 +6413,7 @@ function downloadProductionReport(){
       <button class="btn btn-soft" onclick="showProductTab('info')">المعلومات</button>
       <button class="btn btn-soft" onclick="showProductTab('stock')">المخزون</button>
       <button class="btn btn-soft" onclick="showProductTab('production')">الإنتاج</button>
-      <button class="btn btn-soft" onclick="showProductTab('recipe')">الوصفة</button>
+      
       <button type="button" class="btn btn-soft" onclick="showProductTab('composition')">مكونات المنتج</button>
       <button class="btn btn-soft" onclick="showProductTab('history')">السجل</button>
       <button class="btn btn-soft" onclick="showProductTab('documents')">الملفات</button>
@@ -6086,6 +6437,10 @@ function downloadProductionReport(){
         <input id="pdCost" type="number" step="0.01" placeholder="تكلفة الشراء">
         <input id="pdSale" type="number" step="0.01" placeholder="سعر البيع">
         <input id="pdMin" type="number" step="0.001" placeholder="الحد الأدنى">
+        <div class="product-image-editor no-print">
+          <img id="pdImagePreview" alt="صورة المنتج">
+          <div><label for="pdImageFile">صورة المنتج</label><input id="pdImageFile" type="file" accept="image/*" onchange="previewAndStoreProductImage(this)"><button type="button" class="btn btn-soft" onclick="removeCurrentProductImage()">إزالة الصورة</button></div>
+        </div>
       </div>
       <div class="actions no-print"><button class="btn btn-primary" onclick="saveProductDetail()">حفظ التعديلات</button></div>
     </div>
@@ -6099,10 +6454,6 @@ function downloadProductionReport(){
       <div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الدفعة</th><th>قبل الطبخ</th><th>بعد الطبخ</th><th>الصافي</th><th>الهدر</th><th>المردودية</th></tr></thead><tbody id="pdProductionBody"></tbody></table></div>
     </div>
 
-    <div id="pdTabRecipe" class="product-tab hidden">
-      <div class="notice">تُعرض هنا الوصفة المرتبطة بالمنتج إن وجدت.</div>
-      <div class="table-wrap"><table><thead><tr><th>المكون</th><th>الكمية</th><th>الوحدة</th></tr></thead><tbody id="pdRecipeBody"></tbody></table></div>
-    </div>
 
     
     <div id="pdTabComposition" class="product-tab hidden">
@@ -6146,4 +6497,171 @@ function downloadProductionReport(){
   </div>
 </div></div>
 
+<script>
+(function(){
+let alarmRepeatTimer=null;
+function ensureOrders(){
+ if(!Array.isArray(db.production_orders))db.production_orders=[];
+ if(typeof window.productionOrderSoundEnabled==='undefined')window.productionOrderSoundEnabled=localStorage.getItem('machawiOrderSoundEnabled')==='1';
+ if(typeof window.lastRungProductionOrderId==='undefined')window.lastRungProductionOrderId=sessionStorage.getItem('machawiLastRungOrder')||'';
+ if(!window.productionOrderAlarmSettings){try{window.productionOrderAlarmSettings=JSON.parse(localStorage.getItem('machawiOrderAlarmSettings')||'null')||{tone:'kitchen',volume:90,repeat:true}}catch(e){window.productionOrderAlarmSettings={tone:'kitchen',volume:90,repeat:true}}}
+}
+function orderProducts(){
+ ensureOrders();
+ var ids=new Set((db.product_compositions||[]).map(function(c){return String(c.productId)}));
+ var list=(db.products||[]).filter(function(p){return p.active!==false&&(ids.has(String(p.id))||p.isComposed===true||p.type==='finished')});
+ if(!list.length)list=(db.products||[]).filter(function(p){return p.active!==false});
+ return list.sort(function(a,b){return String(a.name||'').localeCompare(String(b.name||''),'ar')});
+}
+window.openProductionRequestModal=function(){
+ try{
+  ensureOrders();
+  var e=document.getElementById('productionRequestProduct');
+  var products=orderProducts();
+  if(!e)throw new Error('تعذر العثور على قائمة المنتجات');
+  e.innerHTML='<option value="">اختر المنتج</option>'+products.map(function(p){return '<option value="'+p.id+'">'+p.name+'</option>'}).join('');
+  document.getElementById('productionRequestQty').value='';
+  document.getElementById('productionRequestNote').value='';
+  document.getElementById('productionRequestPriority').value='normal';
+  openModal('productionRequestModal');
+  if(!products.length)alert('لا توجد منتجات متاحة. أضف منتجاً أولاً.');
+ }catch(err){console.error(err);alert('تعذر فتح طلب الإنتاج: '+err.message)}
+};
+window.submitProductionRequest=function(){
+ ensureOrders();
+ var productId=document.getElementById('productionRequestProduct').value,
+ qty=Number(document.getElementById('productionRequestQty').value||0),
+ priority=document.getElementById('productionRequestPriority').value,
+ note=document.getElementById('productionRequestNote').value.trim(),
+ product=(db.products||[]).find(function(p){return String(p.id)===String(productId)});
+ if(!product)return alert('اختر المنتج');
+ if(!(qty>0))return alert('أدخل الكمية المطلوبة');
+ var now=new Date().toISOString(),o={id:'ORD-'+Date.now(),productId:product.id,productName:product.name,image:product.image||'',qty:qty,priority:priority,note:note,status:'new',createdAt:now,requestedBy:(current&&current.name)||'محطة المبيعات',seen:false};
+ db.production_orders.unshift(o);
+ log('طلب من الإنتاج',product.name+' — '+qty);
+ save();
+ closeModal('productionRequestModal');
+ renderProductionOrders();
+ if(typeof showActionMessage==='function')showActionMessage('تم إرسال الطلب إلى قسم الطلبيات');else alert('تم إرسال الطلب إلى قسم الطلبيات');
+};
+function tonePattern(tone){
+ return ({
+  kitchen:[{f:880,d:.18},{f:1046,d:.18},{f:880,d:.18},{f:1046,d:.35}],
+  siren:[{f:650,d:.25},{f:1150,d:.25},{f:650,d:.25},{f:1150,d:.4}],
+  bell:[{f:784,d:.5},{f:988,d:.65}],
+  digital:[{f:1200,d:.12},{f:1200,d:.12},{f:1500,d:.22}],
+  triple:[{f:950,d:.16},{f:950,d:.16},{f:950,d:.32}],
+  urgent:[{f:520,d:.18},{f:1040,d:.18},{f:520,d:.18},{f:1040,d:.18},{f:1400,d:.35}]
+ })[tone]||[{f:880,d:.2},{f:1046,d:.3}];
+}
+function playOrderAlarm(force){
+ ensureOrders();
+ if(!force&&!window.productionOrderSoundEnabled)return;
+ try{
+  var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  var c=window._machawiOrderAudioContext||(window._machawiOrderAudioContext=new AC());if(c.state==='suspended')c.resume();
+  var settings=window.productionOrderAlarmSettings||{tone:'kitchen',volume:90},vol=Math.max(.03,Math.min(1,Number(settings.volume||90)/100)),t=c.currentTime+.02,cursor=0;
+  tonePattern(settings.tone).forEach(function(step,i){var o=c.createOscillator(),g=c.createGain();o.type=(settings.tone==='bell'?'sine':'square');o.frequency.value=step.f;var st=t+cursor;g.gain.setValueAtTime(.0001,st);g.gain.exponentialRampToValueAtTime(vol,st+.015);g.gain.exponentialRampToValueAtTime(.0001,st+step.d);o.connect(g);g.connect(c.destination);o.start(st);o.stop(st+step.d+.03);cursor+=step.d+.08});
+ }catch(e){console.warn(e)}
+}
+window.previewProductionOrderSound=function(){
+ ensureOrders();
+ var tone=(document.getElementById('orderAlarmTone')||{}).value||'kitchen',volume=Number((document.getElementById('orderAlarmVolume')||{}).value||90);
+ var old=window.productionOrderAlarmSettings;window.productionOrderAlarmSettings={tone:tone,volume:volume,repeat:false};playOrderAlarm(true);window.productionOrderAlarmSettings=old;
+};
+window.openOrderAlarmSettings=function(){
+ ensureOrders();var st=window.productionOrderAlarmSettings;
+ document.getElementById('orderAlarmTone').value=st.tone||'kitchen';document.getElementById('orderAlarmVolume').value=st.volume||90;document.getElementById('orderAlarmVolumeValue').textContent=(st.volume||90)+'%';document.getElementById('orderAlarmRepeat').value=st.repeat===false?'no':'yes';openModal('orderAlarmSettingsModal');
+};
+window.saveOrderAlarmSettings=function(){
+ ensureOrders();window.productionOrderAlarmSettings={tone:document.getElementById('orderAlarmTone').value,volume:Number(document.getElementById('orderAlarmVolume').value||90),repeat:document.getElementById('orderAlarmRepeat').value==='yes'};localStorage.setItem('machawiOrderAlarmSettings',JSON.stringify(window.productionOrderAlarmSettings));window.productionOrderSoundEnabled=true;localStorage.setItem('machawiOrderSoundEnabled','1');closeModal('orderAlarmSettingsModal');playOrderAlarm(true);updateAlarmButton();
+};
+window.enableProductionOrderSound=function(){
+ ensureOrders();window.productionOrderSoundEnabled=true;localStorage.setItem('machawiOrderSoundEnabled','1');try{var AC=window.AudioContext||window.webkitAudioContext;if(AC){window._machawiOrderAudioContext=window._machawiOrderAudioContext||new AC();window._machawiOrderAudioContext.resume()}}catch(e){}playOrderAlarm(true);updateAlarmButton();
+};
+function updateAlarmButton(){var b=document.getElementById('enableOrderSoundBtn');if(b)b.textContent=window.productionOrderSoundEnabled?'الرنة مفعلة':'تفعيل الرنة'}
+function stopRepeatingAlarm(){if(alarmRepeatTimer){clearInterval(alarmRepeatTimer);alarmRepeatTimer=null}}
+function startRepeatingAlarm(){stopRepeatingAlarm();if(window.productionOrderSoundEnabled&&window.productionOrderAlarmSettings.repeat!==false){alarmRepeatTimer=setInterval(function(){var hasNew=(db.production_orders||[]).some(function(o){return o.status==='new'&&!o.seen});if(hasNew)playOrderAlarm();else stopRepeatingAlarm()},6000)}}
+window.updateProductionOrderStatus=function(id,status){ensureOrders();var o=db.production_orders.find(function(x){return x.id===id});if(!o)return;o.status=status;o.seen=true;o.updatedAt=new Date().toISOString();log('تحديث طلب إنتاج',o.id+' — '+status);save();closeModal('newProductionOrderModal');stopRepeatingAlarm();renderProductionOrders()};
+function label(s){return({new:'طلب جديد',accepted:'تم قبول الطلب',preparing:'قيد التحضير',ready:'جاهز',transferred:'تم التحويل للبيع',cancelled:'ملغى'})[s]||s}
+function actionButton(id,status,text,soft){return '<button type="button" class="btn '+(soft?'btn-soft':'btn-primary')+'" data-order-id="'+id+'" data-order-status="'+status+'">'+text+'</button>'}
+function showNewOrderPopup(o){
+ if(!o)return;var p=(db.products||[]).find(function(x){return String(x.id)===String(o.productId)}),img=(p&&p.image)||o.image||makeProductPlaceholder(o.productName);
+ document.getElementById('newOrderPopupImage').src=img;document.getElementById('newOrderPopupProduct').textContent=o.productName||'-';document.getElementById('newOrderPopupNumber').textContent=o.id||'-';document.getElementById('newOrderPopupQty').textContent=Number(o.qty||0).toFixed(3);document.getElementById('newOrderPopupPriority').textContent=o.priority==='urgent'?'مستعجل':'عادي';document.getElementById('newOrderPopupTime').textContent=formatDateTime(o.createdAt);document.getElementById('newOrderPopupBy').textContent=o.requestedBy||'-';var note=document.getElementById('newOrderPopupNote');note.textContent=o.note||'';note.classList.toggle('hidden',!o.note);document.getElementById('newOrderAcceptBtn').onclick=function(){updateProductionOrderStatus(o.id,'accepted')};document.getElementById('newOrderViewBtn').onclick=function(){closeModal('newProductionOrderModal');window.focusNewestProductionOrder()};openModal('newProductionOrderModal');
+}
+window.focusNewestProductionOrder=function(){
+ closeModal('newProductionOrderModal');var groups=availableNavGroups(),g=groups.find(function(x){return x.id==='production'});if(g){activeNavGroup='production';buildNavigation();var b=[].slice.call(menu.querySelectorAll('button')).find(function(x){return x.textContent.indexOf('الطلبيات')>=0});if(b)showPage('production_orders',b,g)}setTimeout(function(){var c=document.querySelector('.production-order-card.new');if(c)c.scrollIntoView({behavior:'smooth',block:'center'})},150)
+};
+window.renderProductionOrders=function(){
+ ensureOrders();var search=((document.getElementById('productionOrderSearch')||{}).value||'').trim().toLowerCase(),filter=(document.getElementById('productionOrderStatusFilter')||{}).value||'all',rows=db.production_orders.filter(function(o){return(filter==='all'||o.status===filter)&&(!search||String(o.productName||'').toLowerCase().includes(search)||String(o.id||'').toLowerCase().includes(search))}),grid=document.getElementById('productionOrdersGrid');
+ if(grid)grid.innerHTML=rows.length?rows.map(function(o){var p=(db.products||[]).find(function(x){return String(x.id)===String(o.productId)}),img=(p&&p.image)||o.image||makeProductPlaceholder(o.productName),badge=o.status==='new'?'warn':(o.status==='ready'||o.status==='transferred'?'ok':(o.status==='cancelled'?'danger':'')),a='';if(o.status==='new')a=actionButton(o.id,'accepted','تم الاطلاع وقبول الطلب');if(o.status==='accepted')a=actionButton(o.id,'preparing','بدء التحضير');if(o.status==='preparing')a=actionButton(o.id,'ready','الطلب جاهز');if(o.status==='ready')a=actionButton(o.id,'transferred','تم التحويل للبيع');if(!['transferred','cancelled'].includes(o.status))a+=actionButton(o.id,'cancelled','إلغاء',true);return '<article data-order-card="'+o.id+'" class="production-order-card '+(o.priority==='urgent'?'urgent ':'')+(o.status==='new'?'new':'')+'"><div class="production-order-head"><div class="production-order-product"><img src="'+img+'"><div><h3>'+o.productName+'</h3><small>'+o.id+'</small></div></div><span class="badge '+badge+'">'+label(o.status)+'</span></div><div class="production-order-meta"><div><small>الكمية المطلوبة</small><strong>'+Number(o.qty||0).toFixed(3)+'</strong></div><div><small>الأولوية</small><strong>'+(o.priority==='urgent'?'مستعجل':'عادي')+'</strong></div><div><small>وقت الطلب</small><strong>'+formatDateTime(o.createdAt)+'</strong></div><div><small>الطالب</small><strong>'+(o.requestedBy||'-')+'</strong></div></div>'+(o.note?'<div class="notice" style="margin-bottom:12px">'+o.note+'</div>':'')+'<div class="production-order-actions">'+a+'</div></article>'}).join(''):'<div class="card"><div class="sales-ready-empty"><strong>لا توجد طلبيات حالياً.</strong><span>ستظهر هنا الطلبات المرسلة من قسم المبيعات.</span></div></div>';
+ var today=localDateKey(new Date()),set=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v},newOrders=db.production_orders.filter(function(o){return o.status==='new'});set('ordersNewKpi',newOrders.length);set('ordersPreparingKpi',db.production_orders.filter(function(o){return o.status==='accepted'||o.status==='preparing'}).length);set('ordersReadyKpi',db.production_orders.filter(function(o){return o.status==='ready'}).length);set('ordersTodayKpi',db.production_orders.filter(function(o){return String(o.createdAt||'').slice(0,10)===today}).length);
+ var badge=document.getElementById('productionOrdersNavBadge');if(badge){badge.textContent=newOrders.length;badge.classList.toggle('hidden',newOrders.length===0)}var banner=document.getElementById('newOrdersAttentionBanner');if(banner){banner.classList.toggle('hidden',newOrders.length===0);var txt=document.getElementById('newOrdersAttentionText');if(txt&&newOrders.length)txt.textContent='لديك '+newOrders.length+' طلب جديد. أحدث طلب: '+newOrders[0].productName+' — الكمية '+Number(newOrders[0].qty||0).toFixed(3)}
+ var latestUnseen=newOrders.find(function(o){return !o.seen});if(latestUnseen&&latestUnseen.id!==window.lastRungProductionOrderId){window.lastRungProductionOrderId=latestUnseen.id;sessionStorage.setItem('machawiLastRungOrder',latestUnseen.id);playOrderAlarm();showNewOrderPopup(latestUnseen);startRepeatingAlarm()}updateAlarmButton();
+};
+document.addEventListener('click',function(e){var req=e.target.closest('#openProductionRequestBtn');if(req){e.preventDefault();window.openProductionRequestModal();return}var b=e.target.closest('[data-order-id][data-order-status]');if(!b)return;updateProductionOrderStatus(b.dataset.orderId,b.dataset.orderStatus)});
+window.addEventListener('storage',function(e){if(e.key==='machawiERP'){try{var remote=JSON.parse(e.newValue||'null');if(remote){db=remote;renderProductionOrders()}}catch(err){}}});
+var old=window.renderAll;window.renderAll=function(){old();renderProductionOrders()};ensureOrders();setInterval(function(){try{renderProductionOrders()}catch(e){console.warn(e)}},4000)
+})();
+</script>
+<script>
+(function(){
+ function ensureWorkflow(){
+  if(!Array.isArray(db.production_orders))db.production_orders=[];
+  if(!Array.isArray(db.preparation_batches))db.preparation_batches=[];
+  if(!Array.isArray(db.product_compositions))db.product_compositions=[];
+  if(!Array.isArray(db.production_sales_transfers))db.production_sales_transfers=[];
+  if(!Array.isArray(db.sales_ready_stock))db.sales_ready_stock=[];
+ }
+ function composedProducts(){ensureWorkflow();var ids=new Set(db.product_compositions.map(function(c){return String(c.productId)}));return (db.products||[]).filter(function(p){return p.active!==false&&ids.has(String(p.id))})}
+ function compFor(pid){return (db.product_compositions||[]).find(function(c){return String(c.productId)===String(pid)})}
+ function invQty(pid,loc){return (db.inventory||[]).filter(function(x){return String(x.productId)===String(pid)&&(!loc||x.location===loc)}).reduce(function(a,x){return a+Number(x.stock||0)},0)}
+ function prodReady(pid){return invQty(pid,'مخزن الإنتاج')}
+ function orderRemaining(o){return Math.max(0,Number(o.qty||0)-Number(o.transferredQty||0))}
+ function statusIndex(s){return {new:0,accepted:1,preparing:2,ready:3,transferred:4,cancelled:-1}[s]??0}
+ function statusText(s){return {new:'تم الإرسال',accepted:'تم القبول',preparing:'قيد التحضير',ready:'جاهز',transferred:'تم التحويل للبيع',cancelled:'ملغى'}[s]||s}
+ function ensureInvRow(product,loc){var r=(db.inventory||[]).find(function(x){return String(x.productId)===String(product.id)&&x.location===loc});if(!r){r={id:'MAT-'+Date.now()+'-'+Math.random().toString(16).slice(2),productId:product.id,name:product.name,category:product.category||product.type,unit:product.unit,location:loc,stock:0,min:Number(product.min||0),cost:Number(product.cost||0)};db.inventory.push(r)}return r}
+ function transferOrderNow(o,qty){
+  ensureWorkflow();var p=(db.products||[]).find(function(x){return String(x.id)===String(o.productId)});if(!p)return alert('المنتج غير موجود');qty=Number(qty||orderRemaining(o));var ready=prodReady(p.id);if(qty<=0)return alert('لا توجد كمية للتحويل');if(ready+1e-9<qty)return alert('الكمية الجاهزة غير كافية. المتوفر: '+ready.toFixed(3));
+  var src=ensureInvRow(p,'مخزن الإنتاج'),dst=ensureInvRow(p,'مخزن البيع');src.stock=Math.max(0,Number(src.stock||0)-qty);dst.stock=Number(dst.stock||0)+qty;
+  var now=new Date().toISOString(),tr={id:'PTS-'+Date.now(),date:now.slice(0,10),createdAt:now,productionId:o.preparationBatchId||o.id,batch:o.preparationBatchId||o.id,productId:p.id,productName:p.name,qty:qty,unit:p.unit||'',from:'الإنتاج',to:'محطة البيع الرئيسية',user:(current&&current.name)||'مستخدم',note:'تحويل طلب '+o.id};db.production_sales_transfers.unshift(tr);
+  var stock=(db.sales_ready_stock||[]).find(function(x){return String(x.productId)===String(p.id)});if(!stock){stock={key:p.id,productId:p.id,productName:p.name,unit:p.unit||'',qty:0,lastBatch:'-',lastTransferAt:'',lastProductionId:''};db.sales_ready_stock.push(stock)}stock.qty=Number(stock.qty||0)+qty;stock.lastBatch=tr.batch;stock.lastTransferAt=now;stock.lastProductionId=tr.productionId;
+  o.transferredQty=Number(o.transferredQty||0)+qty;o.status=o.transferredQty>=Number(o.qty||0)-1e-9?'transferred':'ready';o.updatedAt=now;log('تحويل طلب إلى البيع',o.id+' — '+qty+' '+(p.unit||''));save();
+ }
+ window.renderSalesOrderTracking=function(){
+  ensureWorkflow();var box=document.getElementById('salesOrderTrackingGrid');if(!box)return;var rows=db.production_orders.slice().sort(function(a,b){return String(b.createdAt||'').localeCompare(String(a.createdAt||''))});
+  box.innerHTML=rows.length?rows.map(function(o){var p=(db.products||[]).find(function(x){return String(x.id)===String(o.productId)}),img=(p&&p.image)||o.image||makeProductPlaceholder(o.productName),idx=statusIndex(o.status),steps=['تم الإرسال','تم القبول','قيد التحضير','جاهز','تم التحويل'];return '<article class="order-track-card"><div class="order-track-head"><div style="display:flex;align-items:center;gap:10px"><img src="'+img+'"><div><strong>'+o.productName+'</strong><small style="display:block;color:var(--muted)">'+o.id+'</small></div></div><span class="badge '+(o.status==='transferred'?'ok':o.status==='cancelled'?'danger':'warn')+'">'+statusText(o.status)+'</span></div><div class="order-ready-info"><div><small>المطلوب</small><strong>'+Number(o.qty||0).toFixed(3)+'</strong></div><div><small>وصل للبيع</small><strong>'+Number(o.transferredQty||0).toFixed(3)+'</strong></div><div><small>المتبقي</small><strong>'+orderRemaining(o).toFixed(3)+'</strong></div></div><div class="track-steps">'+steps.map(function(x,i){return '<span class="track-step '+(i<idx?'done':i===idx?'current':'')+'">'+x+'</span>'}).join('')+'</div><small style="display:block;margin-top:9px;color:var(--muted)">آخر تحديث: '+formatDateTime(o.updatedAt||o.createdAt)+'</small></article>'}).join(''):'<div class="sales-ready-empty"><strong>لا توجد طلبات إنتاج.</strong><span>عند إرسال طلب سيظهر هنا ويمكن تتبع حالته.</span></div>';
+ }
+ window.renderPreparationCenter=function(){
+  ensureWorkflow();var products=composedProducts(),sel=document.getElementById('prepProductSelect'),linked=document.getElementById('prepLinkedOrder');if(sel){var old=sel.value;sel.innerHTML='<option value="">اختر المنتج المركب</option>'+products.map(function(p){return '<option value="'+p.id+'">'+p.name+' — '+p.unit+'</option>'}).join('');if(products.some(function(p){return String(p.id)===String(old)}))sel.value=old}
+  if(linked){var oldo=linked.value,orders=db.production_orders.filter(function(o){return ['accepted','preparing'].includes(o.status)});linked.innerHTML='<option value="">بدون طلب مرتبط</option>'+orders.map(function(o){return '<option value="'+o.id+'">'+o.id+' — '+o.productName+' — '+orderRemaining(o).toFixed(3)+'</option>'}).join('');if(orders.some(function(o){return o.id===oldo}))linked.value=oldo}
+  var grid=document.getElementById('preparationProductsGrid');if(grid)grid.innerHTML=products.length?products.map(function(p){var ready=prodReady(p.id),reserved=db.production_orders.filter(function(o){return String(o.productId)===String(p.id)&&['accepted','preparing','ready'].includes(o.status)}).reduce(function(a,o){return a+orderRemaining(o)},0),available=Math.max(0,ready-reserved);return '<article class="prep-product-card"><div class="prep-product-head"><div style="display:flex;align-items:center;gap:10px"><img src="'+(p.image||makeProductPlaceholder(p.name))+'"><div><strong>'+p.name+'</strong><small style="display:block;color:var(--muted)">'+(p.unit||'')+'</small></div></div><button type="button" class="btn btn-soft" onclick="selectPreparationProduct(\''+p.id+'\')">تحضير</button></div><div class="prep-stock-grid"><div><small>الجاهز</small><strong>'+ready.toFixed(3)+'</strong></div><div><small>محجوز</small><strong>'+reserved.toFixed(3)+'</strong></div><div><small>المتاح</small><strong>'+available.toFixed(3)+'</strong></div></div></article>'}).join(''):'<div class="sales-ready-empty"><strong>لا توجد منتجات مركبة.</strong><span>احفظ تركيب المنتج ليظهر تلقائياً هنا.</span></div>';
+  var body=document.getElementById('preparationBatchesBody');if(body)body.innerHTML=db.preparation_batches.length?db.preparation_batches.slice().reverse().map(function(b){return '<tr><td>'+b.id+'</td><td>'+b.productName+'</td><td>'+Number(b.qty||0).toFixed(3)+' '+(b.unit||'')+'</td><td>'+formatDateTime(b.createdAt)+'</td><td>'+(b.orderId||'-')+'</td><td><span class="badge ok">جاهز</span></td></tr>'}).join(''):'<tr><td colspan="6">لا توجد دفعات تحضير</td></tr>';
+  var set=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v};set('prepProductsKpi',products.length);set('prepOrdersKpi',db.production_orders.filter(function(o){return ['accepted','preparing'].includes(o.status)}).length);set('prepReadyKpi',products.filter(function(p){return prodReady(p.id)>0}).length);calculatePreparationRequirements();
+ }
+ window.selectPreparationProduct=function(id){var e=document.getElementById('prepProductSelect');if(e){e.value=id;calculatePreparationRequirements();e.scrollIntoView({behavior:'smooth',block:'center'})}}
+ window.calculatePreparationRequirements=function(){
+  var pid=(document.getElementById('prepProductSelect')||{}).value,qty=Number((document.getElementById('prepTargetQty')||{}).value||0),box=document.getElementById('prepRequirementsBox');if(!box)return;var c=compFor(pid);if(!c||qty<=0){box.innerHTML='<div class="notice">اختر المنتج وأدخل الكمية لعرض احتياجات المكونات.</div>';return}var factor=qty/Number(c.yieldQty||1);box.innerHTML='<div class="requirement-row"><strong>المكوّن</strong><strong>المطلوب</strong><strong>المتوفر</strong><strong>الحالة</strong></div>'+c.items.map(function(it){var pr=(db.products||[]).find(function(x){return String(x.id)===String(it.productId)}),need=Number(it.qty||0)*factor,have=invQty(it.productId,'المخزن الرئيسي'),short=Math.max(0,need-have);return '<div class="requirement-row '+(short>1e-9?'short':'')+'"><span>'+(pr?pr.name:'مكوّن')+'</span><span>'+need.toFixed(3)+' '+(it.unit||pr&&pr.unit||'')+'</span><span>'+have.toFixed(3)+'</span><span>'+(short>0?'ناقص '+short.toFixed(3):'متوفر')+'</span></div>'}).join('');
+ }
+ window.approvePreparationBatch=function(){
+  ensureWorkflow();var pid=document.getElementById('prepProductSelect').value,qty=Number(document.getElementById('prepTargetQty').value||0),orderId=document.getElementById('prepLinkedOrder').value,p=(db.products||[]).find(function(x){return String(x.id)===String(pid)}),c=compFor(pid);if(!p||!c)return alert('اختر منتجاً مركباً');if(!(qty>0))return alert('أدخل كمية التحضير');var factor=qty/Number(c.yieldQty||1),needs=c.items.map(function(it){return {it:it,need:Number(it.qty||0)*factor,have:invQty(it.productId,'المخزن الرئيسي')}}),bad=needs.find(function(x){return x.have+1e-9<x.need});if(bad){var bp=(db.products||[]).find(function(x){return String(x.id)===String(bad.it.productId)});return alert('المخزون غير كافٍ للمكوّن: '+(bp?bp.name:''))}
+  needs.forEach(function(n){var left=n.need;(db.inventory||[]).filter(function(x){return String(x.productId)===String(n.it.productId)&&x.location==='المخزن الرئيسي'}).forEach(function(r){var take=Math.min(Number(r.stock||0),left);r.stock=Number(r.stock||0)-take;left-=take})});var out=ensureInvRow(p,'مخزن الإنتاج');out.stock=Number(out.stock||0)+qty;var now=new Date().toISOString(),b={id:'PREP-'+Date.now(),productId:p.id,productName:p.name,qty:qty,unit:p.unit||c.unit||'',createdAt:now,orderId:orderId||'',note:document.getElementById('prepNote').value.trim(),status:'ready'};db.preparation_batches.push(b);if(orderId){var o=db.production_orders.find(function(x){return x.id===orderId});if(o){o.status='ready';o.preparationBatchId=b.id;o.updatedAt=now}}log('دفعة تحضير',p.name+' — '+qty);document.getElementById('prepTargetQty').value='';document.getElementById('prepNote').value='';save();alert('تم اعتماد التحضير وإضافة الكمية إلى الرصيد الجاهز');
+ }
+ window.handleProductionOrderAction=function(id,action){
+  ensureWorkflow();var o=db.production_orders.find(function(x){return x.id===id});if(!o)return;var ready=prodReady(o.productId),remain=orderRemaining(o);if(action==='accept'){
+   if(ready+1e-9>=remain){if(confirm('الكمية الجاهزة '+ready.toFixed(3)+' تكفي الطلب. هل تريد قبول الطلب وتحويله فوراً إلى البيع؟')){o.status='ready';o.seen=true;transferOrderNow(o,remain)}}else{o.status='accepted';o.seen=true;o.updatedAt=new Date().toISOString();save();alert('تم قبول الطلب وإرساله إلى قسم التحضير')}
+  }else if(action==='prepare'){o.status='preparing';o.updatedAt=new Date().toISOString();save();var groups=availableNavGroups(),g=groups.find(function(x){return x.id==='production'});if(g){activeNavGroup='production';buildNavigation();var b=[].slice.call(menu.querySelectorAll('button')).find(function(x){return x.textContent.indexOf('قسم التحضير')>=0});if(b)showPage('preparation',b,g)}setTimeout(function(){document.getElementById('prepProductSelect').value=o.productId;document.getElementById('prepTargetQty').value=orderRemaining(o);document.getElementById('prepLinkedOrder').value=o.id;calculatePreparationRequirements()},80)
+  }else if(action==='transfer'){transferOrderNow(o,remain)}else if(action==='cancel'){o.status='cancelled';o.updatedAt=new Date().toISOString();save()}
+ }
+ var originalRenderOrders=window.renderProductionOrders;
+ window.renderProductionOrders=function(){
+  ensureWorkflow();var search=((document.getElementById('productionOrderSearch')||{}).value||'').trim().toLowerCase(),filter=(document.getElementById('productionOrderStatusFilter')||{}).value||'all',rows=db.production_orders.filter(function(o){return(filter==='all'||o.status===filter)&&(!search||String(o.productName||'').toLowerCase().includes(search)||String(o.id||'').toLowerCase().includes(search))}),grid=document.getElementById('productionOrdersGrid');
+  if(grid)grid.innerHTML=rows.length?rows.map(function(o){var p=(db.products||[]).find(function(x){return String(x.id)===String(o.productId)}),ready=prodReady(o.productId),remain=orderRemaining(o),reserved=db.production_orders.filter(function(x){return x.id!==o.id&&String(x.productId)===String(o.productId)&&['accepted','preparing','ready'].includes(x.status)}).reduce(function(a,x){return a+orderRemaining(x)},0),available=Math.max(0,ready-reserved),actions='';if(o.status==='new')actions='<button class="btn btn-primary" onclick="handleProductionOrderAction(\''+o.id+'\',\'accept\')">'+(available>=remain?'قبول وتحويل فوراً':'قبول وإرسال للتحضير')+'</button>';if(o.status==='accepted')actions='<button class="btn btn-primary" onclick="handleProductionOrderAction(\''+o.id+'\',\'prepare\')">فتح في قسم التحضير</button>';if(o.status==='preparing')actions='<button class="btn btn-soft" onclick="handleProductionOrderAction(\''+o.id+'\',\'prepare\')">متابعة التحضير</button>';if(o.status==='ready')actions='<button class="btn btn-primary" onclick="handleProductionOrderAction(\''+o.id+'\',\'transfer\')">تحويل إلى البيع</button>';if(!['transferred','cancelled'].includes(o.status))actions+=' <button class="btn btn-danger" onclick="handleProductionOrderAction(\''+o.id+'\',\'cancel\')">إلغاء</button>';return '<article class="production-order-card '+(o.status==='new'?'new':'')+'"><div class="production-order-head"><div class="production-order-product"><img src="'+((p&&p.image)||o.image||makeProductPlaceholder(o.productName))+'"><div><h3>'+o.productName+'</h3><small>'+o.id+'</small></div></div><span class="badge '+(o.status==='transferred'?'ok':'warn')+'">'+statusText(o.status)+'</span></div><div class="production-order-meta"><div><small>المطلوب</small><strong>'+Number(o.qty||0).toFixed(3)+'</strong></div><div><small>الجاهز</small><strong>'+ready.toFixed(3)+'</strong></div><div><small>المتاح</small><strong>'+available.toFixed(3)+'</strong></div><div><small>المتبقي للطلب</small><strong>'+remain.toFixed(3)+'</strong></div></div><div class="production-order-actions">'+actions+'</div></article>'}).join(''):'<div class="card"><div class="sales-ready-empty"><strong>لا توجد طلبيات حالياً.</strong></div></div>';
+  var set=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v};set('ordersNewKpi',db.production_orders.filter(function(o){return o.status==='new'}).length);set('ordersPreparingKpi',db.production_orders.filter(function(o){return ['accepted','preparing'].includes(o.status)}).length);set('ordersReadyKpi',db.production_orders.filter(function(o){return o.status==='ready'}).length);set('ordersTodayKpi',db.production_orders.filter(function(o){return String(o.createdAt||'').slice(0,10)===new Date().toISOString().slice(0,10)}).length);var badge=document.getElementById('productionOrdersNavBadge'),n=db.production_orders.filter(function(o){return o.status==='new'}).length;if(badge){badge.textContent=n;badge.classList.toggle('hidden',!n)}
+ }
+ var priorRenderAll=window.renderAll;window.renderAll=function(){priorRenderAll();renderPreparationCenter();renderSalesOrderTracking();renderProductionOrders()};
+ var priorSaveComp=window.saveProductComposition;window.saveProductComposition=function(){priorSaveComp();setTimeout(function(){renderPreparationCenter();renderSalesOrderTracking()},0)};
+ ensureWorkflow();
+})();
+</script>
 </body></html>

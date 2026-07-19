@@ -1,8 +1,8 @@
 {
-  "name": "Machawi Dajaj ERP Cloud V3.8",
+  "name": "Machawi Dajaj ERP Cloud",
   "short_name": "Machawi ERP",
-  "description": "نظام إدارة المخزون والإنتاج لمشاوي الدجاج",
-  "start_url": "./",
+  "description": "نظام مشاوي الدجاج لإدارة المخزون والإنتاج والمشتريات والمبيعات",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
@@ -11,17 +11,7 @@
   "lang": "ar",
   "dir": "rtl",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
 }
