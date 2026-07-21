@@ -1,4 +1,4 @@
-const CACHE_NAME = 'machawi-erp-v5-7-0';
+const CACHE_NAME = 'machawi-v5-8-9-finish-real-fix';
 const CORE_ASSETS = [
   './',
   './index.html',

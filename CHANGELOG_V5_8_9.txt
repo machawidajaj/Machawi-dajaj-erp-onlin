@@ -1,0 +1,6 @@
+V5.8.9
+- إصلاح فعلي لزر إنهاء التحضير على Samsung/Android.
+- إزالة الاعتماد على form submit.
+- إضافة click + touchend + delegated capture.
+- منع التكرار والتحقق من الكمية.
+- تحديث cache name.
