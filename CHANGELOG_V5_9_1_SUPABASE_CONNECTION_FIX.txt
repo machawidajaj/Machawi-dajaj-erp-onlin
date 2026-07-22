@@ -1,0 +1,6 @@
+Machawi ERP V5.9.1 - Supabase Connection Fix
+
+- Corrected Supabase Project URL to: https://ivwdtmhjhafctxveramd.supabase.co
+- Kept the provided publishable key.
+- Bumped application/cache version to avoid loading the previous offline build.
+- Online state table: public.machawi_app_state, row id: main.
