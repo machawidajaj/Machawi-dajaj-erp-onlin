@@ -1,0 +1,10 @@
+Machawi ERP V5.9.0 - Supabase Online Storage
+
+- Connected the application to Supabase project ivwdtmjhafctxveramd.
+- Reads the shared application state from public.machawi_app_state (id=main).
+- Saves products, inventory, purchases, recipes, production and movements online.
+- Keeps localStorage as an offline backup.
+- Automatically retries cloud synchronization after temporary connection failures.
+- Displays cloud connection/saving status in the top bar.
+
+Deployment: upload all files to the GitHub repository root, then open the Vercel URL.

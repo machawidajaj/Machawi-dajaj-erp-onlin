@@ -17,7 +17,7 @@
     .btn{border:0;border-radius:12px;padding:12px 16px;cursor:pointer;font-weight:800}.btn-primary{background:var(--red);color:#fff}.btn-primary:hover{background:var(--red2)}.btn-yellow{background:var(--yellow);color:#3d2c00}.btn-light{background:#f0f0f0}.btn-danger{background:#ffe5e5;color:#a00000}
     .login .btn{width:100%;margin-top:18px}.hint{font-size:12px;color:var(--muted);margin-top:12px;text-align:center}
     .app{min-height:100vh;display:grid;grid-template-columns:270px 1fr}.sidebar{background:var(--red);color:#fff;padding:18px 14px;position:sticky;top:0;height:100vh}.side-brand{padding:10px 12px 20px;border-bottom:1px solid #ffffff33}.side-brand strong{display:block;color:var(--yellow);font-size:20px}.side-brand small{opacity:.85}.nav{display:grid;gap:8px;margin-top:18px}.nav button{width:100%;text-align:right;background:transparent;color:#fff;border:0;border-radius:12px;padding:13px;cursor:pointer;font-weight:700}.nav button:hover,.nav button.active{background:var(--yellow);color:#3d2c00}.side-footer{position:absolute;bottom:18px;right:14px;left:14px}.side-footer button{width:100%}
-    .main{min-width:0}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:3}.topbar h2{font-size:21px;margin:0}.user-chip{background:#fff7d6;border:1px solid #ffe06b;padding:8px 12px;border-radius:12px;font-size:13px}
+    .main{min-width:0}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:3}.topbar h2{font-size:21px;margin:0}.user-chip{background:#fff7d6;border:1px solid #ffe06b;padding:8px 12px;border-radius:12px;font-size:13px}.cloud-chip{display:inline-flex;align-items:center;gap:6px;margin-inline-start:8px;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#fff0db;color:#8a5400}.cloud-chip.online{background:#e5f6ea;color:#137a34}.cloud-chip.error{background:#ffe4e4;color:#a00000}
     .content{padding:24px}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 5px 16px #00000008}.stat strong{display:block;font-size:27px;color:var(--red);margin-top:8px}.stat small{color:var(--muted)}
     .toolbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap}.toolbar .actions{display:flex;gap:8px;flex-wrap:wrap}.search{min-width:240px}
     table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:right;font-size:14px}th{background:#fff5cc;color:#5a4100}.badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800}.ok{background:#e5f6ea;color:var(--green)}.low{background:#fff0db;color:var(--orange)}.out{background:#ffe4e4;color:#a00000}
@@ -99,6 +99,7 @@
   </section>
 
   <div id="modal" class="modal hidden"><div class="modal-card"><div class="modal-head"><h3 id="modalTitle"></h3><button id="closeModal" class="close">✕</button></div><div id="modalBody"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const KEY='machawi_stock_cloud_v1';
 function uuid(){return (globalThis.crypto&&typeof globalThis.crypto.randomUUID==='function')?globalThis.crypto.randomUUID():'id-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10)}
@@ -116,7 +117,54 @@ const placeholderImage=`data:image/svg+xml;charset=UTF-8,${encodeURIComponent('<
 function productImage(p){return p&&p.image?p.image:placeholderImage}
 function esc(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 function compressImage(file,maxSize=600,quality=.8){return new Promise((resolve,reject)=>{if(!file)return resolve('');if(!file.type.startsWith('image/'))return reject(new Error('الملف المختار ليس صورة'));let r=new FileReader();r.onerror=()=>reject(new Error('تعذر قراءة الصورة'));r.onload=()=>{let img=new Image();img.onerror=()=>reject(new Error('تعذر فتح الصورة'));img.onload=()=>{let scale=Math.min(1,maxSize/Math.max(img.width,img.height)),w=Math.max(1,Math.round(img.width*scale)),h=Math.max(1,Math.round(img.height*scale)),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);resolve(c.toDataURL('image/jpeg',quality))};img.src=r.result};r.readAsDataURL(file)})}
-function save(){localStorage.setItem(KEY,JSON.stringify(state));renderAll()}
+const SUPABASE_URL='https://ivwdtmjhafctxveramd.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_eoqiwJ1iHI9pOBcemfWBmQ_QRwqTv7q';
+let cloudClient=null,cloudReady=false,cloudSaving=false,cloudSaveTimer=null,pendingCloudSave=false;
+function setCloudStatus(text,kind=''){
+  let chip=document.getElementById('cloudStatus');
+  if(!chip){
+    chip=document.createElement('span');chip.id='cloudStatus';chip.className='cloud-chip';
+    let user=document.querySelector('.user-chip');if(user)user.insertAdjacentElement('afterend',chip);
+  }
+  chip.textContent=text;chip.className='cloud-chip'+(kind?' '+kind:'');
+}
+function normalizeCloudState(){
+  if(!Array.isArray(state.products))state.products=[];
+  if(!Array.isArray(state.purchases))state.purchases=[];
+  if(!Array.isArray(state.moves))state.moves=[];
+  if(!Array.isArray(state.recipes))state.recipes=[];
+  if(!Array.isArray(state.productions))state.productions=[];
+  state.products.forEach(p=>{if(!('image' in p))p.image='';if(!Array.isArray(p.components))p.components=[];if(!('productType' in p))p.productType='standard';if(!('outputProductId' in p))p.outputProductId='';p.qty=Number(p.qty||0);p.price=Number(p.price||0);p.min=Number(p.min||0)});
+  state.productions.forEach(op=>{if(!op.startedTs&&op.startedAt){let t=Date.parse(op.startedAt);if(Number.isFinite(t))op.startedTs=t}if(!Array.isArray(op.componentsUsed)&&op.rawProductId)op.componentsUsed=[{productId:op.rawProductId,qty:Number(op.inputQty||0)}]});
+}
+async function pushStateToCloud(){
+  if(!cloudReady||!cloudClient){pendingCloudSave=true;return}
+  if(cloudSaving){pendingCloudSave=true;return}
+  cloudSaving=true;pendingCloudSave=false;setCloudStatus('جارٍ الحفظ...');
+  try{
+    const {error}=await cloudClient.from('machawi_app_state').upsert({id:'main',data:state,updated_at:new Date().toISOString()},{onConflict:'id'});
+    if(error)throw error;
+    setCloudStatus('محفوظ أونلاين','online');
+  }catch(err){console.error('Supabase save error',err);setCloudStatus('تعذر الحفظ أونلاين','error');pendingCloudSave=true}
+  finally{cloudSaving=false;if(pendingCloudSave)setTimeout(pushStateToCloud,500)}
+}
+function scheduleCloudSave(){clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(pushStateToCloud,350)}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));renderAll();scheduleCloudSave()}
+async function initializeCloud(){
+  setCloudStatus('الاتصال بالسحابة...');
+  try{
+    if(!window.supabase?.createClient)throw new Error('تعذر تحميل مكتبة Supabase');
+    cloudClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
+    const {data,error}=await cloudClient.from('machawi_app_state').select('data,updated_at').eq('id','main').maybeSingle();
+    if(error)throw error;
+    const remote=data?.data;
+    const hasRemote=remote&&typeof remote==='object'&&Array.isArray(remote.products);
+    if(hasRemote){Object.keys(state).forEach(k=>delete state[k]);Object.assign(state,remote);normalizeCloudState();localStorage.setItem(KEY,JSON.stringify(state));renderAll();setCloudStatus('متصل ومحفوظ أونلاين','online')}
+    else{cloudReady=true;await pushStateToCloud();setCloudStatus('تم تفعيل التخزين أونلاين','online');return}
+    cloudReady=true;
+    if(pendingCloudSave)pushStateToCloud();
+  }catch(err){console.error('Supabase init error',err);setCloudStatus('وضع محلي — تحقق من الاتصال','error')}
+}
 const $=s=>document.querySelector(s); const fmt=n=>Number(n||0).toLocaleString('fr-FR',{maximumFractionDigits:2});
 $('#loginForm').onsubmit=e=>{e.preventDefault();if($('#username').value==='admin'&&$('#password').value==='1234'){sessionStorage.setItem('auth','1');showApp()}else alert('اسم المستخدم أو الرقم السري غير صحيح')};
 function showApp(){$('#loginView').classList.add('hidden');$('#appView').classList.remove('hidden');renderAll()}
@@ -185,6 +233,8 @@ window.confirmFinishProduction=()=>{let id=window.__finishingProductionId,op=sta
 document.addEventListener('click',e=>{let btn=e.target.closest?.('#finishProductionConfirmBtn');if(!btn)return;e.preventDefault();window.confirmFinishProduction()},true);
 $('#addRecipeBtn').onclick=()=>{if(!state.products.length)return alert('أضف المنتجات والمواد الأولية أولًا');openModal('إضافة وصفة',recipeFormHtml(null));setTimeout(()=>bindRecipeForm(null),0)};
 renderAll();
+initializeCloud();
+window.addEventListener('online',initializeCloud);
 setInterval(()=>{document.querySelectorAll('.production-timer').forEach(el=>{let op=state.productions.find(x=>x.id===el.dataset.productionId);if(op)el.textContent=elapsedText(op)})},1000);
 </script>
 
